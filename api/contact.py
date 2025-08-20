@@ -56,9 +56,12 @@ class handler(BaseHTTPRequestHandler):
                 print("Supabase client not initialized")
             
             # Send email via Resend
+            email_success = False
+            email_error = None
             if resend.api_key:
                 try:
-                    resend.Emails.send({
+                    print(f"Attempting to send email to tmille12@syr.edu")
+                    email_result = resend.Emails.send({
                         "from": "onboarding@resend.dev",
                         "to": "tmille12@syr.edu",
                         "subject": f"Portfolio Contact: {name}",
@@ -70,8 +73,15 @@ class handler(BaseHTTPRequestHandler):
                         <p>{message}</p>
                         """
                     })
+                    print(f"Email sent successfully: {email_result}")
+                    email_success = True
                 except Exception as e:
+                    email_error = str(e)
                     print(f"Resend error: {e}")
+                    print(f"Error type: {type(e).__name__}")
+            else:
+                email_error = "No Resend API key configured"
+                print("No Resend API key found")
             
             # Send success response with debug info
             response_data = {
@@ -80,6 +90,9 @@ class handler(BaseHTTPRequestHandler):
                 'debug': {
                     'supabase_success': supabase_success,
                     'supabase_initialized': bool(supabase),
+                    'email_success': email_success,
+                    'email_error': email_error,
+                    'resend_api_key_exists': bool(resend.api_key),
                     'form_data_received': {'name': name, 'email': email, 'message_length': len(message)}
                 }
             }
