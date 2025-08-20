@@ -26,6 +26,10 @@
     {
       "src": "/api/email-test",
       "dest": "/api/email-test.py"
+    },
+    {
+      "src": "/api/resend-debug",
+      "dest": "/api/resend-debug.py"
     }
   ]
 }
