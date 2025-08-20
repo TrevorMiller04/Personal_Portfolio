@@ -40,16 +40,21 @@ function openProject(project, slideIndex=0){
   desc.innerHTML=(project.longDescription||'').trim() || `<p>${project.description||''}</p>`;
   links.innerHTML=`<a class="btn" href="${project.repoURL||'#'}" target="_blank" rel="noopener">View Repo</a>`;
 
-  // build thumbs
+  // build thumbs (only show if multiple images)
   thumbs.innerHTML='';
   const imgs = (project.images||[]).slice(0,5);
-  imgs.forEach((im,idx)=>{
-    const tb=document.createElement('button');
-    const ti=document.createElement('img');
-    ti.src=im.src; ti.alt=im.alt||''; tb.appendChild(ti);
-    tb.addEventListener('click',()=>setSlide(idx,true));
-    thumbs.appendChild(tb);
-  });
+  if(imgs.length > 1) {
+    imgs.forEach((im,idx)=>{
+      const tb=document.createElement('button');
+      const ti=document.createElement('img');
+      ti.src=im.src; ti.alt=im.alt||''; tb.appendChild(ti);
+      tb.addEventListener('click',()=>setSlide(idx,true));
+      thumbs.appendChild(tb);
+    });
+    thumbs.parentElement.style.display = 'block';
+  } else {
+    thumbs.parentElement.style.display = 'none';
+  }
 
   function setSlide(i,updateHash){
     const images=(project.images||[]);
@@ -83,11 +88,15 @@ function openProject(project, slideIndex=0){
   modal.hidden=false; document.body.style.overflow='hidden';
   const firstFocus=qs('.modal__content',modal); firstFocus && firstFocus.focus();
 
-  // focus trap
+  // keyboard navigation and focus trap
   const focusables = ()=>qsa('button, [href], input, textarea, [tabindex]:not([tabindex="-1"])', modal)
                            .filter(el=>!el.hasAttribute('disabled') && el.offsetParent!==null);
   modal.addEventListener('keydown', (e)=>{
-    if(e.key==='Tab'){
+    const images=(project.images||[]);
+    if(e.key==='ArrowLeft' && images.length>1){ setSlide(state.slide-1,true); e.preventDefault(); }
+    else if(e.key==='ArrowRight' && images.length>1){ setSlide(state.slide+1,true); e.preventDefault(); }
+    else if(e.key==='Escape'){ closeModal(); e.preventDefault(); }
+    else if(e.key==='Tab'){
       const els=focusables(); if(!els.length) return;
       const first=els[0], last=els[els.length-1];
       if(e.shiftKey && document.activeElement===first){ last.focus(); e.preventDefault(); }
