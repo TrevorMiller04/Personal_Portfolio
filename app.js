@@ -275,6 +275,44 @@ async function setupContactForm() {
   });
 }
 
+// ---------- Clipboard functionality ----------
+function copyToClipboard(text, element) {
+  navigator.clipboard.writeText(text).then(() => {
+    // Visual feedback
+    const originalText = element.innerHTML;
+    element.innerHTML = `<strong>Copied!</strong> ${text}`;
+    element.style.background = 'var(--brand1)';
+    element.style.color = 'white';
+    
+    // Reset after 2 seconds
+    setTimeout(() => {
+      element.innerHTML = originalText;
+      element.style.background = '';
+      element.style.color = '';
+    }, 2000);
+  }).catch(() => {
+    // Fallback for older browsers
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
+    
+    // Visual feedback
+    const originalText = element.innerHTML;
+    element.innerHTML = `<strong>Copied!</strong> ${text}`;
+    element.style.background = 'var(--brand1)';
+    element.style.color = 'white';
+    
+    setTimeout(() => {
+      element.innerHTML = originalText;
+      element.style.background = '';
+      element.style.color = '';
+    }, 2000);
+  });
+}
+
 // ---------- Boot (load all JSON content) ----------
 (async ()=>{
   const social=await loadJSON('./data/social.json'); setSocialLinks(social||{});

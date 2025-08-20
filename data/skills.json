@@ -3,41 +3,31 @@
     {
       "name": "Python",
       "experience": [
-        "Developed REST API endpoints using Flask framework for portfolio contact system",
-        "Built data analysis scripts for processing and visualizing large datasets",
-        "Implemented automation tools for file management and system administration",
-        "Created web scraping applications using BeautifulSoup and requests libraries",
-        "Applied object-oriented programming principles in academic and personal projects"
+        "Developed REST API endpoints with Flask for contact workflows",
+        "Built data processing and visualization scripts",
+        "Created automation tools for system tasks",
+        "Implemented web scraping utilities with BeautifulSoup and requests",
+        "Applied OOP principles in projects and coursework"
       ]
     },
     {
       "name": "JavaScript",
       "experience": [
-        "Built interactive modal gallery system with image carousel functionality",
-        "Implemented asynchronous data loading and JSON API integration",
-        "Created responsive user interfaces with DOM manipulation and event handling",
-        "Developed modern ES6+ features including arrow functions, async/await, and destructuring",
-        "Applied client-side form validation and user experience enhancements"
+        "Built interactive modal/gallery systems with carousel functionality",
+        "Implemented asynchronous data fetching with JSON APIs",
+        "Created responsive interfaces using DOM manipulation and event handling",
+        "Used ES6+ features such as async/await and destructuring",
+        "Enhanced user experience with client-side validation"
       ]
     },
     {
       "name": "Java",
       "experience": [
-        "Implemented fundamental data structures including linked lists, stacks, and queues",
-        "Developed object-oriented applications following SOLID design principles",
-        "Created algorithms for sorting, searching, and graph traversal problems",
-        "Built GUI applications using Swing framework for academic projects",
-        "Applied inheritance, polymorphism, and encapsulation in complex class hierarchies"
-      ]
-    },
-    {
-      "name": "SQL",
-      "experience": [
-        "Designed normalized database schemas for web application data storage",
-        "Wrote complex queries involving joins, subqueries, and aggregate functions",
-        "Implemented database triggers and stored procedures for data integrity",
-        "Optimized query performance through indexing and execution plan analysis",
-        "Integrated database operations with Python and web application backends"
+        "Implemented data structures including linked lists, stacks, and queues",
+        "Developed OOP applications with SOLID principles",
+        "Created sorting, searching, and graph traversal algorithms",
+        "Built GUIs with Swing in academic projects",
+        "Applied inheritance, polymorphism, and encapsulation"
       ]
     }
   ],
@@ -45,21 +35,45 @@
     {
       "name": "Flask",
       "experience": [
-        "Built RESTful API endpoints for portfolio contact form with email integration",
-        "Implemented serverless functions for Vercel deployment platform",
-        "Created request handling and validation middleware for data processing",
-        "Integrated third-party services including Supabase database and Resend email",
-        "Applied proper HTTP status codes and error handling for robust API design"
+        "Built REST APIs with email and database integration",
+        "Created serverless functions for Vercel deployments",
+        "Added request validation and error handling",
+        "Integrated Supabase and Resend services",
+        "Followed best practices for HTTP status codes"
       ]
     },
     {
       "name": "React",
       "experience": [
-        "Learning component-based architecture and functional programming patterns",
-        "Studying state management with hooks and context API",
-        "Exploring JSX syntax and virtual DOM concepts",
-        "Building practice applications to understand component lifecycle",
-        "Investigating modern development tools and build processes"
+        "Learned component-based architecture",
+        "Explored hooks and Context API",
+        "Practiced JSX syntax and virtual DOM concepts",
+        "Built projects to understand lifecycle",
+        "Studied modern build processes"
+      ]
+    },
+    {
+      "name": "PyTorch",
+      "experience": [
+        "Built, trained, and evaluated neural networks",
+        "Implemented gradient descent and backpropagation workflows",
+        "Applied GPU acceleration for deep learning tasks"
+      ]
+    },
+    {
+      "name": "TensorFlow",
+      "experience": [
+        "Explored model training and deployment in labs",
+        "Worked with Keras API for high-level experimentation",
+        "Tested model export for serving"
+      ]
+    },
+    {
+      "name": "scikit-learn",
+      "experience": [
+        "Trained supervised/unsupervised ML models",
+        "Performed data preprocessing and feature engineering",
+        "Evaluated models using cross-validation and metrics"
       ]
     }
   ],
@@ -67,41 +81,41 @@
     {
       "name": "Git/GitHub",
       "experience": [
-        "Managed version control for portfolio project with branching and merging strategies",
-        "Implemented continuous deployment workflows through GitHub integration",
-        "Applied proper commit messaging and code review practices",
-        "Resolved merge conflicts and maintained clean project history",
-        "Utilized GitHub Issues and project management features for development tracking"
+        "Managed branches and merges",
+        "Configured continuous deployment workflows",
+        "Wrote clear commit messages",
+        "Resolved merge conflicts",
+        "Tracked progress with Issues and Projects"
       ]
     },
     {
       "name": "Vercel",
       "experience": [
-        "Deployed full-stack portfolio application with static site hosting",
-        "Configured serverless Python functions for backend API endpoints",
-        "Managed environment variables and deployment settings for production",
-        "Implemented continuous deployment from GitHub repository integration",
-        "Troubleshot deployment issues and optimized build performance"
+        "Deployed full-stack applications",
+        "Configured serverless Python endpoints",
+        "Managed environment variables",
+        "Integrated CI/CD from GitHub",
+        "Optimized build performance"
       ]
     },
     {
       "name": "Supabase",
       "experience": [
-        "Set up PostgreSQL database with table design and relationships",
-        "Configured Row Level Security policies for data access control",
-        "Integrated real-time database operations with Python backend",
-        "Managed API keys and authentication for secure data access",
-        "Implemented CRUD operations for contact form data storage"
+        "Created Postgres schemas and relationships",
+        "Applied Row Level Security policies",
+        "Integrated realtime CRUD with Python backend",
+        "Managed API keys and authentication",
+        "Stored contact form data securely"
       ]
     },
     {
-      "name": "VS Code",
+      "name": "VS Code/Cursor",
       "experience": [
-        "Utilized as primary development environment for all programming projects",
-        "Configured extensive extension ecosystem for Python, JavaScript, and web development",
-        "Applied integrated debugging tools for troubleshooting and code analysis",
-        "Leveraged integrated terminal for git operations and package management",
-        "Customized workspace settings and keybindings for optimized development workflow"
+        "Primary IDE for coursework and projects",
+        "Extensions for Python, JS, and web development",
+        "Debugging and integrated terminal workflows",
+        "Git integration and package management",
+        "AI-assisted development with Cursor"
       ]
     }
   ],
@@ -109,41 +123,51 @@
     {
       "name": "Data Structures & Algorithms",
       "experience": [
-        "Implemented fundamental data structures: arrays, linked lists, stacks, queues, and hash tables",
-        "Analyzed time and space complexity using Big O notation for algorithm optimization",
-        "Developed sorting algorithms including quicksort, mergesort, and heap sort",
-        "Created graph algorithms for shortest path, minimum spanning tree, and traversal problems",
-        "Applied dynamic programming techniques to solve complex optimization problems"
+        "Implemented core structures: arrays, linked lists, stacks, queues, hash tables",
+        "Analyzed time/space complexity with Big-O",
+        "Developed sorting algorithms: quicksort, mergesort, heap sort",
+        "Built graph algorithms for paths, MST, traversals",
+        "Applied dynamic programming"
       ]
     },
     {
-      "name": "Object-Oriented Programming", 
+      "name": "Object-Oriented Programming",
       "experience": [
-        "Designed class hierarchies using inheritance, polymorphism, and encapsulation principles",
-        "Implemented design patterns including Singleton, Factory, and Observer patterns",
-        "Applied SOLID principles for maintainable and extensible software architecture",
-        "Developed exception handling strategies for robust error management",
-        "Created unit tests and debugging practices for quality assurance"
-      ]
-    },
-    {
-      "name": "Database Systems",
-      "experience": [
-        "Designed normalized database schemas following 1NF, 2NF, and 3NF principles",
-        "Implemented complex SQL queries with joins, subqueries, and window functions",
-        "Created database triggers, stored procedures, and views for data integrity",
-        "Analyzed query execution plans and applied indexing strategies for performance",
-        "Studied transaction management, concurrency control, and ACID properties"
+        "Designed hierarchies with inheritance and polymorphism",
+        "Implemented patterns like Singleton and Factory",
+        "Applied SOLID principles",
+        "Handled exceptions for robust programs",
+        "Practiced unit testing and debugging"
       ]
     },
     {
       "name": "Software Engineering",
       "experience": [
-        "Applied Agile development methodologies including Scrum and sprint planning",
-        "Participated in team projects with version control and collaborative coding practices",
-        "Implemented testing strategies including unit testing, integration testing, and TDD",
-        "Created software documentation, requirements analysis, and system design documents",
-        "Studied software maintenance, refactoring techniques, and code quality metrics"
+        "Used Agile practices (Scrum, sprints)",
+        "Collaborated with Git in team projects",
+        "Applied unit/integration testing and TDD",
+        "Created system design and requirements docs",
+        "Maintained/refactored for code quality"
+      ]
+    },
+    {
+      "name": "ZTM AI Engineering Bootcamp",
+      "experience": [
+        "Hands-on projects with AWS SageMaker for ML deployment",
+        "Trained and deployed models with PyTorch and TensorFlow",
+        "Applied scikit-learn for preprocessing and evaluation",
+        "Learned MLOps workflows for production",
+        "Built end-to-end ML pipelines from training to deployment"
+      ]
+    },
+    {
+      "name": "Complete Python Developer in 2025",
+      "experience": [
+        "Strengthened Python fundamentals and best practices",
+        "Worked with advanced OOP and functional programming",
+        "Learned testing and debugging workflows",
+        "Applied Python for APIs, automation, and data processing",
+        "Studied real-world project structures"
       ]
     }
   ]
