@@ -1,0 +1,39 @@
+[
+  {
+    "title": "Placeholder Project One",
+    "role": "Developer",
+    "date": "2025-01",
+    "description": "Short description of the project's purpose and outcomes.",
+    "tech": ["Python", "Flask", "JS"],
+    "repoURL": "https://github.com/TrevorMiller04/placeholder-one",
+    "longDescription": "<p>Deeper details about goals, approach, and impact. Supports <strong>strong</strong>, <em>emphasis</em>, and lists.</p>",
+    "images": [
+      { "src": "/public/projects/placeholder-one/1.jpg", "alt": "", "caption": "" },
+      { "src": "/public/projects/placeholder-one/2.jpg", "alt": "", "caption": "" }
+    ]
+  },
+  {
+    "title": "Placeholder Project Two",
+    "role": "Developer",
+    "date": "2025-03",
+    "description": "What you built, why, and impact (numbers if possible).",
+    "tech": ["React Native", "Expo"],
+    "repoURL": "https://github.com/TrevorMiller04/placeholder-two",
+    "longDescription": "<p>Challenges, architecture decisions, and performance results.</p>",
+    "images": [
+      { "src": "/public/projects/placeholder-two/1.jpg", "alt": "", "caption": "" }
+    ]
+  },
+  {
+    "title": "Placeholder Project Three",
+    "role": "Lead",
+    "date": "2025-06",
+    "description": "Key features, challenges, and results.",
+    "tech": ["PostgreSQL", "Pandas"],
+    "repoURL": "https://github.com/TrevorMiller04/placeholder-three",
+    "longDescription": "<p>Team role, metrics, and what you'd improve next iteration.</p>",
+    "images": [
+      { "src": "/public/projects/placeholder-three/1.jpg", "alt": "", "caption": "" }
+    ]
+  }
+]

@@ -1,0 +1,971 @@
+<portfolioSpec version="1.2">
+  <!-- =========================
+       BRANDING & ACCESSIBILITY
+       ========================= -->
+  <branding>
+    <name>Trevor Miller</name>
+    <tagline>Junior CS Major @ Syracuse University</tagline>
+    <colors>
+      <primary>
+        <color name="white">#FFFFFF</color>
+        <color name="light-gray">#F5F5F5</color>
+        <color name="medium-gray">#E0E0E0</color>
+        <color name="dark-gray">#1A1A1A</color>
+        <color name="accent-blue">#0077B6</color>
+      </primary>
+      <secondary>
+        <color name="burnt-orange">#C13F03</color>
+        <color name="deep-navy">#051C3D</color>
+        <color name="black">#000000</color>
+      </secondary>
+      <usage>Apply primary colors for base layout, text, and section dividers. Use secondary colors sparingly for buttons, headings, and branding elements.</usage>
+    </colors>
+    <typography>
+      <primaryFont>Inter</primaryFont>
+      <secondaryFont>Merriweather</secondaryFont>
+      <fallback>system-ui, -apple-system, Segoe UI, Roboto, Arial</fallback>
+    </typography>
+    <darkMode>off</darkMode>
+    <animations>
+      <heroTextFade>true</heroTextFade>
+      <cardHoverLift>true</cardHoverLift>
+    </animations>
+    <accessibility>
+      <target>WCAG AA</target>
+      <focusRings>visible</focusRings>
+      <skipToContent>false</skipToContent>
+      <altText policy="allow-empty-for-decorative"/>
+    </accessibility>
+    <logoFavicon path="/public/favicon.svg">provide-later</logoFavicon>
+  </branding>
+
+  <!-- =========================
+       SITE STRUCTURE & CONTENT
+       ========================= -->
+  <site>
+    <singlePage>true</singlePage>
+    <topNav order="Home, About, Projects, Skills, Leadership &amp; Extracurriculars, Contact"/>
+
+    <hero>
+      <headshot src="/public/headshot.jpg" provideLater="true" alt="Headshot of Trevor Miller"/>
+      <ctas order="Resume, Contact, LinkedIn, GitHub">
+        <cta id="resume" action="download" href="/public/resume.pdf"/>
+        <cta id="contact" action="scroll" target="#contact"/>
+        <cta id="linkedin" action="link" href="{{SOCIAL.linkedin}}"/>
+        <cta id="github" action="link" href="{{SOCIAL.github}}"/>
+      </ctas>
+      <note>For any images marked provideLater="true", reference the paths in code now and instruct the user to place files there later with the exact filenames shown.</note>
+    </hero>
+
+    <about>
+      <shortBio>placeholder</shortBio>
+      <careerGoal>placeholder</careerGoal>
+      <quickStats>placeholder</quickStats>
+      <format>Brief paragraphs with subheadings.</format>
+    </about>
+
+    <resume>
+      <file path="/public/resume.pdf"/>
+      <inlinePreview type="embed"/>
+      <downloadButton>true</downloadButton>
+    </resume>
+
+    <!-- ===== Projects (combined v1.1 + modal/lightbox update) ===== -->
+    <projects>
+      <storage path="/data/projects.json"/>
+      <fields>
+        title, role, date, description, tech, repoURL, images[], longDescription
+      </fields>
+      <imagesSchema>
+        <![CDATA[
+        "images": [
+          { "src": "/public/projects/<slug>/1.jpg", "alt": "", "caption": "" },
+          { "src": "/public/projects/<slug>/2.jpg", "alt": "", "caption": "" }
+        ],
+        "longDescription": "<p>Allows minimal <strong>HTML</strong> like <em>em</em>, <ul><li>lists</li></ul></p>"
+        ]]>
+      </imagesSchema>
+      <media directory="/public/projects" videoSupport="false"/>
+      <homeList max="3"/>
+      <order>custom</order>
+      <filters enabled="false"/>
+      <imageConvention>/public/projects/&lt;slug&gt;/{index}.jpg</imageConvention>
+      <a11y altPolicy="allow-empty-for-decorative"/>
+      <images>
+        <maxHeroKB>200</maxHeroKB>
+        <maxProjectKB>300</maxProjectKB>
+      </images>
+
+      <enlarge>
+        <interaction type="modal" trigger="card-click" oneOpen="true"/>
+        <close via="x-button,backdrop-click"/>
+        <layout>stacked</layout>
+        <gallery controls="dots,swipe" thumbnails="row" zoom="none" captions="optional" maxImages="5"/>
+        <animation>scale-fade-180ms</animation>
+        <urlHash reflect="project,slide"/>
+        <loading lazy="true" preloadNeighbors="true" placeholder="blur-up"/>
+        <keyboard>
+          <focusTrap>true</focusTrap>
+          <returnFocus>true</returnFocus>
+        </keyboard>
+      </enlarge>
+    </projects>
+
+    <skills>
+      <storage path="/data/skills.json"/>
+      <grouping>Languages, Frameworks, Tools/Cloud, Coursework</grouping>
+      <displayStyle>compact-chips</displayStyle>
+      <data>placeholder</data>
+      <icons>simple-svg-placeholders</icons>
+    </skills>
+
+    <leadershipAndExtracurriculars>
+      <items storage="/data/leadership.json">placeholder</items>
+      <awards enabled="true" storage="/data/awards.json"/>
+      <layout>card-list</layout>
+    </leadershipAndExtracurriculars>
+
+    <contact id="contact">
+      <form>
+        <field>Name</field>
+        <field>Email</field>
+        <field>Message</field>
+        <validation clientSide="true"/>
+        <spamProtection>none</spamProtection>
+      </form>
+      <footerContact>
+        <email>tmille12@syr.edu</email>
+        <phone>978-646-7116</phone>
+        <backToTop>true</backToTop>
+      </footerContact>
+      <social storage="/data/social.json">
+        <link name="LinkedIn">https://www.linkedin.com/in/trevor-miller04/</link>
+        <link name="GitHub">https://github.com/TrevorMiller04</link>
+        <link name="Email">mailto:tmille12@syr.edu</link>
+      </social>
+    </contact>
+  </site>
+
+  <!-- =========================
+       TECH STACK & HOSTING
+       ========================= -->
+  <stack>
+    <frontend>vanilla HTML/CSS/JS</frontend>
+    <server language="python" framework="flask"/>
+    <hosting platform="vercel" deployment="GitHub-&gt;Vercel"/>
+    <domain useLater="true">trevormiller.xyz</domain>
+  </stack>
+
+  <!-- =========================
+       EMAIL (RESEND) & STORAGE (SUPABASE)
+       ========================= -->
+  <integrations>
+    <resend>
+      <provider>Resend</provider>
+      <sendingIdentity type="domain">trevormiller.xyz</sendingIdentity>
+      <from>Trevor Miller &lt;notify@trevormiller.xyz&gt;</from>
+      <to>tmille12@syr.edu</to>
+      <replyTo>Trevor Miller &lt;tmille12@syr.edu&gt;</replyTo>
+      <subjectTemplate>New portfolio contact from {{name}}</subjectTemplate>
+      <webhook>
+        <status>deferred</status>
+        <instruction>After deployment, add a Resend webhook URL (e.g., /api/resend-webhook) and set RESEND_WEBHOOK_SECRET in Vercel. Do not commit the secret.</instruction>
+      </webhook>
+      <envVars>
+        <var>RESEND_API_KEY</var>
+        <var>RESEND_FROM</var>
+        <var>RESEND_TO</var>
+        <var>RESEND_REPLY_TO</var>
+        <var optional="true">RESEND_WEBHOOK_SECRET</var>
+      </envVars>
+      <values>
+        <set var="RESEND_FROM">Trevor Miller &lt;notify@trevormiller.xyz&gt;</set>
+        <set var="RESEND_TO">tmille12@syr.edu</set>
+        <set var="RESEND_REPLY_TO">Trevor Miller &lt;tmille12@syr.edu&gt;</set>
+      </values>
+    </resend>
+
+    <supabase>
+      <url env="SUPABASE_URL">https://vuxuyhdhvptswjyumpag.supabase.co</url>
+      <serviceRoleKey env="SUPABASE_SERVICE_ROLE_KEY">set in Vercel only</serviceRoleKey>
+      <table name="contact_submissions">
+        <columns>
+          <col name="id" type="uuid" primaryKey="true" default="gen_random_uuid()"/>
+          <col name="created_at" type="timestamptz" default="now()"/>
+          <col name="name" type="text"/>
+          <col name="email" type="text"/>
+          <col name="message" type="text"/>
+          <col name="status" type="text" default="new"/>
+        </columns>
+        <privacy storeIP="false" storeUserAgent="false"/>
+        <retention>forever</retention>
+      </table>
+      <envVars>
+        <var>SUPABASE_URL</var>
+        <var>SUPABASE_SERVICE_ROLE_KEY</var>
+      </envVars>
+      <notes>Use Supabase REST (PostgREST) with service role key in serverless function only. Never expose the service role in client-side JS.</notes>
+    </supabase>
+  </integrations>
+
+  <!-- =========================
+       FILE TREE & ARTIFACTS
+       ========================= -->
+  <files>
+    <tree>
+      <![CDATA[
+      /
+      ├─ index.html
+      ├─ styles.css
+      ├─ app.js
+      ├─ vercel.json
+      ├─ requirements.txt
+      ├─ .gitignore
+      ├─ README.md
+      ├─ robots.txt
+      ├─ /public
+      │   ├─ favicon.svg
+      │   ├─ headshot.jpg             # provide later (pre-wired)
+      │   └─ /projects                # images: /public/projects/<slug>/{1..5}.jpg
+      ├─ /data
+      │   ├─ projects.json
+      │   ├─ skills.json
+      │   ├─ leadership.json
+      │   ├─ awards.json
+      │   └─ social.json
+      └─ /api
+          └─ contact.py               # Flask serverless function
+      ]]>
+    </tree>
+
+    <vercelJson>
+      <![CDATA[
+      {
+        "functions": {
+          "api/*.py": {
+            "runtime": "python3.11"
+          }
+        },
+        "routes": [
+          { "src": "/api/.*", "dest": "/api/contact.py" }
+        ]
+      }
+      ]]>
+    </vercelJson>
+
+    <requirements>
+      <![CDATA[
+      Flask==3.0.3
+      requests==2.32.3
+      resend==2.4.0
+      ]]>
+    </requirements>
+
+    <gitignore>
+      <![CDATA[
+      # System / Python
+      __pycache__/
+      *.pyc
+      .DS_Store
+
+      # Env & secrets
+      .env
+      .env.*
+      .vercel
+      .env.local
+      .env.production
+      *.key
+      *.pem
+
+      # Node leftovers if any
+      node_modules/
+      ]]>
+    </gitignore>
+
+    <robots>
+      <![CDATA[
+      User-agent: *
+      Allow: /
+      ]]>
+    </robots>
+
+    <readme>
+      <![CDATA[
+      # Personal Portfolio (Single Page)
+
+      ## Quick Start
+      1) Push this repo (Personal_Portfolio) to GitHub.
+      2) Import to Vercel and deploy.
+      3) In Vercel → Settings → Environment Variables, add:
+         - RESEND_API_KEY = (your key)
+         - RESEND_FROM = Trevor Miller <notify@trevormiller.xyz>
+         - RESEND_TO = tmille12@syr.edu
+         - RESEND_REPLY_TO = Trevor Miller <tmille12@syr.edu>
+         - SUPABASE_URL = https://vuxuyhdhvptswjyumpag.supabase.co
+         - SUPABASE_SERVICE_ROLE_KEY = (service role key)
+         - (Optional later) RESEND_WEBHOOK_SECRET = (random string)
+      4) In Resend, verify your domain trevormiller.xyz (SPF/DKIM per Resend UI).
+      5) In Supabase, create table `contact_submissions` using the SQL below.
+
+      ## Supabase SQL
+      CREATE EXTENSION IF NOT EXISTS pgcrypto;
+      CREATE TABLE IF NOT EXISTS public.contact_submissions (
+        id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+        created_at timestamptz NOT NULL DEFAULT now(),
+        name text NOT NULL,
+        email text NOT NULL,
+        message text NOT NULL,
+        status text NOT NULL DEFAULT 'new'
+      );
+
+      -- Optional: RLS can remain disabled for this table if only accessed by service role in serverless.
+      -- Do NOT expose the service role key in client code.
+
+      ## Images to Add Later
+      - /public/headshot.jpg
+      - /public/projects/<slug>/{1..5}.jpg
+      Keep hero ≤ 200KB, project images ≤ 300KB, ~1200px max width.
+
+      ## Notes
+      - Do not commit secrets; use Vercel env vars only.
+      - Contact API both stores to Supabase and emails via Resend.
+      - No analytics, minimal SEO (robots.txt only).
+      ]]>
+    </readme>
+
+    <!-- =========================
+         COMBINED HTML (with modal)
+         ========================= -->
+    <indexHtml>
+      <![CDATA[
+      <!doctype html>
+      <html lang="en">
+      <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Trevor Miller • Portfolio</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Merriweather:wght@700&display=swap" rel="stylesheet">
+        <link rel="icon" href="/public/favicon.svg" type="image/svg+xml" />
+        <link rel="stylesheet" href="/styles.css" />
+      </head>
+      <body>
+        <header class="site-header">
+          <nav class="nav">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#projects">Projects</a>
+            <a href="#skills">Skills</a>
+            <a href="#leadership">Leadership &amp; Extracurriculars</a>
+            <a href="#contact">Contact</a>
+          </nav>
+        </header>
+
+        <main id="home">
+          <section class="hero">
+            <div class="hero-text">
+              <h1>Trevor Miller</h1>
+              <p>Junior CS Major @ Syracuse University</p>
+              <div class="cta-row">
+                <a class="btn primary" href="/public/resume.pdf" download>Resume</a>
+                <a class="btn" href="#contact">Contact</a>
+                <a class="btn" id="cta-linkedin" target="_blank" rel="noopener">LinkedIn</a>
+                <a class="btn" id="cta-github" target="_blank" rel="noopener">GitHub</a>
+              </div>
+            </div>
+            <div class="hero-media">
+              <img src="/public/headshot.jpg" alt="" aria-hidden="true" />
+            </div>
+          </section>
+
+          <section id="about" class="section">
+            <h2>About</h2>
+            <p id="about-bio">placeholder</p>
+            <p id="about-goal">placeholder</p>
+            <ul id="about-stats"><li>placeholder</li></ul>
+          </section>
+
+          <section id="projects" class="section">
+            <h2>Projects</h2>
+            <div id="project-grid" class="grid" aria-live="polite"></div>
+          </section>
+
+          <section id="skills" class="section">
+            <h2>Skills</h2>
+            <div class="chip-groups" id="skills-chips"></div>
+          </section>
+
+          <section id="leadership" class="section">
+            <h2>Leadership &amp; Extracurriculars</h2>
+            <div id="leadership-list" class="cards"></div>
+            <h3>Awards</h3>
+            <div id="awards-list" class="cards"></div>
+          </section>
+
+          <section id="resume" class="section">
+            <h2>Resume</h2>
+            <div class="resume-embed">
+              <embed src="/public/resume.pdf" type="application/pdf" />
+            </div>
+            <a class="btn primary" href="/public/resume.pdf" download>Download PDF</a>
+          </section>
+
+          <section id="contact" class="section">
+            <h2>Contact</h2>
+            <form id="contact-form" novalidate>
+              <label>Name <input name="name" required /></label>
+              <label>Email <input type="email" name="email" required /></label>
+              <label>Message <textarea name="message" required minlength="10"></textarea></label>
+              <button class="btn primary" type="submit">Send</button>
+              <p id="form-status" role="status" aria-live="polite"></p>
+            </form>
+            <div class="footer-contact">
+              <a href="mailto:tmille12@syr.edu">tmille12@syr.edu</a>
+              <span>•</span>
+              <a href="tel:+19786467116">978-646-7116</a>
+              <span>•</span>
+              <a href="#home">Back to top</a>
+            </div>
+          </section>
+        </main>
+
+        <!-- Modal / Lightbox -->
+        <div id="project-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+          <div class="modal__backdrop" data-close="backdrop"></div>
+          <div class="modal__content" tabindex="-1">
+            <button class="modal__close" aria-label="Close project details" data-close="x">✕</button>
+
+            <div class="carousel" id="carousel">
+              <div class="carousel__viewport">
+                <img id="carousel-image" class="blur-up" alt="" />
+                <div id="carousel-caption" class="carousel__caption" hidden></div>
+              </div>
+              <div id="thumbs" class="carousel__thumbs" aria-label="Image thumbnails"></div>
+              <div id="dots" class="dot-nav" role="tablist" aria-label="Image navigation"></div>
+            </div>
+
+            <div class="modal__body">
+              <h3 id="modal-title"></h3>
+              <div id="modal-tech" class="chip-row"></div>
+              <div id="modal-desc" class="modal__desc"></div>
+              <div class="modal__actions">
+                <a id="modal-repo" class="btn" target="_blank" rel="noopener">View Repo</a>
+                <button class="btn" data-close="x">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <script src="/app.js"></script>
+      </body>
+      </html>
+      ]]>
+    </indexHtml>
+
+    <!-- =========================
+         COMBINED CSS (base + modal)
+         ========================= -->
+    <stylesCss>
+      <![CDATA[
+      :root{
+        --bg:#FFFFFF;--fg:#1A1A1A;--muted:#F5F5F5;--line:#E0E0E0;
+        --accent:#0077B6;--accent-contrast:#FFFFFF;
+        --brand1:#C13F03;--brand2:#051C3D;
+        --radius:14px;--shadow:0 10px 24px rgba(0,0,0,.08);
+      }
+      html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;}
+      h1,h2,h3{font-family:Merriweather,serif;margin:.2rem 0 .6rem;color:var(--fg)}
+      .site-header{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:10}
+      .nav{display:flex;gap:1rem;align-items:center;justify-content:center;padding:.8rem}
+      .nav a{color:var(--fg);text-decoration:none;padding:.4rem .6rem;border-radius:10px}
+      .nav a:focus,.nav a:hover{outline:2px solid var(--brand1)}
+      .hero{display:grid;grid-template-columns:1.2fr .8fr;gap:2rem;align-items:center;padding:4rem 1rem;max-width:1100px;margin:0 auto}
+      .hero-text h1{font-size:2.2rem}
+      .cta-row{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem}
+      .btn{border:1px solid var(--line);padding:.6rem 1rem;border-radius:12px;box-shadow:var(--shadow);background:#fff}
+      .btn.primary{background:var(--accent);color:var(--accent-contrast);border-color:var(--accent)}
+      .btn:hover{transform:translateY(-1px)}
+      .section{padding:3rem 1rem;border-top:1px solid var(--line)}
+      .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem}
+      .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem}
+      .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:1rem;transition:transform .15s ease, box-shadow .15s ease}
+      .card:hover{transform:translateY(-3px)}
+      .resume-embed embed{width:100%;height:720px;border:1px solid var(--line);border-radius:var(--radius)}
+      label{display:block;margin:.6rem 0}
+      input,textarea{width:100%;padding:.6rem;border:1px solid var(--line);border-radius:10px}
+      input:focus,textarea:focus,button:focus{outline:3px solid var(--brand1);outline-offset:2px}
+      @media (max-width:900px){.hero{grid-template-columns:1fr}}
+
+      /* --- Modal / Lightbox --- */
+      .modal[hidden]{display:none!important}
+      .modal{position:fixed;inset:0;z-index:1000}
+      .modal__backdrop{position:absolute;inset:0;background:rgba(0,0,0,.5)}
+      .modal__content{
+        position:relative;inset:auto;margin:4vh auto;max-width:940px;
+        background:#fff;border-radius:14px;box-shadow:var(--shadow);
+        padding:1rem;display:flex;flex-direction:column;gap:1rem;
+        transform:scale(.98);opacity:0;animation:modalIn .18s ease forwards;
+      }
+      @keyframes modalIn{to{transform:scale(1);opacity:1}}
+
+      .modal__close{
+        position:absolute;top:.5rem;right:.5rem;border:1px solid var(--line);
+        background:#fff;border-radius:999px;width:36px;height:36px;cursor:pointer
+      }
+      .modal__body{display:flex;flex-direction:column;gap:.6rem}
+      .modal__desc{line-height:1.5}
+      .chip-row{display:flex;flex-wrap:wrap;gap:.4rem}
+      .chip-row .btn{padding:.35rem .6rem}
+
+      /* --- Carousel --- (stacked layout) */
+      .carousel{display:flex;flex-direction:column;gap:.6rem}
+      .carousel__viewport{position:relative;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+      #carousel-image{width:100%;height:420px;object-fit:cover;display:block}
+      .carousel__caption{position:absolute;left:.6rem;bottom:.6rem;background:rgba(0,0,0,.55);color:#fff;padding:.3rem .5rem;border-radius:8px;font-size:.9rem}
+
+      .carousel__thumbs{display:flex;gap:.4rem;flex-wrap:wrap}
+      .carousel__thumbs button{
+        border:1px solid var(--line);background:#fff;border-radius:10px;padding:0;cursor:pointer
+      }
+      .carousel__thumbs img{width:72px;height:56px;object-fit:cover;border-radius:10px;display:block}
+
+      .dot-nav{display:flex;gap:.35rem;justify-content:center}
+      .dot-nav button{
+        width:10px;height:10px;border-radius:999px;border:1px solid var(--line);background:#fff
+      }
+      .dot-nav button[aria-selected="true"]{background:var(--accent);border-color:var(--accent)}
+
+      /* Blur-up placeholder for images */
+      .blur-up{filter:blur(12px);transform:scale(1.02)}
+      .blur-up.loaded{filter:none;transform:none;transition:filter .25s ease, transform .25s ease}
+
+      /* Grid cards are clickable (button-like) */
+      .card[role="button"]{cursor:pointer}
+
+      /* Reduced motion preference */
+      @media (prefers-reduced-motion: reduce){
+        .modal__content{animation:none}
+        .btn:hover{transform:none}
+      }
+      ]]>
+    </stylesCss>
+
+    <!-- =========================
+         COMBINED JS (with modal + loaders)
+         ========================= -->
+    <appJs>
+      <![CDATA[
+      // ---------- Helpers ----------
+      async function loadJSON(path){const r=await fetch(path);return r.json();}
+      const qs=(s,el=document)=>el.querySelector(s);
+      const qsa=(s,el=document)=>[...el.querySelectorAll(s)];
+      const slugify=s=>String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+
+      // ---------- Social ----------
+      function setSocialLinks(social){
+        const li=document.getElementById('cta-linkedin'); if(li&&social.linkedin) li.href=social.linkedin;
+        const gh=document.getElementById('cta-github'); if(gh&&social.github) gh.href=social.github;
+      }
+
+      // ---------- Build project card ----------
+      function projectCard(p){
+        const div=document.createElement('div');div.className='card';div.setAttribute('role','button');div.setAttribute('tabindex','0');
+        const imgSrc=(p.images && p.images[0] && p.images[0].src) || p.imageOrVideo || '';
+        div.dataset.slug=slugify(p.title||'project');
+        div.innerHTML=`
+          <img src="${imgSrc}" alt="" aria-hidden="true" style="width:100%;height:160px;object-fit:cover;border-radius:12px;border:1px solid var(--line);margin-bottom:.6rem"/>
+          <h3>${p.title||''}</h3>
+          <p>${p.description||''}</p>
+          <p><strong>Tech:</strong> ${Array.isArray(p.tech)?p.tech.join(', '):p.tech||''}</p>
+          <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+            <a class="btn" href="${p.repoURL||'#'}" target="_blank" rel="noopener">Repo</a>
+          </div>`;
+        return div;
+      }
+
+      // ---------- Modal / Gallery state ----------
+      const state={ projects:[], open:null, slide:0, lastFocus:null };
+
+      function openProject(project, slideIndex=0){
+        state.open=project; state.slide=slideIndex;
+        const modal=qs('#project-modal'); const img=qs('#carousel-image'); const caption=qs('#carousel-caption');
+        const dots=qs('#dots'); const thumbs=qs('#thumbs'); const title=qs('#modal-title');
+        const tech=qs('#modal-tech'); const desc=qs('#modal-desc'); const repo=qs('#modal-repo');
+
+        title.textContent=project.title||'';
+        tech.innerHTML=(Array.isArray(project.tech)?project.tech:[]).map(t=>`<span class="btn">${t}</span>`).join('');
+        desc.innerHTML=(project.longDescription||'').trim() || `<p>${project.description||''}</p>`;
+        repo.href=project.repoURL||'#';
+
+        // build dots + thumbs
+        dots.innerHTML=''; thumbs.innerHTML='';
+        const imgs = (project.images||[]).slice(0,5);
+        imgs.forEach((im,idx)=>{
+          const d=document.createElement('button');
+          d.setAttribute('role','tab'); d.setAttribute('aria-label',`Image ${idx+1}`);
+          d.addEventListener('click',()=>setSlide(idx,true));
+          dots.appendChild(d);
+
+          const tb=document.createElement('button');
+          const ti=document.createElement('img');
+          ti.src=im.src; ti.alt=im.alt||''; tb.appendChild(ti);
+          tb.addEventListener('click',()=>setSlide(idx,true));
+          thumbs.appendChild(tb);
+        });
+
+        function setSlide(i,updateHash){
+          const images=(project.images||[]);
+          if(!images.length){ // placeholder tile
+            const svg=`data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='500'><rect width='100%' height='100%' fill='%23E0E0E0'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%231A1A1A' font-family='Inter' font-size='20'>Image unavailable</text></svg>`;
+            img.src=svg; img.alt=''; caption.hidden=true;
+            return;
+          }
+          state.slide=(i+images.length)%images.length;
+          const im=images[state.slide];
+          img.classList.remove('loaded'); img.classList.add('blur-up');
+          img.onload=()=>img.classList.add('loaded');
+          img.onerror=()=>{ const svg=`data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='500'><rect width='100%' height='100%' fill='%23E0E0E0'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%231A1A1A' font-family='Inter' font-size='20'>Image unavailable</text></svg>`; img.src=svg; caption.hidden=true; };
+          img.src=im?.src||''; img.alt=im?.alt||'';
+          if(im && im.caption){ caption.textContent=im.caption; caption.hidden=false; } else { caption.hidden=true; }
+
+          qsa('button',dots).forEach((b,k)=>b.setAttribute('aria-selected', k===state.slide ? 'true':'false'));
+
+          // preload neighbors
+          const next=images[(state.slide+1)%images.length], prev=images[(state.slide-1+images.length)%images.length];
+          [next,prev].forEach(n=>{ if(n&&n.src){ const i2=new Image(); i2.src=n.src; } });
+
+          if(updateHash){ updateHashFromState(); }
+        }
+        window.setSlide=setSlide;
+        setSlide(slideIndex,false);
+
+        // Show modal
+        state.lastFocus=document.activeElement;
+        modal.hidden=false; document.body.style.overflow='hidden';
+        const firstFocus=qs('.modal__close',modal); firstFocus && firstFocus.focus();
+
+        // focus trap
+        const focusables = ()=>qsa('button, [href], input, textarea, [tabindex]:not([tabindex="-1"])', modal)
+                               .filter(el=>!el.hasAttribute('disabled') && el.offsetParent!==null);
+        modal.addEventListener('keydown', (e)=>{
+          if(e.key==='Tab'){
+            const els=focusables(); if(!els.length) return;
+            const first=els[0], last=els[els.length-1];
+            if(e.shiftKey && document.activeElement===first){ last.focus(); e.preventDefault(); }
+            else if(!e.shiftKey && document.activeElement===last){ first.focus(); e.preventDefault(); }
+          }
+        });
+
+        // swipe/drag
+        const vp=qs('.carousel__viewport'); let startX=null, dragging=false;
+        function start(ev){ dragging=true; startX=(ev.touches?ev.touches[0].clientX:ev.clientX); }
+        function end(ev){
+          if(!dragging) return; dragging=false;
+          const endX=(ev.changedTouches?ev.changedTouches[0].clientX:ev.clientX);
+          const dx=endX-startX; const images=(project.images||[]);
+          if(Math.abs(dx)>50 && images.length>1){ const dir = dx<0 ? 1 : -1; setSlide(state.slide+dir,true); }
+        }
+        vp.addEventListener('touchstart',start,{passive:true}); vp.addEventListener('touchend',end);
+        vp.addEventListener('mousedown',start); vp.addEventListener('mouseup',end);
+
+        // close handlers (X + backdrop only)
+        qsa('[data-close]', modal).forEach(el=>el.addEventListener('click', closeModal));
+        modal.addEventListener('click',(e)=>{ if(e.target && e.target.dataset.close==='backdrop'){ closeModal(); } });
+
+        updateHashFromState();
+      }
+
+      function closeModal(){
+        const modal=qs('#project-modal'); if(modal.hidden) return;
+        modal.hidden=true; document.body.style.overflow='';
+        clearHash();
+        if(state.lastFocus && document.body.contains(state.lastFocus)){ state.lastFocus.focus(); }
+        state.open=null;
+      }
+
+      function updateHashFromState(){
+        if(!state.open) return;
+        const slug = slugify(state.open.title||'project');
+        const slide = state.slide || 0;
+        const newHash = `#project=${encodeURIComponent(slug)}&slide=${slide}`;
+        if(location.hash !== newHash){ history.replaceState(null,'',newHash); }
+      }
+      function clearHash(){ if(location.hash){ history.replaceState(null,'',location.pathname+location.search); } }
+
+      function parseHash(){
+        const h=location.hash.replace(/^#/,''); if(!h) return null;
+        const params=new URLSearchParams(h.includes('&')||h.includes('=')?h:('project='+h));
+        const project=params.get('project'); const slide=parseInt(params.get('slide')||'0',10);
+        return (project?{project,slide:isNaN(slide)?0:slide}:null);
+      }
+
+      function tryOpenFromHash(){
+        const info=parseHash(); if(!info) return;
+        const proj=state.projects.find(p=>slugify(p.title||'project')===info.project);
+        if(proj){ openProject(proj, info.slide||0); }
+      }
+      window.addEventListener('hashchange', ()=>{
+        const info=parseHash();
+        const modal=qs('#project-modal');
+        if(!info && !modal.hidden){ closeModal(); }
+        else if(info){
+          const proj=state.projects.find(p=>slugify(p.title||'project')===info.project);
+          if(proj){
+            const isSame = state.open && slugify(state.open.title||'project')===info.project;
+            if(!isSame || typeof info.slide==='number'){ openProject(proj, info.slide||0); }
+          }
+        }
+      });
+
+      // ---------- Contact form ----------
+      document.getElementById('contact-form')?.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+        const form=e.target; const status=document.getElementById('form-status');
+        const name=form.name.value.trim(), email=form.email.value.trim(), message=form.message.value.trim();
+        if(!name||!email||!message||message.length<10){status.textContent='Please complete all fields (message ≥ 10 chars).';return;}
+        try{
+          const res=await fetch('/api/contact', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({name,email,message})});
+          if(!res.ok) throw new Error('Request failed');
+          status.textContent='Thanks! Your message was sent.'; form.reset();
+        }catch(err){status.textContent='Sorry—something went wrong. Please try again later.';}
+      });
+
+      // ---------- Boot (load all JSON content) ----------
+      (async ()=>{
+        const social=await loadJSON('/data/social.json'); setSocialLinks(social||{});
+
+        const projects=await loadJSON('/data/projects.json'); state.projects=projects||[];
+        const grid=document.getElementById('project-grid');
+        (projects||[]).slice(0,3).forEach(p=>{
+          const card=projectCard(p);
+          card.addEventListener('click', ()=>openProject(p,0));
+          card.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); openProject(p,0); }});
+          grid.appendChild(card);
+        });
+
+        // Skills chips
+        const skills=await loadJSON('/data/skills.json');
+        const groups=document.getElementById('skills-chips');
+        const order=['Languages','Frameworks','Tools/Cloud','Coursework'];
+        order.forEach(k=>{
+          const arr=skills?.[k]||[]; const wrap=document.createElement('div'); wrap.innerHTML=`<h3>${k}</h3>`;
+          const row=document.createElement('div'); row.style.display='flex'; row.style.flexWrap='wrap'; row.style.gap='.4rem';
+          arr.forEach(s=>{const chip=document.createElement('span');chip.className='btn';chip.textContent=s;row.appendChild(chip);});
+          wrap.appendChild(row); groups.appendChild(wrap);
+        });
+
+        // Leadership & Awards
+        const leaders=await loadJSON('/data/leadership.json'); const lwrap=document.getElementById('leadership-list');
+        (leaders||[]).forEach(item=>{const c=document.createElement('div');c.className='card';
+          c.innerHTML=`<h3>${item.title||''}</h3><p>${item.org||''} • ${item.dates||''}</p><ul>${(item.bullets||[]).map(b=>`<li>${b}</li>`).join('')}</ul>`; lwrap.appendChild(c);});
+        const awards=await loadJSON('/data/awards.json'); const aw=document.getElementById('awards-list');
+        (awards||[]).forEach(a=>{const c=document.createElement('div');c.className='card'; c.innerHTML=`<h3>${a.title||''}</h3><p>${a.note||''}</p>`; aw.appendChild(c);});
+
+        // Deep-link open if hash present
+        tryOpenFromHash();
+      })();
+      ]]>
+    </appJs>
+
+    <!-- =========================
+         API (Flask serverless)
+         ========================= -->
+    <apiContactPy>
+      <![CDATA[
+      import os, json, requests
+      from flask import Flask, request, jsonify
+      import resend
+
+      app = Flask(__name__)
+
+      # Env (set in Vercel)
+      RESEND_API_KEY = os.environ.get("RESEND_API_KEY")
+      RESEND_FROM     = os.environ.get("RESEND_FROM")
+      RESEND_TO       = os.environ.get("RESEND_TO")
+      RESEND_REPLY_TO = os.environ.get("RESEND_REPLY_TO")
+      SUPABASE_URL    = os.environ.get("SUPABASE_URL")
+      SUPABASE_KEY    = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+
+      resend.api_key = RESEND_API_KEY
+
+      def store_in_supabase(name, email, message):
+        # Use Supabase REST (PostgREST)
+        url = f"{SUPABASE_URL}/rest/v1/contact_submissions"
+        headers = {
+          "apikey": SUPABASE_KEY,
+          "Authorization": f"Bearer {SUPABASE_KEY}",
+          "Content-Type": "application/json",
+          "Prefer": "return=representation"
+        }
+        payload = {"name": name, "email": email, "message": message, "status": "new"}
+        r = requests.post(url, headers=headers, data=json.dumps(payload), timeout=10)
+        r.raise_for_status()
+        return r.json()
+
+      def notify_via_resend(name, email, message):
+        subject = f"New portfolio contact from {name}"
+        html = f"""
+          <div style="font-family:Inter,system-ui">
+            <h2 style="margin:0 0 8px">New Portfolio Contact</h2>
+            <p><strong>Name:</strong> {name}</p>
+            <p><strong>Email:</strong> {email}</p>
+            <p><strong>Message:</strong><br/>{message.replace(chr(10), '<br/>')}</p>
+          </div>
+        """
+        return resend.Emails.send({
+          "from": RESEND_FROM,
+          "to": [RESEND_TO],
+          "reply_to": RESEND_REPLY_TO,
+          "subject": subject,
+          "html": html
+        })
+
+      @app.route("/api/contact", methods=["POST"])
+      def contact():
+        data = request.get_json(silent=True) or {}
+        name   = (data.get("name") or "").strip()
+        email  = (data.get("email") or "").strip()
+        message= (data.get("message") or "").strip()
+
+        if not name or not email or not message or len(message) < 10:
+          return jsonify({"ok": False, "error": "validation"}), 400
+
+        try:
+          store_in_supabase(name, email, message)
+        except Exception as e:
+          return jsonify({"ok": False, "error": "storage"}), 500
+
+        try:
+          notify_via_resend(name, email, message)
+        except Exception as e:
+          return jsonify({"ok": False, "error": "email"}), 502
+
+        return jsonify({"ok": True}), 200
+
+      # Vercel handler
+      def handler(request):
+        with app.request_context(request.environ):
+          return app.full_dispatch_request()
+      ]]>
+    </apiContactPy>
+
+    <!-- =========================
+         SEED DATA (updated schema)
+         ========================= -->
+    <dataSeeds>
+      <projectsJson>
+        <![CDATA[
+        [
+          {
+            "title": "Placeholder Project One",
+            "role": "Developer",
+            "date": "2025-01",
+            "description": "Short description of the project’s purpose and outcomes.",
+            "tech": ["Python", "Flask", "JS"],
+            "repoURL": "https://github.com/TrevorMiller04/placeholder-one",
+            "longDescription": "<p>Deeper details about goals, approach, and impact. Supports <strong>strong</strong>, <em>emphasis</em>, and lists.</p>",
+            "images": [
+              { "src": "/public/projects/placeholder-one/1.jpg", "alt": "", "caption": "" },
+              { "src": "/public/projects/placeholder-one/2.jpg", "alt": "", "caption": "" }
+            ]
+          },
+          {
+            "title": "Placeholder Project Two",
+            "role": "Developer",
+            "date": "2025-03",
+            "description": "What you built, why, and impact (numbers if possible).",
+            "tech": ["React Native", "Expo"],
+            "repoURL": "https://github.com/TrevorMiller04/placeholder-two",
+            "longDescription": "<p>Challenges, architecture decisions, and performance results.</p>",
+            "images": [
+              { "src": "/public/projects/placeholder-two/1.jpg", "alt": "", "caption": "" }
+            ]
+          },
+          {
+            "title": "Placeholder Project Three",
+            "role": "Lead",
+            "date": "2025-06",
+            "description": "Key features, challenges, and results.",
+            "tech": ["PostgreSQL", "Pandas"],
+            "repoURL": "https://github.com/TrevorMiller04/placeholder-three",
+            "longDescription": "<p>Team role, metrics, and what you’d improve next iteration.</p>",
+            "images": [
+              { "src": "/public/projects/placeholder-three/1.jpg", "alt": "", "caption": "" }
+            ]
+          }
+        ]
+        ]]>
+      </projectsJson>
+
+      <skillsJson>
+        <![CDATA[
+        {
+          "Languages": ["placeholder"],
+          "Frameworks": ["placeholder"],
+          "Tools/Cloud": ["placeholder"],
+          "Coursework": ["placeholder"]
+        }
+        ]]>
+      </skillsJson>
+
+      <leadershipJson>
+        <![CDATA[
+        [
+          {
+            "title": "placeholder role",
+            "org": "placeholder org",
+            "dates": "YYYY–YYYY",
+            "bullets": ["impact bullet 1", "impact bullet 2"]
+          }
+        ]
+        ]]>
+      </leadershipJson>
+
+      <awardsJson>
+        <![CDATA[
+        [
+          { "title": "placeholder award", "note": "short description" }
+        ]
+        ]]>
+      </awardsJson>
+
+      <socialJson>
+        <![CDATA[
+        {
+          "linkedin": "https://www.linkedin.com/in/trevor-miller04/",
+          "github": "https://github.com/TrevorMiller04",
+          "email": "mailto:tmille12@syr.edu"
+        }
+        ]]>
+      </socialJson>
+    </dataSeeds>
+  </files>
+
+  <!-- =========================
+       GENERATOR INSTRUCTIONS
+       ========================= -->
+  <generatorInstructions>
+    <do>
+      Create all files exactly as specified; keep secrets out of code; reference env vars only.
+      Pre-wire image references even if assets are “add later,” and print a short post-gen checklist telling where to drop them.
+      Use subtle scroll-in fades and hover lifts; ensure visible focus rings and keyboard accessibility.
+      Add modal/lightbox for projects: stacked layout, dots + swipe, thumbnail row, captions optional, no zoom.
+      Reflect modal state in URL hash (#project=&lt;slug&gt;&amp;slide=&lt;n&gt;), support deep linking and back/forward.
+      Lazy-load expanded images; preload adjacent slide; blur-up placeholders; placeholder tile on errors.
+      Focus trap inside dialog; return focus to the triggering card; close via X button and backdrop only (no Esc).
+    </do>
+    <dont>
+      Do not add SEO beyond robots.txt. Do not add analytics. Do not add dark mode.
+      Do not add autoplay, zoom, or keyboard arrow navigation.
+      Do not change base grid/card format in collapsed view.
+    </dont>
+    <postGenChecklist>
+      - Upload /public/resume.pdf (final) and /public/headshot.jpg (when ready).
+      - Add project images to /public/projects/&lt;slug&gt;/{1..5}.jpg.
+      - In Vercel, set env vars: RESEND_API_KEY, RESEND_FROM, RESEND_TO, RESEND_REPLY_TO, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY (and later RESEND_WEBHOOK_SECRET).
+      - In Resend, verify domain trevormiller.xyz (SPF/DKIM).
+      - In Supabase, run the provided SQL to create contact_submissions.
+      - Connect GitHub repo "Personal_Portfolio" to Vercel and deploy.
+    </postGenChecklist>
+  </generatorInstructions>
+</portfolioSpec>

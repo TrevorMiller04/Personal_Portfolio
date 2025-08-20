@@ -1,0 +1,16 @@
+# System / Python
+__pycache__/
+*.pyc
+.DS_Store
+
+# Env & secrets
+.env
+.env.*
+.vercel
+.env.local
+.env.production
+*.key
+*.pem
+
+# Node leftovers if any
+node_modules/
