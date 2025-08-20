@@ -13,6 +13,7 @@
         <nav class="nav">
             <a href="#home">Home</a>
             <a href="#about">About</a>
+            <a href="#projects">Projects</a>
             <a href="#skills">Skills</a>
             <a href="#contact">Contact</a>
         </nav>
@@ -27,8 +28,8 @@
                     <div class="cta-row">
                         <a class="btn primary" href="./public/resume.pdf" download>Resume</a>
                         <a class="btn" href="#contact">Contact</a>
-                        <a class="btn" href="https://www.linkedin.com/in/trevor-miller04/" target="_blank">LinkedIn</a>
-                        <a class="btn" href="https://github.com/TrevorMiller04" target="_blank">GitHub</a>
+                        <a class="btn" id="cta-linkedin" target="_blank">LinkedIn</a>
+                        <a class="btn" id="cta-github" target="_blank">GitHub</a>
                     </div>
                 </div>
                 <div class="hero-media">
@@ -43,33 +44,26 @@
             <p>Dedicated to learning new technologies and building innovative solutions that make a positive impact.</p>
         </section>
 
+        <section id="projects" class="section">
+            <h2>Projects</h2>
+            <div id="project-grid" class="grid">
+                <!-- Projects will be loaded here by JavaScript -->
+                <div class="card">
+                    <h3>Project Loading...</h3>
+                    <p>Projects will appear here once JavaScript loads.</p>
+                </div>
+            </div>
+        </section>
+
         <section id="skills" class="section">
             <h2>Skills</h2>
-            <div class="skill-category">
-                <h3>Languages</h3>
-                <div class="skill-chips">
-                    <span class="btn skill-chip">JavaScript</span>
-                    <span class="btn skill-chip">Python</span>
-                    <span class="btn skill-chip">Java</span>
-                    <span class="btn skill-chip">C++</span>
-                </div>
-            </div>
-            <div class="skill-category">
-                <h3>Frameworks</h3>
-                <div class="skill-chips">
-                    <span class="btn skill-chip">React</span>
-                    <span class="btn skill-chip">Node.js</span>
-                    <span class="btn skill-chip">Flask</span>
-                    <span class="btn skill-chip">Express</span>
-                </div>
-            </div>
-            <div class="skill-category">
-                <h3>Tools/Cloud</h3>
-                <div class="skill-chips">
-                    <span class="btn skill-chip">Git</span>
-                    <span class="btn skill-chip">Docker</span>
-                    <span class="btn skill-chip">AWS</span>
-                    <span class="btn skill-chip">Vercel</span>
+            <div id="skills-chips">
+                <!-- Skills will be loaded here by JavaScript -->
+                <div class="skill-category">
+                    <h3>Loading...</h3>
+                    <div class="skill-chips">
+                        <span class="btn skill-chip">JavaScript Loading...</span>
+                    </div>
                 </div>
             </div>
         </section>
@@ -93,5 +87,7 @@
             </div>
         </section>
     </main>
+
+    <script src="./app.js"></script>
 </body>
 </html>
