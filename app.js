@@ -145,23 +145,17 @@ function closeModal(){
 function openSkillModal(skill) {
   const modal=qs('#skill-modal');
   const title=qs('#skill-modal-title');
-  const level=qs('#skill-modal-level');
-  const description=qs('#skill-modal-description');
-  const projects=qs('#skill-modal-projects');
+  const experienceList=qs('#skill-modal-experience');
   
   title.textContent = skill.name || '';
-  level.textContent = skill.level || '';
-  level.className = `skill-level-badge level-${(skill.level || '').toLowerCase().replace(/[^a-z]/g, '')}`;
-  description.innerHTML = `<p>${skill.description || ''}</p>`;
   
-  // Build projects chips
-  projects.innerHTML = '';
-  if (skill.projects && skill.projects.length > 0) {
-    skill.projects.forEach(project => {
-      const chip = document.createElement('span');
-      chip.className = 'btn';
-      chip.textContent = project;
-      projects.appendChild(chip);
+  // Build experience bullet points
+  experienceList.innerHTML = '';
+  if (skill.experience && skill.experience.length > 0) {
+    skill.experience.forEach(item => {
+      const li = document.createElement('li');
+      li.textContent = item;
+      experienceList.appendChild(li);
     });
   }
   

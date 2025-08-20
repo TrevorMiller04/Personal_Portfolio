@@ -89,14 +89,11 @@ input:focus,textarea:focus,button:focus{outline:3px solid var(--brand1);outline-
 .skill-chips{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;margin-top:1rem}
 
 /* Skills modal */
-.skill-level{margin:1rem 0;text-align:center}
-.skill-level-badge{display:inline-block;padding:.4rem .8rem;border-radius:20px;font-size:.9rem;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
-.level-advanced{background:var(--brand1);color:white}
-.level-intermediate{background:var(--accent);color:white}
-.level-beginner{background:rgba(193,63,3,.2);color:var(--brand1);border:1px solid var(--brand1)}
-.level-academic{background:var(--brand2);color:white}
-.skill-projects{margin-top:2rem}
-.skill-projects h3{color:var(--brand2);margin-bottom:1rem;font-size:1.1rem}
+.skill-experience{margin-top:2rem}
+.skill-experience h3{color:var(--brand2);margin-bottom:1rem;font-size:1.1rem}
+.experience-list{margin:0;padding-left:1.5rem;line-height:1.6}
+.experience-list li{margin-bottom:.8rem;color:var(--fg)}
+.experience-list li:last-child{margin-bottom:0}
 
 /* Contact section */
 .contact-info{text-align:center;max-width:600px;margin:0 auto}

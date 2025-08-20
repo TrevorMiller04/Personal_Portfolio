@@ -2,93 +2,149 @@
   "Languages": [
     {
       "name": "Python",
-      "level": "Advanced",
-      "description": "Extensive experience in data analysis, web development with Flask, and automation scripts. Used in academic projects and personal development.",
-      "projects": ["Portfolio Contact API", "Data Analysis Projects", "Academic Coursework"]
+      "experience": [
+        "Developed REST API endpoints using Flask framework for portfolio contact system",
+        "Built data analysis scripts for processing and visualizing large datasets",
+        "Implemented automation tools for file management and system administration",
+        "Created web scraping applications using BeautifulSoup and requests libraries",
+        "Applied object-oriented programming principles in academic and personal projects"
+      ]
     },
     {
       "name": "JavaScript",
-      "level": "Intermediate",
-      "description": "Frontend development including DOM manipulation, async programming, and modern ES6+ features. Built interactive web applications.",
-      "projects": ["Portfolio Gallery System", "Interactive Web Components"]
+      "experience": [
+        "Built interactive modal gallery system with image carousel functionality",
+        "Implemented asynchronous data loading and JSON API integration",
+        "Created responsive user interfaces with DOM manipulation and event handling",
+        "Developed modern ES6+ features including arrow functions, async/await, and destructuring",
+        "Applied client-side form validation and user experience enhancements"
+      ]
     },
     {
       "name": "Java",
-      "level": "Intermediate", 
-      "description": "Object-oriented programming, data structures, and algorithm implementation. Primary language for computer science coursework.",
-      "projects": ["Academic Programming Assignments", "Data Structure Implementations"]
+      "experience": [
+        "Implemented fundamental data structures including linked lists, stacks, and queues",
+        "Developed object-oriented applications following SOLID design principles",
+        "Created algorithms for sorting, searching, and graph traversal problems",
+        "Built GUI applications using Swing framework for academic projects",
+        "Applied inheritance, polymorphism, and encapsulation in complex class hierarchies"
+      ]
     },
     {
       "name": "SQL",
-      "level": "Intermediate",
-      "description": "Database design, complex queries, and data manipulation. Experience with both relational database concepts and practical implementation.",
-      "projects": ["Database Design Projects", "Data Analysis Queries"]
+      "experience": [
+        "Designed normalized database schemas for web application data storage",
+        "Wrote complex queries involving joins, subqueries, and aggregate functions",
+        "Implemented database triggers and stored procedures for data integrity",
+        "Optimized query performance through indexing and execution plan analysis",
+        "Integrated database operations with Python and web application backends"
+      ]
     }
   ],
   "Frameworks": [
     {
       "name": "Flask",
-      "level": "Intermediate",
-      "description": "Python web framework for building REST APIs and web applications. Used for backend development and serverless functions.",
-      "projects": ["Portfolio Contact API", "Web Application Backend"]
+      "experience": [
+        "Built RESTful API endpoints for portfolio contact form with email integration",
+        "Implemented serverless functions for Vercel deployment platform",
+        "Created request handling and validation middleware for data processing",
+        "Integrated third-party services including Supabase database and Resend email",
+        "Applied proper HTTP status codes and error handling for robust API design"
+      ]
     },
     {
       "name": "React",
-      "level": "Beginner",
-      "description": "Modern JavaScript library for building user interfaces. Learning component-based architecture and state management.",
-      "projects": ["Learning Projects", "Component Development"]
+      "experience": [
+        "Learning component-based architecture and functional programming patterns",
+        "Studying state management with hooks and context API",
+        "Exploring JSX syntax and virtual DOM concepts",
+        "Building practice applications to understand component lifecycle",
+        "Investigating modern development tools and build processes"
+      ]
     }
   ],
   "Tools/Cloud": [
     {
       "name": "Git/GitHub",
-      "level": "Intermediate",
-      "description": "Version control, collaboration, and project management. Experience with branching, merging, and CI/CD workflows.",
-      "projects": ["All Development Projects", "Portfolio Deployment"]
+      "experience": [
+        "Managed version control for portfolio project with branching and merging strategies",
+        "Implemented continuous deployment workflows through GitHub integration",
+        "Applied proper commit messaging and code review practices",
+        "Resolved merge conflicts and maintained clean project history",
+        "Utilized GitHub Issues and project management features for development tracking"
+      ]
     },
     {
       "name": "Vercel",
-      "level": "Intermediate", 
-      "description": "Modern deployment platform for web applications. Experience with serverless functions and static site hosting.",
-      "projects": ["Portfolio Deployment", "Serverless API Functions"]
+      "experience": [
+        "Deployed full-stack portfolio application with static site hosting",
+        "Configured serverless Python functions for backend API endpoints",
+        "Managed environment variables and deployment settings for production",
+        "Implemented continuous deployment from GitHub repository integration",
+        "Troubleshot deployment issues and optimized build performance"
+      ]
     },
     {
       "name": "Supabase",
-      "level": "Beginner",
-      "description": "Backend-as-a-service platform for database management and authentication. Used for data storage and user management.",
-      "projects": ["Portfolio Contact Storage", "Database Integration"]
+      "experience": [
+        "Set up PostgreSQL database with table design and relationships",
+        "Configured Row Level Security policies for data access control",
+        "Integrated real-time database operations with Python backend",
+        "Managed API keys and authentication for secure data access",
+        "Implemented CRUD operations for contact form data storage"
+      ]
     },
     {
       "name": "VS Code",
-      "level": "Advanced",
-      "description": "Primary development environment with extensive use of extensions, debugging tools, and integrated terminal workflows.",
-      "projects": ["All Development Work", "Code Debugging and Testing"]
+      "experience": [
+        "Utilized as primary development environment for all programming projects",
+        "Configured extensive extension ecosystem for Python, JavaScript, and web development",
+        "Applied integrated debugging tools for troubleshooting and code analysis",
+        "Leveraged integrated terminal for git operations and package management",
+        "Customized workspace settings and keybindings for optimized development workflow"
+      ]
     }
   ],
   "Coursework": [
     {
       "name": "Data Structures & Algorithms",
-      "level": "Academic",
-      "description": "Comprehensive study of fundamental computer science concepts including arrays, linked lists, trees, graphs, and algorithm analysis.",
-      "projects": ["Algorithm Implementation", "Complexity Analysis", "Problem Solving"]
+      "experience": [
+        "Implemented fundamental data structures: arrays, linked lists, stacks, queues, and hash tables",
+        "Analyzed time and space complexity using Big O notation for algorithm optimization",
+        "Developed sorting algorithms including quicksort, mergesort, and heap sort",
+        "Created graph algorithms for shortest path, minimum spanning tree, and traversal problems",
+        "Applied dynamic programming techniques to solve complex optimization problems"
+      ]
     },
     {
       "name": "Object-Oriented Programming", 
-      "level": "Academic",
-      "description": "Design principles, inheritance, polymorphism, and software engineering best practices using Java and other OOP languages.",
-      "projects": ["Class Design Projects", "Software Architecture", "Design Patterns"]
+      "experience": [
+        "Designed class hierarchies using inheritance, polymorphism, and encapsulation principles",
+        "Implemented design patterns including Singleton, Factory, and Observer patterns",
+        "Applied SOLID principles for maintainable and extensible software architecture",
+        "Developed exception handling strategies for robust error management",
+        "Created unit tests and debugging practices for quality assurance"
+      ]
     },
     {
       "name": "Database Systems",
-      "level": "Academic", 
-      "description": "Relational database theory, SQL programming, normalization, and database design principles for efficient data management.",
-      "projects": ["Database Design", "Query Optimization", "Data Modeling"]
+      "experience": [
+        "Designed normalized database schemas following 1NF, 2NF, and 3NF principles",
+        "Implemented complex SQL queries with joins, subqueries, and window functions",
+        "Created database triggers, stored procedures, and views for data integrity",
+        "Analyzed query execution plans and applied indexing strategies for performance",
+        "Studied transaction management, concurrency control, and ACID properties"
+      ]
     },
     {
       "name": "Software Engineering",
-      "level": "Academic",
-      "description": "Software development lifecycle, project management, testing methodologies, and collaborative development practices.",
-      "projects": ["Team Projects", "Testing Frameworks", "Agile Development"]
+      "experience": [
+        "Applied Agile development methodologies including Scrum and sprint planning",
+        "Participated in team projects with version control and collaborative coding practices",
+        "Implemented testing strategies including unit testing, integration testing, and TDD",
+        "Created software documentation, requirements analysis, and system design documents",
+        "Studied software maintenance, refactoring techniques, and code quality metrics"
+      ]
     }
   ]
 }
