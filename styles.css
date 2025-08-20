@@ -47,11 +47,19 @@ h1{color:var(--black)}
 .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:1rem;transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease}
 .card:hover{transform:translateY(-3px);border-color:var(--brand1);box-shadow:0 15px 35px rgba(193,63,3,.12)}
 .card h3{color:var(--brand2)}
-.resume-embed embed{width:100%;height:720px;border:1px solid var(--line);border-radius:var(--radius)}
+/* Resume section */
+.resume-container{max-width:900px;margin:0 auto}
+.resume-actions{display:flex;gap:1rem;justify-content:center;margin-bottom:2rem;flex-wrap:wrap}
+.resume-embed{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.resume-embed embed{width:100%;height:720px;border:none;display:block}
 label{display:block;margin:.6rem 0}
 input,textarea{width:100%;padding:.6rem;border:1px solid var(--line);border-radius:10px}
 input:focus,textarea:focus,button:focus{outline:3px solid var(--brand1);outline-offset:2px}
-@media (max-width:900px){.hero{grid-template-columns:1fr}}
+@media (max-width:900px){
+  .hero{grid-template-columns:1fr}
+  .resume-embed embed{height:500px}
+  .resume-actions{flex-direction:column;align-items:center}
+}
 
 /* --- Modal / Lightbox --- */
 .modal[hidden]{display:none!important}
