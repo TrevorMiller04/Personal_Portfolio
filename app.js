@@ -32,23 +32,18 @@ const state={ projects:[], open:null, slide:0, lastFocus:null };
 function openProject(project, slideIndex=0){
   state.open=project; state.slide=slideIndex;
   const modal=qs('#project-modal'); const img=qs('#carousel-image'); const caption=qs('#carousel-caption');
-  const dots=qs('#dots'); const thumbs=qs('#thumbs'); const title=qs('#modal-title');
-  const tech=qs('#modal-tech'); const desc=qs('#modal-desc'); const repo=qs('#modal-repo');
+  const thumbs=qs('#carousel-thumbs'); const title=qs('#modal-title');
+  const tech=qs('#modal-tech'); const desc=qs('#modal-description'); const links=qs('#modal-links');
 
   title.textContent=project.title||'';
   tech.innerHTML=(Array.isArray(project.tech)?project.tech:[]).map(t=>`<span class="btn">${t}</span>`).join('');
   desc.innerHTML=(project.longDescription||'').trim() || `<p>${project.description||''}</p>`;
-  repo.href=project.repoURL||'#';
+  links.innerHTML=`<a class="btn" href="${project.repoURL||'#'}" target="_blank" rel="noopener">View Repo</a>`;
 
-  // build dots + thumbs
-  dots.innerHTML=''; thumbs.innerHTML='';
+  // build thumbs
+  thumbs.innerHTML='';
   const imgs = (project.images||[]).slice(0,5);
   imgs.forEach((im,idx)=>{
-    const d=document.createElement('button');
-    d.setAttribute('role','tab'); d.setAttribute('aria-label',`Image ${idx+1}`);
-    d.addEventListener('click',()=>setSlide(idx,true));
-    dots.appendChild(d);
-
     const tb=document.createElement('button');
     const ti=document.createElement('img');
     ti.src=im.src; ti.alt=im.alt||''; tb.appendChild(ti);
@@ -71,7 +66,8 @@ function openProject(project, slideIndex=0){
     img.src=im?.src||''; img.alt=im?.alt||'';
     if(im && im.caption){ caption.textContent=im.caption; caption.hidden=false; } else { caption.hidden=true; }
 
-    qsa('button',dots).forEach((b,k)=>b.setAttribute('aria-selected', k===state.slide ? 'true':'false'));
+    // Update thumbnail selection visual feedback
+    qsa('button',thumbs).forEach((b,k)=>b.style.borderColor = k===state.slide ? 'var(--brand1)':'var(--line)');
 
     // preload neighbors
     const next=images[(state.slide+1)%images.length], prev=images[(state.slide-1+images.length)%images.length];
@@ -112,7 +108,7 @@ function openProject(project, slideIndex=0){
   vp.addEventListener('mousedown',start); vp.addEventListener('mouseup',end);
 
   // close handlers (backdrop only)
-  modal.addEventListener('click',(e)=>{ if(e.target && e.target.dataset.close==='backdrop'){ closeModal(); } });
+  modal.addEventListener('click',(e)=>{ if(e.target.classList.contains('modal__backdrop')){ closeModal(); } });
 
   updateHashFromState();
 }
