@@ -247,12 +247,19 @@ async function setupContactForm() {
     wrap.appendChild(row); groups.appendChild(wrap);
   });
 
-  // Leadership & Awards
-  const leaders=await loadJSON('./data/leadership.json'); const lwrap=document.getElementById('leadership-list');
-  (leaders||[]).forEach(item=>{const c=document.createElement('div');c.className='card';
-    c.innerHTML=`<h3>${item.title||''}</h3><p>${item.org||''} • ${item.dates||''}</p><ul>${(item.bullets||[]).map(b=>`<li>${b}</li>`).join('')}</ul>`; lwrap.appendChild(c);});
-  const awards=await loadJSON('./data/awards.json'); const aw=document.getElementById('awards-list');
-  (awards||[]).forEach(a=>{const c=document.createElement('div');c.className='card'; c.innerHTML=`<h3>${a.title||''}</h3><p>${a.note||''}</p>`; aw.appendChild(c);});
+  // Leadership & Awards (only if elements exist)
+  const leaders=await loadJSON('./data/leadership.json'); 
+  const lwrap=document.getElementById('leadership-list');
+  if (lwrap && leaders) {
+    leaders.forEach(item=>{const c=document.createElement('div');c.className='card';
+      c.innerHTML=`<h3>${item.title||''}</h3><p>${item.org||''} • ${item.dates||''}</p><ul>${(item.bullets||[]).map(b=>`<li>${b}</li>`).join('')}</ul>`; lwrap.appendChild(c);});
+  }
+  
+  const awards=await loadJSON('./data/awards.json'); 
+  const aw=document.getElementById('awards-list');
+  if (aw && awards) {
+    awards.forEach(a=>{const c=document.createElement('div');c.className='card'; c.innerHTML=`<h3>${a.title||''}</h3><p>${a.note||''}</p>`; aw.appendChild(c);});
+  }
 
   // Setup contact form
   setupContactForm();
