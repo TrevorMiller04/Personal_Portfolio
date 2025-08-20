@@ -60,10 +60,10 @@ class handler(BaseHTTPRequestHandler):
             email_error = None
             if resend.api_key:
                 try:
-                    print(f"Attempting to send email to tmille12@syr.edu")
+                    print(f"Attempting to send email to trevormiller68@icloud.com")
                     email_result = resend.Emails.send({
                         "from": "onboarding@resend.dev",
-                        "to": "tmille12@syr.edu",
+                        "to": "trevormiller68@icloud.com",
                         "subject": f"Portfolio Contact: {name}",
                         "html": f"""
                         <h2>New Portfolio Contact</h2>
