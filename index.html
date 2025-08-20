@@ -72,6 +72,21 @@
             <h2>Contact</h2>
             <div class="contact-info">
                 <p>Get in touch to discuss opportunities or collaborations!</p>
+                
+                <form id="contact-form" style="max-width:500px;margin:2rem auto">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                    
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                    
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                    
+                    <button type="submit" class="btn primary">Send Message</button>
+                    <div id="form-status" style="margin-top:1rem;text-align:center"></div>
+                </form>
+                
                 <div class="contact-methods">
                     <a href="mailto:tmille12@syr.edu" class="contact-link">
                         <strong>Email:</strong> tmille12@syr.edu

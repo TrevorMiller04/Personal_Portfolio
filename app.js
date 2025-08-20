@@ -165,14 +165,63 @@ window.addEventListener('hashchange', ()=>{
 });
 
 // ---------- Contact form ----------
-document.getElementById('contact-form')?.addEventListener('submit', async (e)=>{
-  e.preventDefault();
-  const form=e.target; const status=document.getElementById('form-status');
-  const name=form.name.value.trim(), email=form.email.value.trim(), message=form.message.value.trim();
-  if(!name||!email||!message||message.length<10){status.textContent='Please complete all fields (message ≥ 10 chars).';return;}
-  // Temporarily disabled - static site deployment
-  status.textContent='Contact form temporarily disabled during static deployment. Please email tmille12@syr.edu directly.';
-});
+async function setupContactForm() {
+  const form = document.getElementById('contact-form');
+  if (!form) return;
+  
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const status = document.getElementById('form-status');
+    const submitBtn = form.querySelector('button[type="submit"]');
+    
+    const name = form.name.value.trim();
+    const email = form.email.value.trim(); 
+    const message = form.message.value.trim();
+    
+    // Validation
+    if (!name || !email || !message) {
+      status.textContent = 'Please complete all fields.';
+      status.style.color = 'var(--brand1)';
+      return;
+    }
+    
+    if (message.length < 10) {
+      status.textContent = 'Message must be at least 10 characters.';
+      status.style.color = 'var(--brand1)';
+      return;
+    }
+    
+    // Submit
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+    status.textContent = '';
+    
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, message })
+      });
+      
+      const result = await response.json();
+      
+      if (response.ok) {
+        status.textContent = result.message || 'Message sent successfully!';
+        status.style.color = 'var(--brand2)';
+        form.reset();
+      } else {
+        status.textContent = result.error || 'Failed to send message.';
+        status.style.color = 'var(--brand1)';
+      }
+    } catch (error) {
+      status.textContent = 'Network error. Please try again or email directly.';
+      status.style.color = 'var(--brand1)';
+    }
+    
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Send Message';
+  });
+}
 
 // ---------- Boot (load all JSON content) ----------
 (async ()=>{
@@ -205,6 +254,9 @@ document.getElementById('contact-form')?.addEventListener('submit', async (e)=>{
   const awards=await loadJSON('./data/awards.json'); const aw=document.getElementById('awards-list');
   (awards||[]).forEach(a=>{const c=document.createElement('div');c.className='card'; c.innerHTML=`<h3>${a.title||''}</h3><p>${a.note||''}</p>`; aw.appendChild(c);});
 
+  // Setup contact form
+  setupContactForm();
+  
   // Deep-link open if hash present
   tryOpenFromHash();
 })();
