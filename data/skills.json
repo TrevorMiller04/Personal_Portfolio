@@ -1,6 +1,94 @@
 {
-  "Languages": ["placeholder"],
-  "Frameworks": ["placeholder"],
-  "Tools/Cloud": ["placeholder"],
-  "Coursework": ["placeholder"]
+  "Languages": [
+    {
+      "name": "Python",
+      "level": "Advanced",
+      "description": "Extensive experience in data analysis, web development with Flask, and automation scripts. Used in academic projects and personal development.",
+      "projects": ["Portfolio Contact API", "Data Analysis Projects", "Academic Coursework"]
+    },
+    {
+      "name": "JavaScript",
+      "level": "Intermediate",
+      "description": "Frontend development including DOM manipulation, async programming, and modern ES6+ features. Built interactive web applications.",
+      "projects": ["Portfolio Gallery System", "Interactive Web Components"]
+    },
+    {
+      "name": "Java",
+      "level": "Intermediate", 
+      "description": "Object-oriented programming, data structures, and algorithm implementation. Primary language for computer science coursework.",
+      "projects": ["Academic Programming Assignments", "Data Structure Implementations"]
+    },
+    {
+      "name": "SQL",
+      "level": "Intermediate",
+      "description": "Database design, complex queries, and data manipulation. Experience with both relational database concepts and practical implementation.",
+      "projects": ["Database Design Projects", "Data Analysis Queries"]
+    }
+  ],
+  "Frameworks": [
+    {
+      "name": "Flask",
+      "level": "Intermediate",
+      "description": "Python web framework for building REST APIs and web applications. Used for backend development and serverless functions.",
+      "projects": ["Portfolio Contact API", "Web Application Backend"]
+    },
+    {
+      "name": "React",
+      "level": "Beginner",
+      "description": "Modern JavaScript library for building user interfaces. Learning component-based architecture and state management.",
+      "projects": ["Learning Projects", "Component Development"]
+    }
+  ],
+  "Tools/Cloud": [
+    {
+      "name": "Git/GitHub",
+      "level": "Intermediate",
+      "description": "Version control, collaboration, and project management. Experience with branching, merging, and CI/CD workflows.",
+      "projects": ["All Development Projects", "Portfolio Deployment"]
+    },
+    {
+      "name": "Vercel",
+      "level": "Intermediate", 
+      "description": "Modern deployment platform for web applications. Experience with serverless functions and static site hosting.",
+      "projects": ["Portfolio Deployment", "Serverless API Functions"]
+    },
+    {
+      "name": "Supabase",
+      "level": "Beginner",
+      "description": "Backend-as-a-service platform for database management and authentication. Used for data storage and user management.",
+      "projects": ["Portfolio Contact Storage", "Database Integration"]
+    },
+    {
+      "name": "VS Code",
+      "level": "Advanced",
+      "description": "Primary development environment with extensive use of extensions, debugging tools, and integrated terminal workflows.",
+      "projects": ["All Development Work", "Code Debugging and Testing"]
+    }
+  ],
+  "Coursework": [
+    {
+      "name": "Data Structures & Algorithms",
+      "level": "Academic",
+      "description": "Comprehensive study of fundamental computer science concepts including arrays, linked lists, trees, graphs, and algorithm analysis.",
+      "projects": ["Algorithm Implementation", "Complexity Analysis", "Problem Solving"]
+    },
+    {
+      "name": "Object-Oriented Programming", 
+      "level": "Academic",
+      "description": "Design principles, inheritance, polymorphism, and software engineering best practices using Java and other OOP languages.",
+      "projects": ["Class Design Projects", "Software Architecture", "Design Patterns"]
+    },
+    {
+      "name": "Database Systems",
+      "level": "Academic", 
+      "description": "Relational database theory, SQL programming, normalization, and database design principles for efficient data management.",
+      "projects": ["Database Design", "Query Optimization", "Data Modeling"]
+    },
+    {
+      "name": "Software Engineering",
+      "level": "Academic",
+      "description": "Software development lifecycle, project management, testing methodologies, and collaborative development practices.",
+      "projects": ["Team Projects", "Testing Frameworks", "Agile Development"]
+    }
+  ]
 }

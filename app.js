@@ -123,11 +123,69 @@ function openProject(project, slideIndex=0){
 }
 
 function closeModal(){
-  const modal=qs('#project-modal'); if(modal.hidden) return;
-  modal.hidden=true; document.body.style.overflow='';
-  clearHash();
-  if(state.lastFocus && document.body.contains(state.lastFocus)){ state.lastFocus.focus(); }
-  state.open=null;
+  const projectModal=qs('#project-modal');
+  const skillModal=qs('#skill-modal');
+  
+  if(!projectModal.hidden) {
+    projectModal.hidden=true;
+    clearHash();
+    if(state.lastFocus && document.body.contains(state.lastFocus)){ state.lastFocus.focus(); }
+    state.open=null;
+  }
+  
+  if(!skillModal.hidden) {
+    skillModal.hidden=true;
+    if(state.lastFocus && document.body.contains(state.lastFocus)){ state.lastFocus.focus(); }
+  }
+  
+  document.body.style.overflow='';
+}
+
+// ---------- Skills Modal ----------
+function openSkillModal(skill) {
+  const modal=qs('#skill-modal');
+  const title=qs('#skill-modal-title');
+  const level=qs('#skill-modal-level');
+  const description=qs('#skill-modal-description');
+  const projects=qs('#skill-modal-projects');
+  
+  title.textContent = skill.name || '';
+  level.textContent = skill.level || '';
+  level.className = `skill-level-badge level-${(skill.level || '').toLowerCase().replace(/[^a-z]/g, '')}`;
+  description.innerHTML = `<p>${skill.description || ''}</p>`;
+  
+  // Build projects chips
+  projects.innerHTML = '';
+  if (skill.projects && skill.projects.length > 0) {
+    skill.projects.forEach(project => {
+      const chip = document.createElement('span');
+      chip.className = 'btn';
+      chip.textContent = project;
+      projects.appendChild(chip);
+    });
+  }
+  
+  // Show modal
+  state.lastFocus = document.activeElement;
+  modal.hidden = false;
+  document.body.style.overflow = 'hidden';
+  const firstFocus = qs('.modal__content', modal);
+  firstFocus && firstFocus.focus();
+  
+  // Add keyboard navigation
+  modal.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeModal();
+      e.preventDefault();
+    }
+  });
+  
+  // Close on backdrop click
+  modal.addEventListener('click', (e) => {
+    if (e.target.classList.contains('modal__backdrop')) {
+      closeModal();
+    }
+  });
 }
 
 function updateHashFromState(){
@@ -236,15 +294,47 @@ async function setupContactForm() {
     grid.appendChild(card);
   });
 
-  // Skills chips
+  // Skills chips with modal functionality
   const skills=await loadJSON('./data/skills.json');
   const groups=document.getElementById('skills-chips');
+  groups.innerHTML = ''; // Clear loading content
+  
   const order=['Languages','Frameworks','Tools/Cloud','Coursework'];
   order.forEach(k=>{
-    const arr=skills?.[k]||[]; const wrap=document.createElement('div'); wrap.innerHTML=`<h3>${k}</h3>`;
-    const row=document.createElement('div'); row.style.display='flex'; row.style.flexWrap='wrap'; row.style.gap='.4rem';
-    arr.forEach(s=>{const chip=document.createElement('span');chip.className='btn skill-chip';chip.textContent=s;row.appendChild(chip);});
-    wrap.appendChild(row); groups.appendChild(wrap);
+    const skillList = skills?.[k] || [];
+    if (skillList.length > 0) {
+      const wrap=document.createElement('div'); 
+      wrap.className = 'skill-category';
+      wrap.innerHTML=`<h3>${k}</h3>`;
+      
+      const row=document.createElement('div'); 
+      row.className = 'skill-chips';
+      
+      skillList.forEach(skill=>{
+        const chip=document.createElement('span');
+        chip.className='btn skill-chip';
+        chip.textContent = typeof skill === 'string' ? skill : skill.name;
+        chip.style.cursor = 'pointer';
+        chip.setAttribute('role', 'button');
+        chip.setAttribute('tabindex', '0');
+        
+        // Add click handler for modal
+        if (typeof skill === 'object') {
+          chip.addEventListener('click', () => openSkillModal(skill));
+          chip.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              openSkillModal(skill);
+            }
+          });
+        }
+        
+        row.appendChild(chip);
+      });
+      
+      wrap.appendChild(row); 
+      groups.appendChild(wrap);
+    }
   });
 
   // Leadership & Awards (only if elements exist)

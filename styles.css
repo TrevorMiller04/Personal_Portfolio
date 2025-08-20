@@ -80,12 +80,23 @@ input:focus,textarea:focus,button:focus{outline:3px solid var(--brand1);outline-
 .chip-row .btn:hover{background:var(--brand2);border-color:var(--brand2)}
 
 /* Skills chips with alternating colors */
-.skill-chip{background:rgba(5,28,61,.1);border-color:var(--brand2);color:var(--brand2)}
-.skill-chip:hover{background:var(--brand2);color:white}
+.skill-chip{background:rgba(5,28,61,.1);border-color:var(--brand2);color:var(--brand2);transition:all .15s ease}
+.skill-chip:hover{background:var(--brand2);color:white;transform:translateY(-1px)}
+.skill-chip[role="button"]:hover{cursor:pointer}
 
 /* Skills section layout */
 .skill-category{margin-bottom:2rem;text-align:center}
 .skill-chips{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;margin-top:1rem}
+
+/* Skills modal */
+.skill-level{margin:1rem 0;text-align:center}
+.skill-level-badge{display:inline-block;padding:.4rem .8rem;border-radius:20px;font-size:.9rem;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.level-advanced{background:var(--brand1);color:white}
+.level-intermediate{background:var(--accent);color:white}
+.level-beginner{background:rgba(193,63,3,.2);color:var(--brand1);border:1px solid var(--brand1)}
+.level-academic{background:var(--brand2);color:white}
+.skill-projects{margin-top:2rem}
+.skill-projects h3{color:var(--brand2);margin-bottom:1rem;font-size:1.1rem}
 
 /* Contact section */
 .contact-info{text-align:center;max-width:600px;margin:0 auto}
