@@ -171,9 +171,9 @@ document.getElementById('contact-form')?.addEventListener('submit', async (e)=>{
 
 // ---------- Boot (load all JSON content) ----------
 (async ()=>{
-  const social=await loadJSON('/data/social.json'); setSocialLinks(social||{});
+  const social=await loadJSON('./data/social.json'); setSocialLinks(social||{});
 
-  const projects=await loadJSON('/data/projects.json'); state.projects=projects||[];
+  const projects=await loadJSON('./data/projects.json'); state.projects=projects||[];
   const grid=document.getElementById('project-grid');
   (projects||[]).slice(0,3).forEach(p=>{
     const card=projectCard(p);
@@ -183,7 +183,7 @@ document.getElementById('contact-form')?.addEventListener('submit', async (e)=>{
   });
 
   // Skills chips
-  const skills=await loadJSON('/data/skills.json');
+  const skills=await loadJSON('./data/skills.json');
   const groups=document.getElementById('skills-chips');
   const order=['Languages','Frameworks','Tools/Cloud','Coursework'];
   order.forEach(k=>{
@@ -194,10 +194,10 @@ document.getElementById('contact-form')?.addEventListener('submit', async (e)=>{
   });
 
   // Leadership & Awards
-  const leaders=await loadJSON('/data/leadership.json'); const lwrap=document.getElementById('leadership-list');
+  const leaders=await loadJSON('./data/leadership.json'); const lwrap=document.getElementById('leadership-list');
   (leaders||[]).forEach(item=>{const c=document.createElement('div');c.className='card';
     c.innerHTML=`<h3>${item.title||''}</h3><p>${item.org||''} • ${item.dates||''}</p><ul>${(item.bullets||[]).map(b=>`<li>${b}</li>`).join('')}</ul>`; lwrap.appendChild(c);});
-  const awards=await loadJSON('/data/awards.json'); const aw=document.getElementById('awards-list');
+  const awards=await loadJSON('./data/awards.json'); const aw=document.getElementById('awards-list');
   (awards||[]).forEach(a=>{const c=document.createElement('div');c.className='card'; c.innerHTML=`<h3>${a.title||''}</h3><p>${a.note||''}</p>`; aw.appendChild(c);});
 
   // Deep-link open if hash present
