@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/contact.py": {
+      "runtime": "@vercel/python"
+    }
+  }
+}

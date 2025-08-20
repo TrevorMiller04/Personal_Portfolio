@@ -69,6 +69,5 @@ def contact():
   return jsonify({"ok": True}), 200
 
 # Vercel handler
-def handler(request):
-  with app.request_context(request.environ):
-    return app.full_dispatch_request()
+def handler(event, context):
+  return app(event, context)
