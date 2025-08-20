@@ -22,6 +22,10 @@
     {
       "src": "/api/supabase-test",
       "dest": "/api/supabase-test.py"
+    },
+    {
+      "src": "/api/email-test",
+      "dest": "/api/email-test.py"
     }
   ]
 }
