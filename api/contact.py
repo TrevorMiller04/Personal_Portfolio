@@ -38,15 +38,22 @@ class handler(BaseHTTPRequestHandler):
                 return
             
             # Store in Supabase
+            supabase_success = False
             if supabase:
                 try:
-                    supabase.table('contacts').insert({
+                    print(f"Attempting to insert: name={name}, email={email}, message_length={len(message)}")
+                    result = supabase.table('contacts').insert({
                         'name': name,
                         'email': email,
                         'message': message
                     }).execute()
+                    print(f"Supabase insert result: {result}")
+                    supabase_success = True
                 except Exception as e:
                     print(f"Supabase error: {e}")
+                    print(f"Error type: {type(e).__name__}")
+            else:
+                print("Supabase client not initialized")
             
             # Send email via Resend
             if resend.api_key:
@@ -66,12 +73,22 @@ class handler(BaseHTTPRequestHandler):
                 except Exception as e:
                     print(f"Resend error: {e}")
             
-            # Send success response
+            # Send success response with debug info
+            response_data = {
+                'success': True, 
+                'message': 'Message sent successfully!',
+                'debug': {
+                    'supabase_success': supabase_success,
+                    'supabase_initialized': bool(supabase),
+                    'form_data_received': {'name': name, 'email': email, 'message_length': len(message)}
+                }
+            }
+            
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
             self.send_header('Access-Control-Allow-Origin', '*')
             self.end_headers()
-            self.wfile.write(json.dumps({'success': True, 'message': 'Message sent successfully!'}).encode())
+            self.wfile.write(json.dumps(response_data).encode())
             
         except Exception as e:
             print(f"Error: {e}")
