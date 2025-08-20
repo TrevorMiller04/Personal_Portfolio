@@ -69,7 +69,7 @@ function openProject(project, slideIndex=0){
     img.onload=()=>img.classList.add('loaded');
     img.onerror=()=>{ const svg=`data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='500'><rect width='100%' height='100%' fill='%23E0E0E0'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%231A1A1A' font-family='Inter' font-size='20'>Image unavailable</text></svg>`; img.src=svg; caption.hidden=true; };
     img.src=im?.src||''; img.alt=im?.alt||'';
-    if(im && im.caption){ caption.textContent=im.caption; caption.hidden=false; } else { caption.hidden=true; }
+    caption.hidden=true; // Always hide captions
 
     // Update thumbnail selection visual feedback
     qsa('button',thumbs).forEach((b,k)=>b.style.borderColor = k===state.slide ? 'var(--brand1)':'var(--line)');
