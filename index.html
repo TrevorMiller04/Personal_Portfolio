@@ -88,6 +88,26 @@
         </section>
     </main>
 
+    <!-- Modal for project details -->
+    <div class="modal" hidden id="project-modal">
+        <div class="modal__backdrop"></div>
+        <div class="modal__content">
+            <div class="modal__body">
+                <h2 id="modal-title">Project Title</h2>
+                <div id="modal-carousel" class="carousel">
+                    <div class="carousel__viewport">
+                        <img id="carousel-image" src="" alt="" />
+                        <div id="carousel-caption" class="carousel__caption"></div>
+                    </div>
+                    <div id="carousel-thumbs" class="carousel__thumbs"></div>
+                </div>
+                <div id="modal-description" class="modal__desc"></div>
+                <div id="modal-tech" class="chip-row"></div>
+                <div id="modal-links" style="display:flex;gap:.6rem;margin-top:1rem"></div>
+            </div>
+        </div>
+    </div>
+
     <script src="./app.js"></script>
 </body>
 </html>
