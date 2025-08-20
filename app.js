@@ -165,11 +165,8 @@ document.getElementById('contact-form')?.addEventListener('submit', async (e)=>{
   const form=e.target; const status=document.getElementById('form-status');
   const name=form.name.value.trim(), email=form.email.value.trim(), message=form.message.value.trim();
   if(!name||!email||!message||message.length<10){status.textContent='Please complete all fields (message ≥ 10 chars).';return;}
-  try{
-    const res=await fetch('/api/contact', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({name,email,message})});
-    if(!res.ok) throw new Error('Request failed');
-    status.textContent='Thanks! Your message was sent.'; form.reset();
-  }catch(err){status.textContent='Sorry—something went wrong. Please try again later.';}
+  // Temporarily disabled - static site deployment
+  status.textContent='Contact form temporarily disabled during static deployment. Please email tmille12@syr.edu directly.';
 });
 
 // ---------- Boot (load all JSON content) ----------
