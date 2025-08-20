@@ -23,24 +23,46 @@ class handler(BaseHTTPRequestHandler):
                 resend.api_key = resend_key
                 response_data["api_key_set"] = True
                 
-                # Try to send a test email
+                # Try different email formats
+                tests = []
+                
+                # Test 1: Simple text email
                 try:
-                    result = resend.Emails.send({
+                    result1 = resend.Emails.send({
                         "from": "onboarding@resend.dev",
-                        "to": "tmille12@syr.edu",
-                        "subject": "Test Email from Portfolio",
-                        "text": "This is a test email to verify Resend is working."
+                        "to": ["tmille12@syr.edu"],
+                        "subject": "Test 1 - Portfolio Contact",
+                        "text": "Simple test email"
                     })
-                    response_data["email_test"] = {
-                        "status": "success",
-                        "result": str(result)
-                    }
-                except Exception as email_error:
-                    response_data["email_test"] = {
-                        "status": "failed", 
-                        "error": str(email_error),
-                        "error_type": type(email_error).__name__
-                    }
+                    tests.append({"test": "simple_text", "status": "success", "result": str(result1)})
+                except Exception as e:
+                    tests.append({"test": "simple_text", "status": "failed", "error": str(e)})
+                
+                # Test 2: Different from address format
+                try:
+                    result2 = resend.Emails.send(
+                        from_email="onboarding@resend.dev",
+                        to=["tmille12@syr.edu"],
+                        subject="Test 2 - Portfolio Contact",
+                        text="Alternative format test"
+                    )
+                    tests.append({"test": "alt_format", "status": "success", "result": str(result2)})
+                except Exception as e:
+                    tests.append({"test": "alt_format", "status": "failed", "error": str(e)})
+                
+                # Test 3: Very minimal
+                try:
+                    result3 = resend.Emails.send(
+                        from_="onboarding@resend.dev",
+                        to="tmille12@syr.edu", 
+                        subject="Test 3",
+                        text="Minimal test"
+                    )
+                    tests.append({"test": "minimal", "status": "success", "result": str(result3)})
+                except Exception as e:
+                    tests.append({"test": "minimal", "status": "failed", "error": str(e)})
+                
+                response_data["email_tests"] = tests
                     
             except Exception as import_error:
                 response_data["resend_import"] = f"failed: {str(import_error)}"
