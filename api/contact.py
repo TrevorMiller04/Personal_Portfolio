@@ -3,6 +3,45 @@ import os
 from http.server import BaseHTTPRequestHandler
 from supabase import create_client, Client
 import resend
+from openai import OpenAI
+
+def generate_ai_reply(name, email, message):
+    """Generate an AI-suggested reply using OpenAI's API"""
+    try:
+        openai_api_key = os.environ.get("OPENAI_API_KEY")
+        if not openai_api_key:
+            return "[AI reply generation unavailable - no API key configured]"
+        
+        client = OpenAI(api_key=openai_api_key)
+        
+        prompt = f"""You write short, professional email replies for a personal portfolio contact form.
+Tone: warm, concise, helpful. Include one concrete next step or question.
+If the inquiry looks like spam, prefix with "[Potential spam — review before sending]".
+Never invent facts or commit to dates not provided.
+No signature block.
+
+Contact form submission:
+Name: {name}
+Email: {email}
+Message: {message}
+
+Generate a suggested reply:"""
+
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "You are Trevor Miller's professional email assistant."},
+                {"role": "user", "content": prompt}
+            ],
+            max_tokens=200,
+            temperature=0.7
+        )
+        
+        return response.choices[0].message.content.strip()
+    
+    except Exception as e:
+        print(f"OpenAI API error: {e}")
+        return f"[AI reply generation failed: {str(e)}]"
 
 class handler(BaseHTTPRequestHandler):
     def do_POST(self):
@@ -55,22 +94,45 @@ class handler(BaseHTTPRequestHandler):
             else:
                 print("Supabase client not initialized")
             
+            # Generate AI-suggested reply
+            print("Generating AI-suggested reply...")
+            ai_reply = generate_ai_reply(name, email, message)
+            
             # Send email via Resend
             email_success = False
             email_error = None
             if resend.api_key:
                 try:
                     print(f"Attempting to send email to trevormiller68@icloud.com")
+                    
+                    # Get recipient email from environment or use default
+                    recipient_email = os.environ.get("RESEND_TO", "trevormiller68@icloud.com")
+                    from_email = os.environ.get("RESEND_FROM", "onboarding@resend.dev")
+                    
                     email_result = resend.Emails.send({
-                        "from": "onboarding@resend.dev",
-                        "to": "trevormiller68@icloud.com",
+                        "from": from_email,
+                        "to": recipient_email,
+                        "reply_to": email,  # Set Reply-To to sender's email
                         "subject": f"Portfolio Contact: {name}",
                         "html": f"""
                         <h2>New Portfolio Contact</h2>
                         <p><strong>Name:</strong> {name}</p>
                         <p><strong>Email:</strong> {email}</p>
                         <p><strong>Message:</strong></p>
-                        <p>{message}</p>
+                        <div style="background-color: #f5f5f5; padding: 15px; border-left: 4px solid #0077B6; margin: 10px 0;">
+                            {message.replace(chr(10), '<br>')}
+                        </div>
+                        
+                        <hr style="margin: 30px 0; border: none; height: 1px; background-color: #ddd;">
+                        
+                        <h3 style="color: #0077B6;">💡 AI-Suggested Reply</h3>
+                        <div style="background-color: #f0f8ff; padding: 15px; border-radius: 5px; border: 1px solid #e0e8f0;">
+                            {ai_reply.replace(chr(10), '<br>')}
+                        </div>
+                        
+                        <p style="font-size: 12px; color: #666; margin-top: 20px;">
+                            <em>Reply directly to this email to respond to {name}. The AI suggestion is provided for your convenience and should be reviewed before sending.</em>
+                        </p>
                         """
                     })
                     print(f"Email sent successfully: {email_result}")
