@@ -14,26 +14,29 @@ def generate_ai_reply(name, email, message):
         
         client = OpenAI(api_key=openai_api_key)
         
-        prompt = f"""You write short, professional email replies for a personal portfolio contact form.
-Tone: warm, concise, helpful. Include one concrete next step or question.
-If the inquiry looks like spam, prefix with "[Potential spam — review before sending]".
-Never invent facts or commit to dates not provided.
-No signature block.
+        prompt = f"""Write a complete email reply for this portfolio contact form submission.
 
-Contact form submission:
+Guidelines:
+- Tone: warm, concise, helpful
+- Include one concrete next step or question
+- If spam-like, start with "[Potential spam — review before sending]"
+- Never invent facts or commit to specific dates/times
+- No signature block needed
+
+Contact details:
 Name: {name}
 Email: {email}
 Message: {message}
 
-Generate a suggested reply:"""
+Write the complete email reply (not just suggestions):"""
 
         response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o-mini",
             messages=[
-                {"role": "system", "content": "You are Trevor Miller's professional email assistant."},
+                {"role": "system", "content": "You are Trevor Miller's professional email assistant. Generate a direct, actionable email reply."},
                 {"role": "user", "content": prompt}
             ],
-            max_tokens=200,
+            max_tokens=300,
             temperature=0.7
         )
         
