@@ -10,9 +10,13 @@ def generate_ai_reply(name, email, message):
     try:
         openai_api_key = os.environ.get("OPENAI_API_KEY")
         if not openai_api_key:
+            print("No OpenAI API key found in environment")
             return "[AI reply generation unavailable - no API key configured]"
         
+        print(f"OpenAI API key exists, length: {len(openai_api_key)}")
+        
         client = OpenAI(api_key=openai_api_key)
+        print("OpenAI client created successfully")
         
         prompt = f"""Write a complete email reply for this portfolio contact form submission.
 
@@ -30,6 +34,7 @@ Message: {message}
 
 Write the complete email reply (not just suggestions):"""
 
+        print("About to make OpenAI API call...")
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
@@ -40,11 +45,22 @@ Write the complete email reply (not just suggestions):"""
             temperature=0.7
         )
         
-        return response.choices[0].message.content.strip()
+        print(f"OpenAI API call successful, response received")
+        reply_content = response.choices[0].message.content.strip()
+        print(f"Reply content length: {len(reply_content)}")
+        return reply_content
     
     except Exception as e:
         print(f"OpenAI API error: {e}")
-        return f"[AI reply generation failed: {str(e)}]"
+        error_str = str(e)
+        
+        # Handle specific error types with user-friendly messages
+        if "429" in error_str or "quota" in error_str.lower():
+            return "[AI reply generation temporarily unavailable due to quota limits. Please check your OpenAI usage.]"
+        elif "401" in error_str or "authentication" in error_str.lower():
+            return "[AI reply generation failed due to authentication error. Please check your OpenAI API key.]"
+        else:
+            return f"[AI reply generation failed: {error_str[:100]}...]"
 
 class handler(BaseHTTPRequestHandler):
     def do_POST(self):
