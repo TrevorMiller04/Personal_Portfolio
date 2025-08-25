@@ -37,7 +37,7 @@ Write the complete email reply (not just suggestions):"""
         print("About to make Claude API call...")
         
         response = client.messages.create(
-            model="claude-3-5-sonnet-20241022",
+            model="claude-3-5-haiku-20241022",
             max_tokens=300,
             temperature=0.7,
             system="You are Trevor Miller's professional email assistant. Generate a direct, actionable email reply.",
