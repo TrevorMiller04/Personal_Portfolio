@@ -1,4 +1,4 @@
 flask
 supabase
 resend
-openai
+anthropic

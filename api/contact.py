@@ -3,20 +3,20 @@ import os
 from http.server import BaseHTTPRequestHandler
 from supabase import create_client, Client
 import resend
-from openai import OpenAI
+import anthropic
 
 def generate_ai_reply(name, email, message):
-    """Generate an AI-suggested reply using OpenAI's API"""
+    """Generate an AI-suggested reply using Claude's API"""
     try:
-        openai_api_key = os.environ.get("OPENAI_API_KEY")
-        if not openai_api_key:
-            print("No OpenAI API key found in environment")
+        claude_api_key = os.environ.get("ANTHROPIC_API_KEY")
+        if not claude_api_key:
+            print("No Anthropic API key found in environment")
             return "[AI reply generation unavailable - no API key configured]"
         
-        print(f"OpenAI API key exists, length: {len(openai_api_key)}")
+        print(f"Anthropic API key exists, length: {len(claude_api_key)}")
         
-        client = OpenAI(api_key=openai_api_key)
-        print("OpenAI client created successfully")
+        client = anthropic.Anthropic(api_key=claude_api_key)
+        print("Claude client created successfully")
         
         prompt = f"""Write a complete email reply for this portfolio contact form submission.
 
@@ -34,31 +34,32 @@ Message: {message}
 
 Write the complete email reply (not just suggestions):"""
 
-        print("About to make OpenAI API call...")
-        response = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[
-                {"role": "system", "content": "You are Trevor Miller's professional email assistant. Generate a direct, actionable email reply."},
-                {"role": "user", "content": prompt}
-            ],
+        print("About to make Claude API call...")
+        
+        response = client.messages.create(
+            model="claude-3-5-sonnet-20241022",
             max_tokens=300,
-            temperature=0.7
+            temperature=0.7,
+            system="You are Trevor Miller's professional email assistant. Generate a direct, actionable email reply.",
+            messages=[
+                {"role": "user", "content": prompt}
+            ]
         )
         
-        print(f"OpenAI API call successful, response received")
-        reply_content = response.choices[0].message.content.strip()
+        print(f"Claude API call successful, response received")
+        reply_content = response.content[0].text.strip()
         print(f"Reply content length: {len(reply_content)}")
         return reply_content
     
     except Exception as e:
-        print(f"OpenAI API error: {e}")
+        print(f"Claude API error: {e}")
         error_str = str(e)
         
         # Handle specific error types with user-friendly messages
-        if "429" in error_str or "quota" in error_str.lower():
-            return "[AI reply generation temporarily unavailable due to quota limits. Please check your OpenAI usage.]"
-        elif "401" in error_str or "authentication" in error_str.lower():
-            return "[AI reply generation failed due to authentication error. Please check your OpenAI API key.]"
+        if "429" in error_str or "rate_limit" in error_str.lower():
+            return "[AI reply generation temporarily unavailable due to rate limits. Please try again in a moment.]"
+        elif "401" in error_str or "authentication" in error_str.lower() or "invalid" in error_str.lower():
+            return "[AI reply generation failed due to authentication error. Please check your Anthropic API key.]"
         else:
             return f"[AI reply generation failed: {error_str[:100]}...]"
 
@@ -177,7 +178,7 @@ class handler(BaseHTTPRequestHandler):
                     'email_success': email_success,
                     'email_error': email_error,
                     'resend_api_key_exists': bool(resend.api_key),
-                    'openai_api_key_exists': bool(os.environ.get("OPENAI_API_KEY")),
+                    'anthropic_api_key_exists': bool(os.environ.get("ANTHROPIC_API_KEY")),
                     'ai_reply_preview': ai_reply[:100] + "..." if len(ai_reply) > 100 else ai_reply,
                     'form_data_received': {'name': name, 'email': email, 'message_length': len(message)}
                 }
