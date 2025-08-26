@@ -69,7 +69,7 @@ class handler(BaseHTTPRequestHandler):
             # Initialize services
             resend.api_key = os.environ.get("RESEND_API_KEY")
             supabase_url = os.environ.get("SUPABASE_URL")
-            supabase_key = os.environ.get("SUPABASE_ANON_KEY")
+            supabase_key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
             supabase: Client = create_client(supabase_url, supabase_key) if supabase_url and supabase_key else None
             
             # Read request body
@@ -128,11 +128,15 @@ class handler(BaseHTTPRequestHandler):
             email_error = None
             if resend.api_key:
                 try:
-                    print(f"Attempting to send email to trevormiller68@icloud.com")
-                    
                     # Get recipient email from environment or use default
                     recipient_email = os.environ.get("RESEND_TO", "trevormiller68@icloud.com")
                     from_email = os.environ.get("RESEND_FROM", "onboarding@resend.dev")
+                    
+                    # Override to use the correct email address
+                    recipient_email = "trevormiller68@icloud.com"
+                    
+                    print(f"Email config - From: {from_email}, To: {recipient_email}")
+                    print(f"Attempting to send email via Resend...")
                     
                     email_result = resend.Emails.send({
                         "from": from_email,
@@ -179,6 +183,10 @@ class handler(BaseHTTPRequestHandler):
                     'email_error': email_error,
                     'resend_api_key_exists': bool(resend.api_key),
                     'anthropic_api_key_exists': bool(os.environ.get("ANTHROPIC_API_KEY")),
+                    'email_config': {
+                        'from': os.environ.get("RESEND_FROM", "onboarding@resend.dev"),
+                        'to': os.environ.get("RESEND_TO", "trevormiller68@icloud.com")
+                    },
                     'ai_reply_preview': ai_reply[:100] + "..." if len(ai_reply) > 100 else ai_reply,
                     'form_data_received': {'name': name, 'email': email, 'message_length': len(message)}
                 }
