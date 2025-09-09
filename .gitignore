@@ -14,3 +14,4 @@ __pycache__/
 
 # Node leftovers if any
 node_modules/
+/lib/generated/prisma
