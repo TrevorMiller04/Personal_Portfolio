@@ -128,12 +128,9 @@ class handler(BaseHTTPRequestHandler):
             email_error = None
             if resend.api_key:
                 try:
-                    # Get recipient email from environment or use default
-                    recipient_email = os.environ.get("RESEND_TO", "trevormiller68@icloud.com")
-                    from_email = os.environ.get("RESEND_FROM", "onboarding@resend.dev")
-                    
-                    # Override to use the correct email address
-                    recipient_email = "trevormiller68@icloud.com"
+                    # Get email configuration from environment variables
+                    recipient_email = os.environ.get("RESEND_TO", "tmille12@syr.edu")
+                    from_email = os.environ.get("RESEND_FROM", "Trevor Miller <notify@trevormiller.xyz>")
                     
                     print(f"Email config - From: {from_email}, To: {recipient_email}")
                     print(f"Attempting to send email via Resend...")
@@ -184,8 +181,8 @@ class handler(BaseHTTPRequestHandler):
                     'resend_api_key_exists': bool(resend.api_key),
                     'anthropic_api_key_exists': bool(os.environ.get("ANTHROPIC_API_KEY")),
                     'email_config': {
-                        'from': os.environ.get("RESEND_FROM", "onboarding@resend.dev"),
-                        'to': os.environ.get("RESEND_TO", "trevormiller68@icloud.com")
+                        'from': os.environ.get("RESEND_FROM", "Trevor Miller <notify@trevormiller.xyz>"),
+                        'to': os.environ.get("RESEND_TO", "tmille12@syr.edu")
                     },
                     'ai_reply_preview': ai_reply[:100] + "..." if len(ai_reply) > 100 else ai_reply,
                     'form_data_received': {'name': name, 'email': email, 'message_length': len(message)}
