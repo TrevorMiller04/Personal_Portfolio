@@ -176,7 +176,7 @@ export default function DataStoriesPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                {/* @ts-ignore - Plotly types are complex */}
+                {/* @ts-expect-error - Plotly types are complex */}
                 <Plot
                   data={[
                     {
@@ -186,7 +186,7 @@ export default function DataStoriesPage() {
                       marker: { color: '#0077B6' },
                       name: 'Sales',
                     },
-                  ] as any}
+                  ] as unknown[]}
                   layout={{
                     title: { text: '' },
                     xaxis: { title: 'Category' },
@@ -211,7 +211,7 @@ export default function DataStoriesPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                {/* @ts-ignore - Plotly types are complex */}
+                {/* @ts-expect-error - Plotly types are complex */}
                 <Plot
                   data={[
                     {
@@ -234,7 +234,7 @@ export default function DataStoriesPage() {
                       marker: { color: '#C13F03' },
                       line: { width: 3 },
                     },
-                  ] as any}
+                  ] as unknown[]}
                   layout={{
                     title: { text: '' },
                     xaxis: { title: 'Month' },
