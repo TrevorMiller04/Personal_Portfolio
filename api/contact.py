@@ -98,6 +98,7 @@ class handler(BaseHTTPRequestHandler):
             
             # Store in Supabase
             supabase_success = False
+            supabase_error = None
             if supabase:
                 try:
                     print(f"Attempting to insert: name={name}, email={email}, message_length={len(message)}")
@@ -109,8 +110,12 @@ class handler(BaseHTTPRequestHandler):
                     print(f"Supabase insert result: {result}")
                     supabase_success = True
                 except Exception as e:
+                    supabase_error = str(e)
                     print(f"Supabase error: {e}")
                     print(f"Error type: {type(e).__name__}")
+                    print(f"Error details: {str(e)}")
+                    import traceback
+                    print(f"Traceback: {traceback.format_exc()}")
             else:
                 print("Supabase client not initialized")
             
@@ -175,6 +180,7 @@ class handler(BaseHTTPRequestHandler):
                 'message': 'Message sent successfully!',
                 'debug': {
                     'supabase_success': supabase_success,
+                    'supabase_error': supabase_error,
                     'supabase_initialized': bool(supabase),
                     'email_success': email_success,
                     'email_error': email_error,
