@@ -3,15 +3,14 @@ import { prisma } from '@/lib/db'
 import { ProjectQuerySchema, ProjectsApiResponseSchema, EnvSchema } from '@/lib/validation'
 import { z } from 'zod'
 
-// Validate environment variables on startup
-EnvSchema.pick({
-  DATABASE_URL: true,
-  SUPABASE_URL: true,
-  SUPABASE_SERVICE_ROLE_KEY: true,
-}).parse(process.env)
-
 export async function GET(request: NextRequest) {
   try {
+    // Validate environment variables at runtime
+    EnvSchema.pick({
+      DATABASE_URL: true,
+      SUPABASE_URL: true,
+      SUPABASE_SERVICE_ROLE_KEY: true,
+    }).parse(process.env)
     const { searchParams } = new URL(request.url)
     
     // Parse and validate query parameters
