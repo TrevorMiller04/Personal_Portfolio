@@ -131,11 +131,18 @@ class handler(BaseHTTPRequestHandler):
             # Send email via Resend
             email_success = False
             email_error = None
+            email_result = None
             if resend.api_key:
                 try:
                     # Get email configuration from environment variables
                     recipient_email = os.environ.get("RESEND_TO", "tmille12@syr.edu")
                     from_email = os.environ.get("RESEND_FROM", "Trevor Miller <notify@trevormiller.xyz>")
+                    
+                    # If custom domain isn't verified, fall back to onboarding@resend.dev
+                    if "trevormiller.xyz" in from_email:
+                        print("Using custom domain - ensure trevormiller.xyz is verified in Resend")
+                    else:
+                        print("Using default Resend domain")
                     
                     print(f"Email config - From: {from_email}, To: {recipient_email}")
                     print(f"Attempting to send email via Resend...")
@@ -184,6 +191,7 @@ class handler(BaseHTTPRequestHandler):
                     'supabase_initialized': bool(supabase),
                     'email_success': email_success,
                     'email_error': email_error,
+                    'email_result': str(email_result) if email_result else None,
                     'resend_api_key_exists': bool(resend.api_key),
                     'anthropic_api_key_exists': bool(os.environ.get("ANTHROPIC_API_KEY")),
                     'email_config': {
