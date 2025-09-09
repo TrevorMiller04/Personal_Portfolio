@@ -1,4 +1,0 @@
-flask
-supabase
-resend
-anthropic
