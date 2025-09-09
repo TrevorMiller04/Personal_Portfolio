@@ -4,7 +4,7 @@ import { ProjectQuerySchema, ProjectsApiResponseSchema, EnvSchema } from '@/lib/
 import { z } from 'zod'
 
 // Validate environment variables on startup
-const env = EnvSchema.pick({
+EnvSchema.pick({
   DATABASE_URL: true,
   SUPABASE_URL: true,
   SUPABASE_SERVICE_ROLE_KEY: true,
@@ -83,7 +83,7 @@ export async function GET(request: NextRequest) {
     
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { error: 'Invalid request parameters', details: error.errors },
+        { error: 'Invalid request parameters', details: error.issues },
         { status: 400 }
       )
     }

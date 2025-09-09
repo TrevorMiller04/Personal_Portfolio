@@ -1,9 +1,10 @@
 import * as Sentry from '@sentry/nextjs'
+import { nodeProfilingIntegration } from '@sentry/profiling-node'
 
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
   integrations: [
-    Sentry.profilerIntegration(),
+    nodeProfilingIntegration(),
   ],
   // Performance Monitoring
   tracesSampleRate: 1.0,

@@ -74,11 +74,11 @@ async function main() {
       impactMetric: '95+ Lighthouse Score',
       technologies: {
         create: [
-          { techId: techTags.find(t => t.name === 'Next.js 14')?.id! },
-          { techId: techTags.find(t => t.name === 'TypeScript')?.id! },
-          { techId: techTags.find(t => t.name === 'Tailwind CSS')?.id! },
-          { techId: techTags.find(t => t.name === 'Prisma')?.id! },
-          { techId: techTags.find(t => t.name === 'Supabase')?.id! },
+          { techId: techTags.find(t => t.name === 'Next.js 14')!.id },
+          { techId: techTags.find(t => t.name === 'TypeScript')!.id },
+          { techId: techTags.find(t => t.name === 'Tailwind CSS')!.id },
+          { techId: techTags.find(t => t.name === 'Prisma')!.id },
+          { techId: techTags.find(t => t.name === 'Supabase')!.id },
         ],
       },
     },
@@ -95,9 +95,9 @@ async function main() {
       impactMetric: '10x faster query performance',
       technologies: {
         create: [
-          { techId: techTags.find(t => t.name === 'dbt')?.id! },
-          { techId: techTags.find(t => t.name === 'DuckDB')?.id! },
-          { techId: techTags.find(t => t.name === 'Polars')?.id! },
+          { techId: techTags.find(t => t.name === 'dbt')!.id },
+          { techId: techTags.find(t => t.name === 'DuckDB')!.id },
+          { techId: techTags.find(t => t.name === 'Polars')!.id },
         ],
       },
     },
@@ -115,9 +115,9 @@ async function main() {
       impactMetric: '50ms avg response time',
       technologies: {
         create: [
-          { techId: techTags.find(t => t.name === 'Next.js 14')?.id! },
-          { techId: techTags.find(t => t.name === 'TanStack Query')?.id! },
-          { techId: techTags.find(t => t.name === 'TypeScript')?.id! },
+          { techId: techTags.find(t => t.name === 'Next.js 14')!.id },
+          { techId: techTags.find(t => t.name === 'TanStack Query')!.id },
+          { techId: techTags.find(t => t.name === 'TypeScript')!.id },
         ],
       },
     },

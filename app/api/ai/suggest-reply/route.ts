@@ -32,7 +32,7 @@ function isRateLimited(ip: string): boolean {
 export async function POST(request: NextRequest) {
   try {
     // Get IP for rate limiting
-    const ip = request.ip ?? request.headers.get('x-forwarded-for') ?? 'unknown'
+    const ip = request.headers.get('x-forwarded-for') ?? request.headers.get('x-real-ip') ?? 'unknown'
     
     if (isRateLimited(ip)) {
       return NextResponse.json(
@@ -92,7 +92,7 @@ Write the complete email reply (not just suggestions):`
       ],
     })
 
-    const suggestion = response.content[0]?.text || 'Unable to generate suggestion'
+    const suggestion = response.content[0]?.type === 'text' ? response.content[0].text : 'Unable to generate suggestion'
 
     return NextResponse.json({
       success: true,
@@ -109,7 +109,7 @@ Write the complete email reply (not just suggestions):`
 
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { error: 'Invalid input', details: error.errors },
+        { error: 'Invalid input', details: error.issues },
         { status: 400 }
       )
     }

@@ -76,7 +76,7 @@ export default function ContactPage() {
         <div className="text-center space-y-4">
           <h1 className="text-4xl font-bold">Get in Touch</h1>
           <p className="text-xl text-muted-foreground">
-            Interested in collaborating? Send me a message and I'll get back to you.
+            Interested in collaborating? Send me a message and I&apos;ll get back to you.
           </p>
         </div>
 
@@ -180,7 +180,7 @@ export default function ContactPage() {
               {!suggestion && (
                 <div className="text-center py-12 text-muted-foreground">
                   <Send className="h-12 w-12 mx-auto mb-4 text-muted-foreground/50" />
-                  <p>Fill out the contact form and click "Generate AI Reply Suggestion" to see the AI-powered response.</p>
+                  <p>Fill out the contact form and click &quot;Generate AI Reply Suggestion&quot; to see the AI-powered response.</p>
                 </div>
               )}
 

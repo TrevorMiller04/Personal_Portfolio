@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import dynamic from 'next/dynamic'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -176,6 +176,7 @@ export default function DataStoriesPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
+                {/* @ts-ignore - Plotly types are complex */}
                 <Plot
                   data={[
                     {
@@ -185,9 +186,9 @@ export default function DataStoriesPage() {
                       marker: { color: '#0077B6' },
                       name: 'Sales',
                     },
-                  ]}
+                  ] as any}
                   layout={{
-                    title: '',
+                    title: { text: '' },
                     xaxis: { title: 'Category' },
                     yaxis: { title: 'Total Sales ($)' },
                     plot_bgcolor: 'transparent',
@@ -210,6 +211,7 @@ export default function DataStoriesPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
+                {/* @ts-ignore - Plotly types are complex */}
                 <Plot
                   data={[
                     {
@@ -232,9 +234,9 @@ export default function DataStoriesPage() {
                       marker: { color: '#C13F03' },
                       line: { width: 3 },
                     },
-                  ]}
+                  ] as any}
                   layout={{
-                    title: '',
+                    title: { text: '' },
                     xaxis: { title: 'Month' },
                     yaxis: { title: 'Sales ($)', side: 'left' },
                     yaxis2: {
