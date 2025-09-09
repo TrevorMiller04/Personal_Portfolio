@@ -1,0 +1,31 @@
+order_id,customer_id,order_date,category,product_name,quantity,unit_price,total_amount,region
+1001,C001,2024-01-15,Electronics,Laptop Pro,1,1299.99,1299.99,North America
+1002,C002,2024-01-16,Clothing,Winter Jacket,2,89.99,179.98,Europe
+1003,C003,2024-01-17,Electronics,Smartphone X,1,899.99,899.99,Asia
+1004,C004,2024-01-18,Home & Garden,Coffee Maker,1,129.99,129.99,North America
+1005,C005,2024-01-19,Books,Data Science Handbook,3,45.99,137.97,Europe
+1006,C006,2024-01-20,Electronics,Wireless Earbuds,2,199.99,399.98,Asia
+1007,C007,2024-01-21,Clothing,Running Shoes,1,149.99,149.99,North America
+1008,C008,2024-01-22,Home & Garden,Plant Pot Set,5,24.99,124.95,Europe
+1009,C009,2024-01-23,Electronics,Gaming Console,1,499.99,499.99,Asia
+1010,C010,2024-01-24,Books,Programming Guide,2,59.99,119.98,North America
+1011,C011,2024-02-01,Electronics,Tablet,1,399.99,399.99,Europe
+1012,C012,2024-02-02,Clothing,Summer Dress,3,79.99,239.97,Asia
+1013,C013,2024-02-03,Home & Garden,Kitchen Scale,1,49.99,49.99,North America
+1014,C014,2024-02-04,Electronics,Smart Watch,1,299.99,299.99,Europe
+1015,C015,2024-02-05,Books,AI & Machine Learning,1,89.99,89.99,Asia
+1016,C016,2024-02-06,Clothing,Casual Pants,2,69.99,139.98,North America
+1017,C017,2024-02-07,Electronics,Bluetooth Speaker,1,79.99,79.99,Europe
+1018,C018,2024-02-08,Home & Garden,Garden Tools,1,199.99,199.99,Asia
+1019,C019,2024-02-09,Books,Web Development,4,39.99,159.96,North America
+1020,C020,2024-02-10,Electronics,Camera,1,599.99,599.99,Europe
+1021,C021,2024-03-01,Clothing,Wool Sweater,1,119.99,119.99,Asia
+1022,C022,2024-03-02,Electronics,Laptop Air,1,999.99,999.99,North America
+1023,C023,2024-03-03,Home & Garden,Air Purifier,1,249.99,249.99,Europe
+1024,C024,2024-03-04,Books,Database Design,2,69.99,139.98,Asia
+1025,C025,2024-03-05,Electronics,Headphones,1,179.99,179.99,North America
+1026,C026,2024-03-06,Clothing,Hiking Boots,1,229.99,229.99,Europe
+1027,C027,2024-03-07,Home & Garden,Vacuum Cleaner,1,399.99,399.99,Asia
+1028,C028,2024-03-08,Electronics,Monitor 4K,1,449.99,449.99,North America
+1029,C029,2024-03-09,Books,Cloud Computing,1,79.99,79.99,Europe
+1030,C030,2024-03-10,Clothing,Business Suit,1,299.99,299.99,Asia
