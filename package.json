@@ -26,6 +26,7 @@
     "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.61.0",
     "@duckdb/duckdb-wasm": "^1.30.0",
     "@prisma/client": "^6.15.0",
     "@radix-ui/react-navigation-menu": "^1.2.14",
