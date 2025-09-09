@@ -136,13 +136,15 @@ class handler(BaseHTTPRequestHandler):
                 try:
                     # Get email configuration from environment variables
                     recipient_email = os.environ.get("RESEND_TO", "tmille12@syr.edu")
-                    from_email = os.environ.get("RESEND_FROM", "Trevor Miller <notify@trevormiller.xyz>")
+                    from_email_env = os.environ.get("RESEND_FROM", "Trevor Miller <notify@trevormiller.xyz>")
                     
-                    # If custom domain isn't verified, fall back to onboarding@resend.dev
-                    if "trevormiller.xyz" in from_email:
-                        print("Using custom domain - ensure trevormiller.xyz is verified in Resend")
+                    # Temporarily use Resend default domain until trevormiller.xyz is verified
+                    if "trevormiller.xyz" in from_email_env:
+                        from_email = "onboarding@resend.dev"
+                        print("Using Resend default domain (trevormiller.xyz not yet verified)")
                     else:
-                        print("Using default Resend domain")
+                        from_email = from_email_env
+                        print("Using configured domain")
                     
                     print(f"Email config - From: {from_email}, To: {recipient_email}")
                     print(f"Attempting to send email via Resend...")
