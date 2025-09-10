@@ -1,10 +1,5 @@
 {
-  "/_not-found/page": "/_not-found",
-  "/api/ai/suggest-reply/route": "/api/ai/suggest-reply",
-  "/api/projects/route": "/api/projects",
-  "/contact/page": "/contact",
-  "/data-stories/page": "/data-stories",
   "/favicon.ico/route": "/favicon.ico",
-  "/page": "/",
-  "/projects/page": "/projects"
+  "/_not-found/page": "/_not-found",
+  "/page": "/"
 }

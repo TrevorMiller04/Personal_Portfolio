@@ -33,28 +33,10 @@
       "namedRegex": "^/_not\\-found(?:/)?$"
     },
     {
-      "page": "/contact",
-      "regex": "^/contact(?:/)?$",
-      "routeKeys": {},
-      "namedRegex": "^/contact(?:/)?$"
-    },
-    {
-      "page": "/data-stories",
-      "regex": "^/data\\-stories(?:/)?$",
-      "routeKeys": {},
-      "namedRegex": "^/data\\-stories(?:/)?$"
-    },
-    {
       "page": "/favicon.ico",
       "regex": "^/favicon\\.ico(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/favicon\\.ico(?:/)?$"
-    },
-    {
-      "page": "/projects",
-      "regex": "^/projects(?:/)?$",
-      "routeKeys": {},
-      "namedRegex": "^/projects(?:/)?$"
     }
   ],
   "dataRoutes": [],
