@@ -1,81 +1,51 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-
 export default function HomePage() {
   return (
-    <div className="container mx-auto px-4 py-8 space-y-16">
-      {/* Hero Section */}
-      <section className="text-center space-y-6 py-16">
-        <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
-          Full-Stack Developer &amp; Data Engineer
-        </h1>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Building modern web applications with TypeScript, Next.js, and advanced data analytics pipelines.
-        </p>
-        <div className="flex justify-center gap-4">
-          <Button asChild size="lg">
-            <Link href="/projects">View Projects</Link>
-          </Button>
-          <Button asChild variant="outline" size="lg">
-            <Link href="/data-stories">Data Stories</Link>
-          </Button>
-        </div>
-      </section>
+    <div className="min-h-screen bg-white">
+      <div className="container mx-auto px-4 py-16">
+        <div className="text-center space-y-8">
+          <h1 className="text-5xl font-bold text-gray-900">
+            Trevor Miller
+          </h1>
+          <h2 className="text-2xl text-gray-600">
+            Full-Stack Developer & Data Engineer
+          </h2>
+          <p className="text-lg text-gray-500 max-w-2xl mx-auto">
+            Modern portfolio built with Next.js 14, TypeScript, and advanced data analytics. 
+            This is the MVP version to test Vercel deployment.
+          </p>
+          
+          <div className="space-y-4">
+            <div className="bg-green-100 border border-green-500 rounded-lg p-4 max-w-md mx-auto">
+              <p className="text-green-800 font-semibold">✅ Next.js App Router Working</p>
+              <p className="text-green-700 text-sm">If you see this, the deployment succeeded!</p>
+            </div>
+            
+            <div className="grid grid-cols-2 gap-4 max-w-lg mx-auto text-sm">
+              <div className="bg-blue-50 p-3 rounded">
+                <div className="font-medium">Framework</div>
+                <div className="text-gray-600">Next.js 15.5.2</div>
+              </div>
+              <div className="bg-blue-50 p-3 rounded">
+                <div className="font-medium">TypeScript</div>
+                <div className="text-gray-600">Strict Mode</div>
+              </div>
+              <div className="bg-blue-50 p-3 rounded">
+                <div className="font-medium">Styling</div>
+                <div className="text-gray-600">Tailwind CSS</div>
+              </div>
+              <div className="bg-blue-50 p-3 rounded">
+                <div className="font-medium">Deployment</div>
+                <div className="text-gray-600">Vercel</div>
+              </div>
+            </div>
 
-      {/* Skills Preview */}
-      <section className="space-y-6">
-        <h2 className="text-3xl font-bold text-center">Technical Stack</h2>
-        <div className="grid md:grid-cols-3 gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Frontend</CardTitle>
-              <CardDescription>Modern web interfaces</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-wrap gap-2">
-                {["Next.js 14", "TypeScript", "React", "Tailwind CSS"].map((skill) => (
-                  <span key={skill} className="px-2 py-1 bg-primary/10 text-primary rounded-md text-sm">
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardHeader>
-              <CardTitle>Backend & Data</CardTitle>
-              <CardDescription>Scalable server solutions</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-wrap gap-2">
-                {["Prisma", "Supabase", "dbt", "DuckDB", "Polars"].map((skill) => (
-                  <span key={skill} className="px-2 py-1 bg-primary/10 text-primary rounded-md text-sm">
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardHeader>
-              <CardTitle>DevOps & Quality</CardTitle>
-              <CardDescription>Production-ready workflows</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-wrap gap-2">
-                {["GitHub Actions", "Vitest", "Playwright", "Sentry"].map((skill) => (
-                  <span key={skill} className="px-2 py-1 bg-primary/10 text-primary rounded-md text-sm">
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+            <div className="mt-8 text-sm text-gray-400">
+              <p>MVP Version - No external dependencies</p>
+              <p>No database • No APIs • No third-party services</p>
+            </div>
+          </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 }
