@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Trevor Miller - Portfolio",
@@ -12,28 +13,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body style={{ 
-        fontFamily: 'Inter, system-ui, sans-serif', 
-        margin: 0,
-        WebkitFontSmoothing: 'antialiased',
-        MozOsxFontSmoothing: 'grayscale'
-      }}>
+      <body className="font-inter antialiased">
         <main>{children}</main>
         
         {/* Debug info - Phase indicator */}
-        <div style={{
-          position: 'fixed',
-          bottom: '8px',
-          right: '8px',
-          fontSize: '12px',
-          opacity: 0.7,
-          backgroundColor: '#dcfce7',
-          color: '#166534',
-          padding: '4px 8px',
-          borderRadius: '4px',
-          border: '1px solid #22c55e'
-        }}>
-          Phase 1a | {new Date().toLocaleTimeString()}
+        <div className="fixed bottom-2 right-2 text-xs opacity-70 bg-green-100 text-green-800 px-2 py-1 rounded border border-green-500">
+          Phase 1b | {new Date().toLocaleTimeString()}
         </div>
       </body>
     </html>
