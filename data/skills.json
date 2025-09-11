@@ -1,0 +1,6 @@
+{
+  "languages": ["Python", "TypeScript", "JavaScript", "SQL", "Java", "R"],
+  "frameworks": ["Next.js", "React", "Node.js", "Flask", "Django", "Express"],
+  "tools": ["PostgreSQL", "MongoDB", "Redis", "Docker", "AWS", "Vercel", "Git"],
+  "coursework": ["Data Structures & Algorithms", "Database Design", "Machine Learning", "Software Engineering", "Systems Analysis"]
+}

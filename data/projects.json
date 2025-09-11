@@ -1,0 +1,36 @@
+[
+  {
+    "id": "portfolio-v2",
+    "title": "Modern Portfolio Website",
+    "role": "Full-Stack Developer",
+    "date": "2025",
+    "description": "A modern, responsive portfolio website built with Next.js 15, TypeScript, and Tailwind CSS. Features incremental deployment strategy, comprehensive debugging, and advanced styling system.",
+    "techStack": ["Next.js 15", "TypeScript", "Tailwind CSS", "Vercel"],
+    "repoUrl": "https://github.com/TrevorMiller04/Personal_Portfolio",
+    "liveUrl": "https://trevormiller.xyz",
+    "imagePath": "/projects/portfolio-v2.jpg",
+    "featured": true
+  },
+  {
+    "id": "data-pipeline",
+    "title": "Automated Data Pipeline",
+    "role": "Data Engineer",
+    "date": "2024",
+    "description": "Built a scalable data processing pipeline using Python, Apache Airflow, and cloud services to handle millions of records daily with automated error handling and monitoring.",
+    "techStack": ["Python", "Apache Airflow", "PostgreSQL", "Docker", "AWS"],
+    "repoUrl": "https://github.com/TrevorMiller04/data-pipeline",
+    "imagePath": "/projects/data-pipeline.jpg",
+    "featured": true
+  },
+  {
+    "id": "analytics-dashboard",
+    "title": "Business Analytics Dashboard",
+    "role": "Data Analyst & Developer",
+    "date": "2024",
+    "description": "Interactive dashboard for business intelligence with real-time data visualization, custom metrics tracking, and automated reporting capabilities.",
+    "techStack": ["React", "D3.js", "Node.js", "PostgreSQL", "Redis"],
+    "repoUrl": "https://github.com/TrevorMiller04/analytics-dashboard",
+    "imagePath": "/projects/analytics-dashboard.jpg",
+    "featured": false
+  }
+]

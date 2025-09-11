@@ -17,8 +17,8 @@ export default function RootLayout({
         <main>{children}</main>
         
         {/* Debug info - Phase indicator */}
-        <div className="fixed bottom-2 right-2 text-xs opacity-70 bg-green-100 text-green-800 px-2 py-1 rounded border border-green-500">
-          Phase 1b | {new Date().toLocaleTimeString()}
+        <div className="fixed bottom-2 right-2 text-xs opacity-70 bg-blue-100 text-blue-800 px-2 py-1 rounded border border-blue-500">
+          Phase 2 | {new Date().toLocaleTimeString()}
         </div>
       </body>
     </html>
