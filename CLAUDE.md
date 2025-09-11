@@ -4,119 +4,177 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is Trevor Miller's personal portfolio website - a single-page site built with vanilla HTML/CSS/JS and a Flask backend. It features a clean, professional design with contact form integration via Resend email and Supabase storage.
+This is Trevor Miller's modern portfolio website built with Next.js 14 (App Router) and TypeScript. It showcases full-stack development capabilities with data analytics, AI integration, and modern DevOps practices to impress recruiters.
 
 ## Architecture
 
-- **Frontend**: Vanilla HTML, CSS, JavaScript
-- **Backend**: Python Flask (serverless functions)
+- **Framework**: Next.js 14 (App Router) with TypeScript strict mode
+- **UI**: Tailwind CSS + shadcn/ui components
+- **Database**: Supabase (Postgres) with Prisma ORM
+- **Data Fetching**: TanStack Query with Zod validation
+- **Analytics**: DuckDB-WASM for in-browser data processing + Plotly charts
+- **dbt**: Local dbt project with staging/marts models and tests
+- **AI**: Server-only contact-reply suggester with rate limiting
+- **Observability**: Sentry (client + server)
+- **CI/QA**: ESLint, Prettier, Vitest, Playwright, GitHub Actions
 - **Hosting**: Vercel with GitHub deployment
-- **Email**: Resend service integration
-- **Database**: Supabase (contact form submissions)
-- **Domain**: trevormiller.xyz (to be configured later)
+
+## Tech Stack Requirements
+
+- Next.js 14 (App Router) with **TypeScript strict**
+- Tailwind CSS + shadcn/ui
+- Supabase (Postgres) + Prisma ORM
+- Zod validation + TanStack Query
+- ESLint/Prettier, Vitest unit tests, Playwright e2e
+- GitHub Actions CI/QA pipeline with status badge
+- Sentry observability + performance budget (<150KB app shell)
+- Data Stories page with DuckDB-WASM + 2 Plotly charts
+- dbt mini-project (1 staging + 1 marts model + 1 test)
+- AI contact-reply suggester (server-only, rate-limited)
 
 ## Project Structure
 
 ```
 /
-├─ index.html              # Main HTML file
-├─ styles.css             # All styling with CSS custom properties
-├─ app.js                 # Client-side JavaScript for data loading and form handling
-├─ vercel.json            # Vercel configuration for Python serverless functions
-├─ requirements.txt       # Python dependencies
-├─ .gitignore            # Git ignore patterns
-├─ README.md             # Deployment and setup instructions
-├─ robots.txt            # Simple SEO (allows all)
-├─ /public
-│   ├─ favicon.svg       # Custom favicon with "T" logo
-│   ├─ headshot.jpg      # [TO ADD] Hero section photo
-│   └─ /projects         # [TO ADD] Project images: <slug>.jpg
-├─ /data                 # JSON data files loaded by client JS
-│   ├─ projects.json     # Project showcase data
-│   ├─ skills.json       # Skills organized by category
-│   ├─ leadership.json   # Leadership roles and activities
-│   ├─ awards.json       # Awards and recognitions
-│   └─ social.json       # Social media links
-└─ /api
-    └─ contact.py        # Flask serverless function for contact form
+├─ app/
+│   ├─ (site)/
+│   │   └─ layout.tsx          # Site layout with nav/footer
+│   ├─ api/
+│   │   ├─ projects/route.ts   # Projects API with Zod validation
+│   │   └─ ai/suggest-reply/route.ts  # AI contact suggester
+│   ├─ data-stories/page.tsx   # DuckDB-WASM + Plotly analytics
+│   ├─ projects/page.tsx       # Projects showcase with TanStack Query
+│   ├─ contact/page.tsx        # Contact form with AI suggestions
+│   ├─ globals.css             # Tailwind + custom styles
+│   ├─ layout.tsx              # Root layout
+│   └─ page.tsx                # Homepage with JSON-LD
+├─ components/
+│   ├─ ui/                     # shadcn/ui components
+│   └─ ProjectCard.tsx         # Project display component
+├─ lib/
+│   ├─ db.ts                   # Prisma client
+│   ├─ validation.ts           # Zod schemas
+│   └─ utils.ts                # Utility functions
+├─ prisma/
+│   ├─ schema.prisma           # Database schema
+│   └─ seed.ts                 # Database seed data
+├─ analytics/dbt/              # dbt mini-project
+│   ├─ models/staging/stg_orders.sql
+│   ├─ models/marts/fct_sales_by_month.sql
+│   └─ target/                 # Generated docs
+├─ prompts/
+│   └─ contact_suggester_v1.md # AI prompt versions
+├─ public/
+│   └─ data/sample_orders.csv  # Sample data for analytics
+├─ .github/workflows/ci.yml    # CI/QA pipeline
+├─ sentry.client.config.ts     # Sentry client config
+└─ sentry.server.config.ts     # Sentry server config
 ```
-
-## Design System
-
-- **Colors**: White/light gray backgrounds, dark gray text, blue accent (#0077B6), burnt orange focus (#C13F03)
-- **Typography**: Inter (primary), Merriweather (headings), system fallbacks
-- **Components**: Cards with hover lifts, buttons with subtle shadows, visible focus rings
-- **Layout**: Responsive grid, mobile-first approach, sticky navigation
 
 ## Key Features
 
-1. **Hero Section**: Trevor's name, tagline, CTA buttons for Resume/Contact/LinkedIn/GitHub
-2. **About**: Placeholder content for bio, career goals, quick stats
-3. **Projects**: Dynamic loading from JSON, max 3 displayed, with repo links
-4. **Skills**: Chip-style display grouped by Languages/Frameworks/Tools/Coursework
-5. **Leadership**: Card layout for roles and awards
-6. **Resume**: Embedded PDF viewer with download option
-7. **Contact**: Working form that stores to Supabase and emails via Resend
+1. **Projects Showcase**: Database-backed project cards with tech stack chips, fetched via TanStack Query
+2. **Data Stories**: Interactive analytics page with DuckDB-WASM running SQL in browser + 2 Plotly charts
+3. **dbt Integration**: Mini data modeling project with staging/marts models and tests
+4. **AI Contact Suggester**: Server-only LLM integration with rate limiting and Zod validation
+5. **Modern Dev Experience**: TypeScript strict, ESLint/Prettier, comprehensive testing
+6. **Performance Monitoring**: Sentry observability + bundle size budget (<150KB)
+7. **CI/QA Pipeline**: Automated testing and deployment with GitHub Actions
 
-## Data Management
+## Database Schema (Prisma)
 
-All content is stored in JSON files in `/data/` directory:
-- Projects include title, role, date, description, tech stack, repo URL, image path
-- Skills are grouped into 4 categories with array of items
-- Leadership includes title, organization, dates, bullet points
-- Awards have title and description note
-- Social links include LinkedIn, GitHub, email
-
-## Contact Form Integration
-
-- Client-side validation (name, email, message ≥10 chars)
-- POST to `/api/contact` Flask endpoint
-- Dual storage: Supabase table + Resend email notification
-- Environment variables for all API keys and configuration
-- No secrets in client code
+- **Project**: id, title, summary, repoUrl, demoUrl, impactMetric
+- **TechTag**: id, name
+- **ProjectTech**: projectId, techId (many-to-many)
+- **Metric**: name, value (for analytics)
 
 ## Development Commands
 
-This is a static site with serverless functions:
-- No build process required for development
-- Deploy directly to Vercel from GitHub
-- Test locally by serving static files and running Flask for API
+```bash
+# Development
+npm run dev                    # Start dev server
+npm run build                  # Build for production
+npm run start                  # Start production server
 
-## Customization Areas
+# Database
+npm run db:migrate             # Run Prisma migrations
+npm run db:seed                # Seed database with sample data
+npm run db:generate            # Generate Prisma client
 
-When updating content, modify these files:
-1. **Personal Info** (index.html:27-28) - Name and tagline in hero
-2. **Projects** (data/projects.json) - Project showcase content
-3. **Skills** (data/skills.json) - Technical skills by category  
-4. **Leadership** (data/leadership.json) - Leadership roles and activities
-5. **Awards** (data/awards.json) - Recognition and achievements
-6. **Social Links** (data/social.json) - LinkedIn, GitHub, email
-7. **About Content** (index.html:43-45) - Replace placeholder text
+# Quality Assurance
+npm run lint                   # ESLint check
+npm run lint:fix               # Fix ESLint issues
+npm run prettier               # Prettier check
+npm run prettier:fix           # Fix Prettier issues
+npm run typecheck              # TypeScript check
+npm run test                   # Run Vitest unit tests
+npm run test:ui                # Vitest UI
+npm run e2e                    # Run Playwright e2e tests
 
-## Assets to Add Later
+# dbt Analytics
+cd analytics/dbt && dbt run     # Run dbt models
+cd analytics/dbt && dbt test    # Run dbt tests
+cd analytics/dbt && dbt docs generate  # Generate docs
+```
 
-The following files are referenced but need to be provided:
-- `/public/headshot.jpg` - Hero section photo (≤200KB)
-- `/public/resume.pdf` - Downloadable resume
-- `/public/projects/placeholder-one.jpg` - Project images (≤300KB each)
-- `/public/projects/placeholder-two.jpg`
-- `/public/projects/placeholder-three.jpg`
+## Environment Variables
+
+**Required for production:**
+- `DATABASE_URL` - Supabase Postgres connection string
+- `SUPABASE_URL` - Supabase project URL
+- `SUPABASE_SERVICE_ROLE_KEY` - Service role key for server operations
+- `SENTRY_DSN` - Sentry project DSN for error tracking
+- `ANTHROPIC_API_KEY` - Claude API key for AI features (or OpenAI)
+
+**Optional:**
+- `SENTRY_AUTH_TOKEN` - For Sentry release management
+- `RESEND_API_KEY` - If using Resend for email notifications
+
+## Performance Budget
+
+- **App shell JS**: <150KB (Next.js bundle)
+- **LCP (Largest Contentful Paint)**: <2.5s
+- **Mobile Lighthouse score**: ≥95
+
+## CI/QA Pipeline
+
+GitHub Actions workflow runs on push/PR:
+1. Install dependencies
+2. ESLint + Prettier checks
+3. TypeScript type checking
+4. Vitest unit tests
+5. Playwright e2e tests
+6. Build verification
+
+Badge: ![CI](https://github.com/TrevorMiller04/Personal_Portfolio/workflows/CI/badge.svg)
+
+## Data Analytics Features
+
+- **DuckDB-WASM**: In-browser SQL processing of CSV data
+- **Plotly Charts**: Interactive bar chart (sales by category) + line chart (monthly trends)  
+- **dbt Models**: Staging layer (`stg_orders`) + marts layer (`fct_sales_by_month`)
+- **dbt Tests**: Data quality assertions and documentation
+
+## AI Integration
+
+- **Server-only processing**: No API keys exposed to client
+- **Rate limiting**: 10 requests per hour per IP address
+- **Zod validation**: Type-safe input validation
+- **Prompt versioning**: Tracked in `prompts/` directory with version numbers
+- **PII protection**: No sensitive data logging
 
 ## Deployment Setup
 
-1. Push to GitHub repository named "Personal_Portfolio"
-2. Connect to Vercel for automatic deployment
-3. Configure environment variables in Vercel dashboard
-4. Set up Resend domain verification
-5. Create Supabase table using provided SQL
-6. Upload required assets to appropriate directories
+1. **GitHub**: Push to repository triggers CI/QA pipeline
+2. **Vercel**: Connected for automatic deployments from main branch
+3. **Supabase**: Database setup with connection pooling
+4. **Environment Variables**: Configure in Vercel dashboard
+5. **Sentry**: Project setup for error tracking
+6. **Domain**: Custom domain configuration (trevormiller.xyz)
 
-## Environment Variables Required
+## Implementation Approach
 
-- `RESEND_API_KEY` - API key from Resend service
-- `RESEND_FROM` - Trevor Miller <notify@trevormiller.xyz>
-- `RESEND_TO` - tmille12@syr.edu
-- `RESEND_REPLY_TO` - Trevor Miller <tmille12@syr.edu>
-- `SUPABASE_URL` - https://vuxuyhdhvptswjyumpag.supabase.co
-- `SUPABASE_SERVICE_ROLE_KEY` - Service role key from Supabase
-- `RESEND_WEBHOOK_SECRET` - (Optional) For webhook verification
+- **Minimal Viable Increments**: Each feature works end-to-end before moving to next
+- **Atomic Commits**: Clear commit messages following `feat(area): description` format
+- **Local Testing**: Verify each step locally before committing
+- **Documentation**: README updates with "What, Why, How to run, Evidence" for each feature
