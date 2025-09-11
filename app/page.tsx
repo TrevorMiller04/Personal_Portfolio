@@ -27,7 +27,7 @@ export default function Page() {
           If you see this, the deployment succeeded!
         </p>
         <p style={{ color: '#15803d', fontSize: '0.875rem', margin: '0' }}>
-          Build time: {new Date().toISOString()}
+          Build time: {new Date().toISOString()} - CSS Fix Applied
         </p>
       </div>
     </div>
