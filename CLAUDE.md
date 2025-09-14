@@ -4,89 +4,81 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is Trevor Miller's modern portfolio website built with Next.js 14 (App Router) and TypeScript. It showcases full-stack development capabilities with data analytics, AI integration, and modern DevOps practices to impress recruiters.
+This is Trevor Miller's academic portfolio website showcasing authentic work and technical skills. Built with modern Next.js 14 and TypeScript while preserving the original Syracuse University branding and professional academic presentation.
+
+## Design Philosophy
+
+**Authenticity First**: Only showcase real projects, actual skills, and genuine academic achievements. No fictional work or exaggerated capabilities.
+
+**Syracuse Branding**: Preserve the orange/blue color scheme (#C13F03/#051C3D) and campus background that represents Syracuse University identity.
+
+**Academic Focus**: Maintain the professional tone suitable for recruiters, emphasizing coursework, real experience, and specific technical competencies.
 
 ## Architecture
 
 - **Framework**: Next.js 14 (App Router) with TypeScript strict mode
-- **UI**: Tailwind CSS + shadcn/ui components
-- **Database**: Supabase (Postgres) with Prisma ORM
+- **UI**: Custom CSS (converted from original) + selective modern components
+- **Database**: Supabase (Postgres) with Prisma ORM for project management
 - **Data Fetching**: TanStack Query with Zod validation
-- **Analytics**: DuckDB-WASM for in-browser data processing + Plotly charts
-- **dbt**: Local dbt project with staging/marts models and tests
-- **AI**: Server-only contact-reply suggester with rate limiting
-- **Observability**: Sentry (client + server)
-- **CI/QA**: ESLint, Prettier, Vitest, Playwright, GitHub Actions
+- **Styling**: Preserved original design system with CSS-in-JS or CSS modules
+- **Performance**: Optimized build system with <150KB app shell
+- **CI/QA**: ESLint, Prettier, Playwright e2e testing
 - **Hosting**: Vercel with GitHub deployment
 
 ## Tech Stack Requirements
 
 - Next.js 14 (App Router) with **TypeScript strict**
-- Tailwind CSS + shadcn/ui
-- Supabase (Postgres) + Prisma ORM
+- Preserve original Syracuse color scheme and typography
+- Supabase (Postgres) + Prisma ORM (for real projects only)
 - Zod validation + TanStack Query
-- ESLint/Prettier, Vitest unit tests, Playwright e2e
-- GitHub Actions CI/QA pipeline with status badge
-- Sentry observability + performance budget (<150KB app shell)
-- Data Stories page with DuckDB-WASM + 2 Plotly charts
-- dbt mini-project (1 staging + 1 marts model + 1 test)
-- AI contact-reply suggester (server-only, rate-limited)
+- ESLint/Prettier, Playwright e2e testing
+- Performance budget (<150KB app shell)
+- Maintain original campus background and layout
 
 ## Project Structure
 
 ```
 /
 ├─ app/
-│   ├─ (site)/
-│   │   └─ layout.tsx          # Site layout with nav/footer
 │   ├─ api/
-│   │   ├─ projects/route.ts   # Projects API with Zod validation
-│   │   └─ ai/suggest-reply/route.ts  # AI contact suggester
-│   ├─ data-stories/page.tsx   # DuckDB-WASM + Plotly analytics
-│   ├─ projects/page.tsx       # Projects showcase with TanStack Query
-│   ├─ contact/page.tsx        # Contact form with AI suggestions
-│   ├─ globals.css             # Tailwind + custom styles
-│   ├─ layout.tsx              # Root layout
-│   └─ page.tsx                # Homepage with JSON-LD
+│   │   └─ projects/route.ts   # Projects API with Zod validation
+│   ├─ globals.css             # Original design system converted to CSS
+│   ├─ layout.tsx              # Root layout with Syracuse branding
+│   └─ page.tsx                # Single-page portfolio (original structure)
 ├─ components/
-│   ├─ ui/                     # shadcn/ui components
-│   └─ ProjectCard.tsx         # Project display component
+│   ├─ ProjectCard.tsx         # Real project display component
+│   ├─ SkillsSection.tsx       # Detailed skills with experience bullets
+│   └─ ContactForm.tsx         # Simple contact form
 ├─ lib/
 │   ├─ db.ts                   # Prisma client
 │   ├─ validation.ts           # Zod schemas
 │   └─ utils.ts                # Utility functions
 ├─ prisma/
-│   ├─ schema.prisma           # Database schema
-│   └─ seed.ts                 # Database seed data
-├─ analytics/dbt/              # dbt mini-project
-│   ├─ models/staging/stg_orders.sql
-│   ├─ models/marts/fct_sales_by_month.sql
-│   └─ target/                 # Generated docs
-├─ prompts/
-│   └─ contact_suggester_v1.md # AI prompt versions
+│   ├─ schema.prisma           # Database schema (real projects)
+│   └─ seed.ts                 # Seed with actual project data
 ├─ public/
-│   └─ data/sample_orders.csv  # Sample data for analytics
-├─ .github/workflows/ci.yml    # CI/QA pipeline
-├─ sentry.client.config.ts     # Sentry client config
-└─ sentry.server.config.ts     # Sentry server config
+│   ├─ campus.png              # Syracuse campus background (original)
+│   ├─ headshot2.png           # Professional headshot (original)
+│   └─ resume.pdf              # Current resume
+├─ data/                       # Original data files (for reference)
+│   ├─ projects.json           # Real projects from main branch
+│   └─ skills.json             # Detailed skills from main branch
+└─ .github/workflows/ci.yml    # Basic CI/QA pipeline
 ```
 
 ## Key Features
 
-1. **Projects Showcase**: Database-backed project cards with tech stack chips, fetched via TanStack Query
-2. **Data Stories**: Interactive analytics page with DuckDB-WASM running SQL in browser + 2 Plotly charts
-3. **dbt Integration**: Mini data modeling project with staging/marts models and tests
-4. **AI Contact Suggester**: Server-only LLM integration with rate limiting and Zod validation
-5. **Modern Dev Experience**: TypeScript strict, ESLint/Prettier, comprehensive testing
-6. **Performance Monitoring**: Sentry observability + bundle size budget (<150KB)
-7. **CI/QA Pipeline**: Automated testing and deployment with GitHub Actions
+1. **Authentic Projects**: Real portfolio project with detailed technical descriptions
+2. **Academic Focus**: Coursework, GPA, leadership roles, genuine experience
+3. **Syracuse Branding**: Orange/blue colors, campus background, university identity
+4. **Professional Skills**: Detailed experience bullets for each technology
+5. **Modern Foundation**: TypeScript, Next.js performance, proper SEO
+6. **Recruiter-Ready**: Academic presentation suitable for internship/job applications
 
 ## Database Schema (Prisma)
 
-- **Project**: id, title, summary, repoUrl, demoUrl, impactMetric
-- **TechTag**: id, name
-- **ProjectTech**: projectId, techId (many-to-many)
-- **Metric**: name, value (for analytics)
+- **Project**: id, title, role, date, description, longDescription, techStack[], repoUrl, images[]
+- **Contact**: id, name, email, message, createdAt (simple contact form submissions)
 
 ## Development Commands
 
@@ -98,83 +90,48 @@ npm run start                  # Start production server
 
 # Database
 npm run db:migrate             # Run Prisma migrations
-npm run db:seed                # Seed database with sample data
+npm run db:seed                # Seed database with real project data
 npm run db:generate            # Generate Prisma client
 
 # Quality Assurance
 npm run lint                   # ESLint check
 npm run lint:fix               # Fix ESLint issues
-npm run prettier               # Prettier check
-npm run prettier:fix           # Fix Prettier issues
 npm run typecheck              # TypeScript check
-npm run test                   # Run Vitest unit tests
-npm run test:ui                # Vitest UI
 npm run e2e                    # Run Playwright e2e tests
-
-# dbt Analytics
-cd analytics/dbt && dbt run     # Run dbt models
-cd analytics/dbt && dbt test    # Run dbt tests
-cd analytics/dbt && dbt docs generate  # Generate docs
 ```
 
 ## Environment Variables
 
 **Required for production:**
 - `DATABASE_URL` - Supabase Postgres connection string
-- `SUPABASE_URL` - Supabase project URL
+- `SUPABASE_URL` - Supabase project URL  
 - `SUPABASE_SERVICE_ROLE_KEY` - Service role key for server operations
-- `SENTRY_DSN` - Sentry project DSN for error tracking
-- `ANTHROPIC_API_KEY` - Claude API key for AI features (or OpenAI)
 
 **Optional:**
-- `SENTRY_AUTH_TOKEN` - For Sentry release management
-- `RESEND_API_KEY` - If using Resend for email notifications
+- `RESEND_API_KEY` - For contact form email notifications
 
 ## Performance Budget
 
 - **App shell JS**: <150KB (Next.js bundle)
 - **LCP (Largest Contentful Paint)**: <2.5s
-- **Mobile Lighthouse score**: ≥95
+- **Mobile Lighthouse score**: ≥90
 
-## CI/QA Pipeline
+## Content Guidelines
 
-GitHub Actions workflow runs on push/PR:
-1. Install dependencies
-2. ESLint + Prettier checks
-3. TypeScript type checking
-4. Vitest unit tests
-5. Playwright e2e tests
-6. Build verification
+**Always Authentic**: 
+- Only real projects with actual technical details
+- Genuine coursework and academic achievements
+- True leadership roles and work experience
+- Specific skills with real experience examples
 
-Badge: ![CI](https://github.com/TrevorMiller04/Personal_Portfolio/workflows/CI/badge.svg)
-
-## Data Analytics Features
-
-- **DuckDB-WASM**: In-browser SQL processing of CSV data
-- **Plotly Charts**: Interactive bar chart (sales by category) + line chart (monthly trends)  
-- **dbt Models**: Staging layer (`stg_orders`) + marts layer (`fct_sales_by_month`)
-- **dbt Tests**: Data quality assertions and documentation
-
-## AI Integration
-
-- **Server-only processing**: No API keys exposed to client
-- **Rate limiting**: 10 requests per hour per IP address
-- **Zod validation**: Type-safe input validation
-- **Prompt versioning**: Tracked in `prompts/` directory with version numbers
-- **PII protection**: No sensitive data logging
-
-## Deployment Setup
-
-1. **GitHub**: Push to repository triggers CI/QA pipeline
-2. **Vercel**: Connected for automatic deployments from main branch
-3. **Supabase**: Database setup with connection pooling
-4. **Environment Variables**: Configure in Vercel dashboard
-5. **Sentry**: Project setup for error tracking
-6. **Domain**: Custom domain configuration (trevormiller.xyz)
+**Syracuse Identity**:
+- Maintain orange (#C13F03) and blue (#051C3D) color scheme
+- Keep campus background for Syracuse University representation
+- Professional academic tone suitable for recruiters
 
 ## Implementation Approach
 
-- **Minimal Viable Increments**: Each feature works end-to-end before moving to next
-- **Atomic Commits**: Clear commit messages following `feat(area): description` format
-- **Local Testing**: Verify each step locally before committing
-- **Documentation**: README updates with "What, Why, How to run, Evidence" for each feature
+- **Preserve Original Design**: Convert existing CSS to modern CSS-in-JS/modules
+- **Real Content First**: Import actual projects and skills data
+- **Modern Foundation**: Next.js performance with authentic presentation
+- **Recruiter-Focused**: Academic portfolio suitable for internships and entry-level positions

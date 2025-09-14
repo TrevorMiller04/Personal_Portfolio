@@ -8,8 +8,21 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#0077B6',
+        // Syracuse University Official Colors
+        'syracuse-orange': '#C13F03',
+        'syracuse-blue': '#051C3D',
+        // Alias for consistency
+        primary: '#051C3D',
         accent: '#C13F03',
+        // Extended palette for UI elements
+        orange: {
+          600: '#C13F03',
+          700: '#A13302',
+        },
+        blue: {
+          900: '#051C3D',
+          800: '#0A2345',
+        }
       },
       fontFamily: {
         inter: ['Inter', 'system-ui', 'sans-serif'],

@@ -2,24 +2,52 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Trevor Miller - Portfolio",
-  description: "Full-Stack Developer & Data Engineer with modern tech stack",
+  title: "Trevor Miller • Portfolio",
+  description: "Junior CS Major at Syracuse University with experience in full-stack development, data science, and AI/ML. Available for summer 2025 internships.",
+  keywords: [
+    "Trevor Miller",
+    "Syracuse University", 
+    "Computer Science",
+    "Full-Stack Developer",
+    "Data Science",
+    "AI/ML",
+    "Internships",
+    "Python",
+    "JavaScript",
+    "React"
+  ],
+  authors: [{ name: "Trevor Miller" }],
+  creator: "Trevor Miller",
+  openGraph: {
+    title: "Trevor Miller • Portfolio",
+    description: "Junior CS Major at Syracuse University",
+    url: "https://trevormiller.xyz",
+    siteName: "Trevor Miller Portfolio",
+    type: "website",
+    locale: "en_US",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: "https://trevormiller.xyz",
+  },
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
     <html lang="en">
-      <body className="font-inter antialiased">
-        <main>{children}</main>
-        
-        {/* Debug info - Phase indicator */}
-        <div className="fixed bottom-2 right-2 text-xs opacity-70 bg-blue-100 text-blue-800 px-2 py-1 rounded border border-blue-500">
-          Phase 2 | {new Date().toLocaleTimeString()}
-        </div>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Merriweather:wght@700&display=swap" rel="stylesheet" />
+      </head>
+      <body className="antialiased">
+        {children}
       </body>
     </html>
   );

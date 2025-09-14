@@ -1,176 +1,148 @@
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import projectsData from "@/data/projects.json";
-import skillsData from "@/data/skills.json";
+// Import components and data
+import { ProjectCard } from '@/components/ProjectCard'
+import projectsData from '../data/projects.json'
 
-export default function Page() {
-  const buildTime = new Date().toISOString();
-  const featuredProjects = projectsData.filter(project => project.featured);
-  
+// Define project interface for JSON data
+interface ProjectData {
+  title: string
+  role: string
+  date: string
+  description: string
+  tech: string[]
+  repoURL: string
+  longDescription?: string
+  images?: Array<{
+    src: string
+    alt: string
+    caption: string
+  }>
+}
+
+// Transform JSON data to match our Project schema
+async function getProjects() {
+  const transformedProjects = projectsData.map((project: ProjectData) => ({
+    id: `project-${Date.now()}-${Math.random()}`, // Temporary ID for static data
+    title: project.title,
+    role: project.role,
+    date: project.date,
+    description: project.description,
+    longDescription: project.longDescription || null,
+    techStack: project.tech,
+    repoUrl: project.repoURL || null,
+    liveUrl: null,
+    images: project.images || null,
+    featured: true,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  }))
+
+  return transformedProjects
+}
+
+export default async function HomePage() {
+  const projects = await getProjects();
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-8">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <header className="text-center mb-16">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 leading-tight">
-            Trevor Miller
-          </h1>
-          <h2 className="text-xl sm:text-2xl text-gray-600 mb-8">
-            Full-Stack Developer & Data Engineer
-          </h2>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Button variant="default" size="lg">
-              View Resume
-            </Button>
-            <Button variant="outline" size="lg">
-              Contact Me
-            </Button>
-          </div>
-        </header>
-
-        {/* Featured Projects */}
-        <section className="mb-16">
-          <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Featured Projects</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {featuredProjects.map((project) => (
-              <Card key={project.id} className="border-l-4 border-l-blue-500">
-                <CardHeader>
-                  <CardTitle>{project.title}</CardTitle>
-                  <CardDescription>{project.role} • {project.date}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-700 mb-4">{project.description}</p>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.techStack.map((tech) => (
-                      <Badge key={tech} variant="secondary">{tech}</Badge>
-                    ))}
-                  </div>
-                  <div className="flex gap-2">
-                    {project.repoUrl && (
-                      <Button variant="outline" size="sm">
-                        View Code
-                      </Button>
-                    )}
-                    {project.liveUrl && (
-                      <Button variant="outline" size="sm">
-                        Live Demo
-                      </Button>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </section>
-
-        {/* Skills */}
-        <section className="mb-16">
-          <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Technical Skills</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Languages</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-wrap gap-2">
-                  {skillsData.languages.map((skill) => (
-                    <Badge key={skill} variant="outline">{skill}</Badge>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Frameworks</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-wrap gap-2">
-                  {skillsData.frameworks.map((skill) => (
-                    <Badge key={skill} variant="outline">{skill}</Badge>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Tools</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-wrap gap-2">
-                  {skillsData.tools.map((skill) => (
-                    <Badge key={skill} variant="outline">{skill}</Badge>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Coursework</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-wrap gap-2">
-                  {skillsData.coursework.map((skill) => (
-                    <Badge key={skill} variant="outline">{skill}</Badge>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
-
-        {/* Status Cards */}
-        <section className="mb-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card className="border-l-4 border-l-green-500">
-              <CardHeader>
-                <CardTitle>🚀 Deployment Status</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-green-700 font-medium mb-2">
-                  ✅ Next.js App Router Working
-                </p>
-                <p className="text-sm text-gray-600">
-                  Vercel deployment successful
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-l-4 border-l-blue-500">
-              <CardHeader>
-                <CardTitle>⚡ Feature Progress</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-blue-600 font-medium mb-2">
-                  Phase 2: Components & Data
-                </p>
-                <p className="text-sm text-gray-600">
-                  Enhanced with UI components and project data
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
-
-        {/* Debug Information */}
-        <Card className="debug-box">
-          <CardHeader>
-            <CardTitle className="text-cyan-300">🔧 Debug Information</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-col gap-1">
-              <p><span className="text-blue-300">Build Time:</span> {buildTime}</p>
-              <p><span className="text-blue-300">Phase:</span> 2 - Components & Data Integration</p>
-              <p><span className="text-blue-300">Components:</span> <span className="text-yellow-400">Card, Badge, Button</span></p>
-              <p><span className="text-blue-300">Data Sources:</span> Projects JSON, Skills JSON</p>
-              <p><span className="text-blue-300">Next:</span> Add Database Layer & Advanced Features</p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      {/* Navigation */}
+      <nav className="bg-white/80 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-50">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="font-bold text-xl text-gray-900">
+              Trevor Miller
             </div>
-          </CardContent>
-        </Card>
+            <div className="hidden md:flex space-x-8">
+              <a href="#home" className="text-gray-700 hover:text-gray-900 font-medium">
+                Home
+              </a>
+              <a href="#projects" className="text-gray-700 hover:text-gray-900 font-medium">
+                Projects
+              </a>
+              <a href="#contact" className="text-gray-700 hover:text-gray-900 font-medium">
+                Contact
+              </a>
+            </div>
+            <div className="flex items-center space-x-4">
+              <a href="/resume.pdf" target="_blank" 
+                 className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
+                Resume
+              </a>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Main Content */}
+      <div className="px-8 py-16">
+        <div className="max-w-6xl mx-auto">
+          {/* Hero Section */}
+          <section id="home" className="text-center mb-20">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+              Trevor Miller
+            </h1>
+            <h2 className="text-xl sm:text-2xl text-gray-600 mb-8">
+              Full-Stack Developer & Data Engineer
+            </h2>
+            <p className="text-lg text-gray-700 mb-8 max-w-3xl mx-auto">
+              Junior CS Major at Syracuse University with expertise in modern web development, 
+              data analytics, and AI integration. Building impactful software solutions with 
+              React, Next.js, Python, and cloud technologies.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <a href="#projects"
+                 className="px-6 py-3 bg-syracuse-blue text-white font-medium rounded-md hover:bg-blue-800">
+                View Projects
+              </a>
+              <a href="#contact" 
+                 className="px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-md hover:bg-gray-50">
+                Contact Me
+              </a>
+            </div>
+          </section>
+
+          {/* Projects Section */}
+          <section id="projects" className="mb-20">
+            <h3 className="text-3xl font-bold text-gray-900 mb-10 text-center">Featured Projects</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {projects.map((project) => (
+                <ProjectCard key={project.id} project={project} />
+              ))}
+            </div>
+          </section>
+
+          {/* Contact Section */}
+          <section id="contact" className="text-center">
+            <h3 className="text-3xl font-bold text-gray-900 mb-8">Get In Touch</h3>
+            <p className="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">
+              I'm always interested in new opportunities, collaborations, and interesting projects.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <a href="mailto:trmille3@syr.edu"
+                 className="px-6 py-3 bg-syracuse-blue text-white font-medium rounded-md hover:bg-blue-800">
+                Email Me
+              </a>
+              <a href="https://linkedin.com/in/trevor-miller04" target="_blank" 
+                 className="px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-md hover:bg-gray-50">
+                LinkedIn
+              </a>
+              <a href="https://github.com/TrevorMiller04" target="_blank" 
+                 className="px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-md hover:bg-gray-50">
+                GitHub
+              </a>
+            </div>
+          </section>
+        </div>
       </div>
+
+      {/* Footer */}
+      <footer className="bg-white border-t border-gray-200 mt-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="text-center">
+            <p className="text-gray-600">
+              © 2025 Trevor Miller. Built with Next.js 14 & TypeScript.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

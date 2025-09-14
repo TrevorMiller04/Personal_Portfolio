@@ -1,0 +1,56 @@
+// Prisma schema for Trevor Miller Portfolio
+// Based on CLAUDE.md requirements
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Project model for portfolio projects
+model Project {
+  id              String    @id @default(cuid())
+  title           String
+  role            String
+  date            String
+  description     String
+  longDescription String?
+  techStack       String[]
+  repoUrl         String?
+  liveUrl         String?
+  images          Json?     // Array of image objects with src, alt, caption
+  featured        Boolean   @default(false)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@map("projects")
+}
+
+// Contact model for contact form submissions
+model Contact {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String?
+  message   String
+  replied   Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@map("contacts")
+}
+
+// Skills model for technical skills (optional for future expansion)
+model Skill {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  category    String   // Languages, Frameworks, Tools/Cloud, Coursework
+  experience  String[] // Array of experience bullets
+  proficiency String?  // Beginner, Intermediate, Advanced, Expert
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("skills")
+}
