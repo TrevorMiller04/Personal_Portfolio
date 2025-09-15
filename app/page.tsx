@@ -154,6 +154,7 @@ export default async function HomePage() {
 
           {/* Contact Section */}
           <ContactForm />
+          </div>
         </div>
       </div>
 
