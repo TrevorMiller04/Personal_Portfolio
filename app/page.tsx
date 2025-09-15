@@ -1,6 +1,5 @@
 // Import components and data
 import { ProjectCard } from '../components/ProjectCard'
-import { AboutSection } from '../components/AboutSection'
 import { SkillsSection } from '../components/SkillsSection'
 import { ResumeSection } from '../components/ResumeSection'
 import { ContactForm } from '../components/ContactForm'
@@ -58,9 +57,6 @@ export default async function HomePage() {
               <a href="#home" className="text-gray-700 hover:text-gray-900 font-medium">
                 Home
               </a>
-              <a href="#about" className="text-gray-700 hover:text-gray-900 font-medium">
-                About
-              </a>
               <a href="#projects" className="text-gray-700 hover:text-gray-900 font-medium">
                 Projects
               </a>
@@ -85,34 +81,60 @@ export default async function HomePage() {
       </nav>
 
       {/* Main Content */}
-      <div className="px-8 py-16">
-        <div className="max-w-6xl mx-auto">
-          {/* Hero Section */}
-          <section id="home" className="text-center mb-20">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-              Trevor Miller
-            </h1>
-            <h2 className="text-xl sm:text-2xl text-gray-600 mb-8">
-              Junior CS Major @ Syracuse University
-            </h2>
-            <p className="text-lg text-gray-700 mb-8 max-w-3xl mx-auto">
-              Passionate about applying math and programming to real-world problems, especially in data science and AI/ML.
-              Building impactful software solutions while developing leadership skills through professional and campus experience.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <a href="#projects"
-                 className="px-6 py-3 bg-syracuse-blue text-white font-medium rounded-md hover:bg-blue-800">
-                View Projects
-              </a>
-              <a href="#contact" 
-                 className="px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-md hover:bg-gray-50">
-                Contact Me
-              </a>
-            </div>
-          </section>
+      <div>
+        {/* Hero Section with Syracuse Background */}
+        <section
+          id="home"
+          className="relative min-h-screen flex items-center justify-center"
+          style={{
+            backgroundImage: 'url(/campus.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        >
+          {/* Background overlay for better text readability */}
+          <div className="absolute inset-0 bg-black/40"></div>
 
-          {/* About Section */}
-          <AboutSection />
+          {/* Hero Content */}
+          <div className="relative z-10 text-center text-white px-8 py-16">
+            <div className="max-w-4xl mx-auto">
+              {/* Profile Image */}
+              <div className="mb-8 flex justify-center">
+                <img
+                  src="/headshot2.png"
+                  alt="Trevor Miller"
+                  className="w-48 h-48 rounded-full shadow-2xl border-4 border-white object-cover"
+                />
+              </div>
+
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                Trevor Miller
+              </h1>
+              <h2 className="text-xl sm:text-2xl mb-8 text-gray-100">
+                Junior CS Major @ Syracuse University
+              </h2>
+              <p className="text-lg mb-8 max-w-3xl mx-auto text-gray-100 leading-relaxed">
+                Junior at Syracuse University studying Computer Science with minors in Statistics and Management, graduating December 2026.
+                Passionate about applying math and programming to real-world problems, especially in data science and AI/ML.
+                Seven years of professional experience with leadership roles in both academic and professional settings.
+              </p>
+              <div className="flex flex-wrap justify-center gap-4">
+                <a href="#projects"
+                   className="px-6 py-3 bg-syracuse-orange text-white font-medium rounded-md hover:bg-orange-600 transition-colors duration-200">
+                  View Projects
+                </a>
+                <a href="#contact"
+                   className="px-6 py-3 border-2 border-white text-white font-medium rounded-md hover:bg-white hover:text-gray-900 transition-colors duration-200">
+                  Contact Me
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div className="px-8 py-16">
+          <div className="max-w-6xl mx-auto">
 
           {/* Projects Section */}
           <section id="projects" className="mb-20">
