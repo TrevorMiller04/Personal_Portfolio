@@ -1,5 +1,9 @@
 // Import components and data
-import { ProjectCard } from '@/components/ProjectCard'
+import { ProjectCard } from '../components/ProjectCard'
+import { AboutSection } from '../components/AboutSection'
+import { SkillsSection } from '../components/SkillsSection'
+import { ResumeSection } from '../components/ResumeSection'
+import { ContactForm } from '../components/ContactForm'
 import projectsData from '../data/projects.json'
 
 // Define project interface for JSON data
@@ -54,8 +58,17 @@ export default async function HomePage() {
               <a href="#home" className="text-gray-700 hover:text-gray-900 font-medium">
                 Home
               </a>
+              <a href="#about" className="text-gray-700 hover:text-gray-900 font-medium">
+                About
+              </a>
               <a href="#projects" className="text-gray-700 hover:text-gray-900 font-medium">
                 Projects
+              </a>
+              <a href="#skills" className="text-gray-700 hover:text-gray-900 font-medium">
+                Skills
+              </a>
+              <a href="#resume" className="text-gray-700 hover:text-gray-900 font-medium">
+                Resume
               </a>
               <a href="#contact" className="text-gray-700 hover:text-gray-900 font-medium">
                 Contact
@@ -80,12 +93,11 @@ export default async function HomePage() {
               Trevor Miller
             </h1>
             <h2 className="text-xl sm:text-2xl text-gray-600 mb-8">
-              Full-Stack Developer & Data Engineer
+              Junior CS Major @ Syracuse University
             </h2>
             <p className="text-lg text-gray-700 mb-8 max-w-3xl mx-auto">
-              Junior CS Major at Syracuse University with expertise in modern web development, 
-              data analytics, and AI integration. Building impactful software solutions with 
-              React, Next.js, Python, and cloud technologies.
+              Passionate about applying math and programming to real-world problems, especially in data science and AI/ML.
+              Building impactful software solutions while developing leadership skills through professional and campus experience.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <a href="#projects"
@@ -99,6 +111,9 @@ export default async function HomePage() {
             </div>
           </section>
 
+          {/* About Section */}
+          <AboutSection />
+
           {/* Projects Section */}
           <section id="projects" className="mb-20">
             <h3 className="text-3xl font-bold text-gray-900 mb-10 text-center">Featured Projects</h3>
@@ -109,27 +124,14 @@ export default async function HomePage() {
             </div>
           </section>
 
+          {/* Skills Section */}
+          <SkillsSection />
+
+          {/* Resume Section */}
+          <ResumeSection />
+
           {/* Contact Section */}
-          <section id="contact" className="text-center">
-            <h3 className="text-3xl font-bold text-gray-900 mb-8">Get In Touch</h3>
-            <p className="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">
-              I'm always interested in new opportunities, collaborations, and interesting projects.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <a href="mailto:trmille3@syr.edu"
-                 className="px-6 py-3 bg-syracuse-blue text-white font-medium rounded-md hover:bg-blue-800">
-                Email Me
-              </a>
-              <a href="https://linkedin.com/in/trevor-miller04" target="_blank" 
-                 className="px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-md hover:bg-gray-50">
-                LinkedIn
-              </a>
-              <a href="https://github.com/TrevorMiller04" target="_blank" 
-                 className="px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-md hover:bg-gray-50">
-                GitHub
-              </a>
-            </div>
-          </section>
+          <ContactForm />
         </div>
       </div>
 

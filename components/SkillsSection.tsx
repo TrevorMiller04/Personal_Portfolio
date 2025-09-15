@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import skillsData from '@/data/skills.json'
+import skillsData from '../data/skills.json'
 
 interface Skill {
   name: string;
@@ -29,34 +29,36 @@ export function SkillsSection() {
   }
 
   return (
-    <section id="skills" className="section">
-      <h2>Skills</h2>
-      <div id="skills-chips">
+    <section id="skills" className="mb-20">
+      <h3 className="text-3xl font-bold text-gray-900 mb-10 text-center">Skills</h3>
+      <div className="space-y-8">
         {Object.entries(skills).map(([categoryName, categorySkills]) => (
-          <div key={categoryName} className="skill-category">
-            <h3>{categoryName}</h3>
-            <div className="skill-chips">
+          <div key={categoryName} className="space-y-4">
+            <h4 className="text-xl font-semibold text-gray-800">{categoryName}</h4>
+            <div className="flex flex-wrap gap-3">
               {categorySkills.map((skill) => (
                 <button
                   key={skill.name}
-                  className="btn skill-chip"
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 border ${
+                    selectedSkill === skill.name
+                      ? 'bg-syracuse-blue text-white border-syracuse-blue'
+                      : 'bg-gray-100 text-gray-700 border-gray-300 hover:bg-syracuse-blue hover:text-white hover:border-syracuse-blue'
+                  }`}
                   onClick={() => handleSkillClick(skill.name)}
-                  style={{
-                    backgroundColor: selectedSkill === skill.name ? 'var(--brand1)' : 'var(--muted)',
-                    color: selectedSkill === skill.name ? 'white' : 'var(--brand2)',
-                    borderColor: selectedSkill === skill.name ? 'var(--brand1)' : 'var(--line)'
-                  }}
                 >
                   {skill.name}
                 </button>
               ))}
             </div>
             {selectedSkill && categorySkills.some(s => s.name === selectedSkill) && (
-              <div className="skill-details">
-                <h4>{selectedSkill}</h4>
-                <ul>
+              <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <h5 className="text-lg font-semibold text-gray-800 mb-3">{selectedSkill}</h5>
+                <ul className="space-y-2">
                   {findSkillDetails(selectedSkill).map((experience, index) => (
-                    <li key={index}>{experience}</li>
+                    <li key={index} className="text-gray-700 flex items-start">
+                      <span className="text-syracuse-blue mr-2 mt-1">•</span>
+                      {experience}
+                    </li>
                   ))}
                 </ul>
               </div>

@@ -8,9 +8,28 @@
       "Bash(dbt init:*)",
       "Bash(npm run typecheck:*)",
       "Bash(npm run lint)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "mcp__playwright__browser_navigate",
+      "Bash(npx next:*)",
+      "Bash(pkill:*)",
+      "Bash(npx:*)",
+      "Bash(python3:*)",
+      "mcp__playwright__browser_click",
+      "mcp__playwright__browser_resize",
+      "mcp__playwright__browser_snapshot",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__get-library-docs",
+      "Bash(say \"Ready to continue with portfolio project conversion\")",
+      "Bash(say \"Ready to push to GitHub - requesting approval for git operations\")",
+      "Bash(say \"Need npm install\")",
+      "Bash(say \"Need node_modules cleanup\")"
     ],
     "deny": [],
     "ask": []
-  }
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "context7"
+  ]
 }
