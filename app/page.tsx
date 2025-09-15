@@ -89,7 +89,7 @@ export default async function HomePage() {
           style={{
             backgroundImage: 'url(/campus.png)',
             backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            backgroundPosition: 'center bottom',
             backgroundRepeat: 'no-repeat'
           }}
         >
@@ -105,6 +105,7 @@ export default async function HomePage() {
                   src="/headshot2.png"
                   alt="Trevor Miller"
                   className="w-48 h-48 rounded-full shadow-2xl border-4 border-white object-cover"
+                  style={{ objectPosition: 'center 25%' }}
                 />
               </div>
 
