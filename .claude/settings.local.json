@@ -23,7 +23,8 @@
       "Bash(say \"Ready to continue with portfolio project conversion\")",
       "Bash(say \"Ready to push to GitHub - requesting approval for git operations\")",
       "Bash(say \"Need npm install\")",
-      "Bash(say \"Need node_modules cleanup\")"
+      "Bash(say \"Need node_modules cleanup\")",
+      "mcp__playwright__browser_evaluate"
     ],
     "deny": [],
     "ask": []

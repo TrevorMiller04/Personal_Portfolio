@@ -21,12 +21,23 @@ export function ContactForm() {
     setIsSubmitting(true)
 
     try {
-      // Simple form submission - in production, integrate with email service
-      await new Promise(resolve => setTimeout(resolve, 1000)) // Simulate API call
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
 
-      console.log('Form submitted:', formData)
-      setSubmitStatus('success')
-      setFormData({ name: '', email: '', message: '' })
+      const result = await response.json()
+
+      if (response.ok && result.success) {
+        setSubmitStatus('success')
+        setFormData({ name: '', email: '', message: '' })
+      } else {
+        console.error('Form submission failed:', result)
+        setSubmitStatus('error')
+      }
     } catch (error) {
       console.error('Form submission error:', error)
       setSubmitStatus('error')
