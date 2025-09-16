@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '../../../lib/db'
-import { Resend } from 'resend'
 import { z } from 'zod'
 
-// Initialize Resend with API key
-const resend = new Resend(process.env.RESEND_API_KEY)
+// Email service configuration
+const RESEND_API_KEY = process.env.RESEND_API_KEY
 
 // Validation schema for contact form
 const contactSchema = z.object({
@@ -113,92 +112,110 @@ export async function POST(request: NextRequest) {
     const aiResponse = await generateAIResponse(name, email, message)
 
     // 3. Send email notification to Trevor
-    try {
-      await resend.emails.send({
-        from: 'Portfolio Contact <noreply@your-domain.com>', // Replace with your verified domain
-        to: ['tmille12@syr.edu'],
-        subject: `New Portfolio Contact: ${name}`,
-        html: `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-            <h2 style="color: #051C3D;">New Contact Form Submission</h2>
+    if (RESEND_API_KEY && RESEND_API_KEY !== 'your_resend_api_key_here') {
+      try {
+        await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${RESEND_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            from: 'Portfolio Contact <noreply@your-domain.com>', // Replace with your verified domain
+            to: ['tmille12@syr.edu'],
+            subject: `New Portfolio Contact: ${name}`,
+            html: `
+              <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <h2 style="color: #051C3D;">New Contact Form Submission</h2>
 
-            <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
-              <h3>Contact Details:</h3>
-              <p><strong>Name:</strong> ${name}</p>
-              <p><strong>Email:</strong> ${email}</p>
-              <p><strong>Submitted:</strong> ${new Date().toLocaleString()}</p>
-            </div>
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                  <h3>Contact Details:</h3>
+                  <p><strong>Name:</strong> ${name}</p>
+                  <p><strong>Email:</strong> ${email}</p>
+                  <p><strong>Submitted:</strong> ${new Date().toLocaleString()}</p>
+                </div>
 
-            <div style="background: #fff; padding: 20px; border: 1px solid #ddd; border-radius: 8px; margin: 20px 0;">
-              <h3>Message:</h3>
-              <p style="white-space: pre-wrap;">${message}</p>
-            </div>
+                <div style="background: #fff; padding: 20px; border: 1px solid #ddd; border-radius: 8px; margin: 20px 0;">
+                  <h3>Message:</h3>
+                  <p style="white-space: pre-wrap;">${message}</p>
+                </div>
 
-            <div style="background: #e8f5e8; padding: 20px; border-radius: 8px; margin: 20px 0;">
-              <h3>📤 Suggested AI Response:</h3>
-              <div style="background: white; padding: 15px; border-radius: 4px; white-space: pre-wrap; font-family: 'Courier New', monospace; font-size: 14px;">
+                <div style="background: #e8f5e8; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                  <h3>📤 Suggested AI Response:</h3>
+                  <div style="background: white; padding: 15px; border-radius: 4px; white-space: pre-wrap; font-family: 'Courier New', monospace; font-size: 14px;">
 ${aiResponse}
-              </div>
-              <p style="margin-top: 15px; font-size: 12px; color: #666;">
-                💡 You can copy this response and personalize it as needed, or write your own reply.
-              </p>
-            </div>
+                  </div>
+                  <p style="margin-top: 15px; font-size: 12px; color: #666;">
+                    💡 You can copy this response and personalize it as needed, or write your own reply.
+                  </p>
+                </div>
 
-            <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd;">
-              <p style="color: #666; font-size: 12px;">
-                This message was submitted through your portfolio website contact form.
-              </p>
-            </div>
-          </div>
-        `
-      })
-    } catch (emailError) {
-      console.error('Email sending failed:', emailError)
-      // Continue execution even if email fails
+                <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd;">
+                  <p style="color: #666; font-size: 12px;">
+                    This message was submitted through your portfolio website contact form.
+                  </p>
+                </div>
+              </div>
+            `
+          })
+        })
+      } catch (emailError) {
+        console.error('Email sending failed:', emailError)
+        // Continue execution even if email fails
+      }
     }
 
     // 4. Send confirmation email to submitter
-    try {
-      await resend.emails.send({
-        from: 'Trevor Miller <noreply@your-domain.com>', // Replace with your verified domain
-        to: [email],
-        subject: 'Thanks for reaching out!',
-        html: `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-            <h2 style="color: #051C3D;">Thanks for contacting me!</h2>
+    if (RESEND_API_KEY && RESEND_API_KEY !== 'your_resend_api_key_here') {
+      try {
+        await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${RESEND_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            from: 'Trevor Miller <noreply@your-domain.com>', // Replace with your verified domain
+            to: [email],
+            subject: 'Thanks for reaching out!',
+            html: `
+              <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <h2 style="color: #051C3D;">Thanks for contacting me!</h2>
 
-            <p>Hi ${name},</p>
+                <p>Hi ${name},</p>
 
-            <p>Thank you for reaching out through my portfolio website. I've received your message and will get back to you soon!</p>
+                <p>Thank you for reaching out through my portfolio website. I've received your message and will get back to you soon!</p>
 
-            <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
-              <h3>Your message:</h3>
-              <p style="white-space: pre-wrap; font-style: italic;">"${message}"</p>
-            </div>
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                  <h3>Your message:</h3>
+                  <p style="white-space: pre-wrap; font-style: italic;">"${message}"</p>
+                </div>
 
-            <p>In the meantime, feel free to:</p>
-            <ul>
-              <li>Check out my projects on <a href="https://github.com/TrevorMiller04" style="color: #051C3D;">GitHub</a></li>
-              <li>Connect with me on <a href="https://linkedin.com/in/trevor-miller04" style="color: #051C3D;">LinkedIn</a></li>
-              <li>Download my <a href="https://your-domain.com/resume.pdf" style="color: #051C3D;">resume</a></li>
-            </ul>
+                <p>In the meantime, feel free to:</p>
+                <ul>
+                  <li>Check out my projects on <a href="https://github.com/TrevorMiller04" style="color: #051C3D;">GitHub</a></li>
+                  <li>Connect with me on <a href="https://linkedin.com/in/trevor-miller04" style="color: #051C3D;">LinkedIn</a></li>
+                  <li>Download my <a href="https://your-domain.com/resume.pdf" style="color: #051C3D;">resume</a></li>
+                </ul>
 
-            <p>Best regards,<br>
-            <strong>Trevor Miller</strong><br>
-            Computer Science Major<br>
-            Syracuse University</p>
+                <p>Best regards,<br>
+                <strong>Trevor Miller</strong><br>
+                Computer Science Major<br>
+                Syracuse University</p>
 
-            <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd;">
-              <p style="color: #666; font-size: 12px;">
-                This is an automated confirmation. Please don't reply to this email.
-              </p>
-            </div>
-          </div>
-        `
-      })
-    } catch (confirmationError) {
-      console.error('Confirmation email failed:', confirmationError)
-      // Continue execution even if confirmation email fails
+                <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd;">
+                  <p style="color: #666; font-size: 12px;">
+                    This is an automated confirmation. Please don't reply to this email.
+                  </p>
+                </div>
+              </div>
+            `
+          })
+        })
+      } catch (confirmationError) {
+        console.error('Confirmation email failed:', confirmationError)
+        // Continue execution even if confirmation email fails
+      }
     }
 
     return NextResponse.json({
