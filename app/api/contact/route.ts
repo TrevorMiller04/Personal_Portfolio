@@ -93,20 +93,24 @@ function detectMessageType(message: string): 'job_inquiry' | 'collaboration' | '
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
+    console.log('Contact form submission:', { name: body.name, email: body.email, messageLength: body.message?.length })
 
     // Validate input
     const validatedData = contactSchema.parse(body)
     const { name, email, message } = validatedData
 
     // 1. Save to Supabase database
+    console.log('Attempting to save to database...')
     const contact = await prisma.contact.create({
       data: {
         name,
         email,
+        subject: null, // Explicitly set optional field
         message,
         replied: false
       }
     })
+    console.log('Contact saved successfully:', contact.id)
 
     // 2. Generate AI response
     const aiResponse = await generateAIResponse(name, email, message)
@@ -226,8 +230,14 @@ ${aiResponse}
 
   } catch (error) {
     console.error('Contact form error:', error)
+    console.error('Error details:', {
+      name: error instanceof Error ? error.name : 'Unknown',
+      message: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined
+    })
 
     if (error instanceof z.ZodError) {
+      console.error('Validation errors:', error.errors)
       return NextResponse.json(
         { success: false, message: 'Invalid form data', errors: error.errors },
         { status: 400 }
@@ -235,7 +245,11 @@ ${aiResponse}
     }
 
     return NextResponse.json(
-      { success: false, message: 'Failed to send message. Please try again.' },
+      {
+        success: false,
+        message: 'Failed to send message. Please try again.',
+        error: process.env.NODE_ENV === 'development' ? (error instanceof Error ? error.message : String(error)) : undefined
+      },
       { status: 500 }
     )
   }
