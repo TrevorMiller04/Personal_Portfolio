@@ -3,11 +3,8 @@
 import { useState } from 'react'
 import { Document, Page, pdfjs } from 'react-pdf'
 
-// Configure PDF.js worker via bundler-resolved URL to avoid CDN fallback.
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  'pdfjs-dist/build/pdf.worker.min.mjs',
-  import.meta.url
-).toString()
+// Configure PDF.js worker - use local file from public folder (most reliable for Next.js)
+pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs'
 
 interface PDFViewerProps {
   fileUrl: string
