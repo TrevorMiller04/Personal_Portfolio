@@ -20,11 +20,18 @@ export function ResumeSection() {
           </a>
         </div>
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-          <embed
-            src="/resume.pdf"
-            type="application/pdf"
-            className="w-full h-[720px]"
-          />
+          <iframe
+            src="/resume.pdf#toolbar=0"
+            className="w-full h-[720px] border-0"
+            title="Resume PDF"
+          >
+            <p className="p-4 text-center">
+              Your browser does not support PDF viewing.
+              <a href="/resume.pdf" className="text-syracuse-orange underline ml-1">
+                Download the PDF
+              </a> instead.
+            </p>
+          </iframe>
         </div>
       </div>
     </section>
