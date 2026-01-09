@@ -1,15 +1,18 @@
 'use client'
 
 import { useState } from 'react'
+import { ContactFormSchema } from '../lib/validation'
 
 export function ContactForm() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    subject: '',
     message: ''
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [errors, setErrors] = useState<Record<string, string>>({})
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -18,7 +21,22 @@ export function ContactForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setErrors({}) // Clear previous errors
     setIsSubmitting(true)
+
+    // Client-side validation
+    const validation = ContactFormSchema.safeParse(formData)
+    if (!validation.success) {
+      const fieldErrors: Record<string, string> = {}
+      validation.error.errors.forEach((err) => {
+        if (err.path[0]) {
+          fieldErrors[err.path[0] as string] = err.message
+        }
+      })
+      setErrors(fieldErrors)
+      setIsSubmitting(false)
+      return
+    }
 
     try {
       const response = await fetch('/api/contact', {
@@ -33,9 +51,20 @@ export function ContactForm() {
 
       if (response.ok && result.success) {
         setSubmitStatus('success')
-        setFormData({ name: '', email: '', message: '' })
+        setFormData({ name: '', email: '', subject: '', message: '' })
+        setErrors({})
       } else {
         console.error('Form submission failed:', result)
+        // Parse validation errors if available
+        if (result.errors && Array.isArray(result.errors)) {
+          const fieldErrors: Record<string, string> = {}
+          result.errors.forEach((err: any) => {
+            if (err.path && err.path[0]) {
+              fieldErrors[err.path[0]] = err.message
+            }
+          })
+          setErrors(fieldErrors)
+        }
         setSubmitStatus('error')
       }
     } catch (error) {
@@ -79,8 +108,8 @@ export function ContactForm() {
               value={formData.name}
               onChange={handleInputChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-syracuse-blue focus:border-syracuse-blue"
-              required
             />
+            {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name}</p>}
           </div>
 
           <div>
@@ -88,14 +117,29 @@ export function ContactForm() {
               Email
             </label>
             <input
-              type="email"
+              type="text"
               id="email"
               name="email"
               value={formData.email}
               onChange={handleInputChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-syracuse-blue focus:border-syracuse-blue"
-              required
             />
+            {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
+          </div>
+
+          <div>
+            <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
+              Subject (Optional)
+            </label>
+            <input
+              type="text"
+              id="subject"
+              name="subject"
+              value={formData.subject}
+              onChange={handleInputChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-syracuse-blue focus:border-syracuse-blue"
+            />
+            {errors.subject && <p className="mt-1 text-sm text-red-600">{errors.subject}</p>}
           </div>
 
           <div>
@@ -109,8 +153,8 @@ export function ContactForm() {
               value={formData.message}
               onChange={handleInputChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-syracuse-blue focus:border-syracuse-blue"
-              required
             />
+            {errors.message && <p className="mt-1 text-sm text-red-600">{errors.message}</p>}
           </div>
 
           <button

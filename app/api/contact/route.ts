@@ -1,16 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '../../../lib/db'
-import { z } from 'zod'
+import { ContactFormSchema } from '../../../lib/validation'
+import { checkRateLimit, getClientIP } from '../../../lib/rate-limit'
+import { Resend } from 'resend'
 
 // Email service configuration
 const RESEND_API_KEY = process.env.RESEND_API_KEY
+const resend = RESEND_API_KEY && RESEND_API_KEY !== 'your_resend_api_key_here'
+  ? new Resend(RESEND_API_KEY)
+  : null
 
-// Validation schema for contact form
-const contactSchema = z.object({
-  name: z.string().min(1, 'Name is required').max(100),
-  email: z.string().email('Valid email is required'),
-  message: z.string().min(10, 'Message must be at least 10 characters').max(2000)
-})
 
 // AI Response Generator using OpenAI API or Anthropic (mock for now)
 async function generateAIResponse(name: string, email: string, message: string): Promise<string> {
@@ -92,12 +91,41 @@ function detectMessageType(message: string): 'job_inquiry' | 'collaboration' | '
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting - 5 requests per hour per IP
+    const clientIP = getClientIP(request)
+    const rateLimitResult = checkRateLimit(clientIP, 5)
+
+    if (!rateLimitResult.success) {
+      const resetDate = new Date(rateLimitResult.reset)
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Too many requests. Please try again later.',
+          retryAfter: Math.ceil((rateLimitResult.reset - Date.now()) / 1000)
+        },
+        {
+          status: 429,
+          headers: {
+            'Retry-After': String(Math.ceil((rateLimitResult.reset - Date.now()) / 1000)),
+            'X-RateLimit-Limit': String(rateLimitResult.limit),
+            'X-RateLimit-Remaining': String(rateLimitResult.remaining),
+            'X-RateLimit-Reset': resetDate.toISOString()
+          }
+        }
+      )
+    }
+
+    console.log('Rate limit check passed:', {
+      ip: clientIP,
+      remaining: rateLimitResult.remaining
+    })
+
     const body = await request.json()
     console.log('Contact form submission:', { name: body.name, email: body.email, messageLength: body.message?.length })
 
     // Validate input
-    const validatedData = contactSchema.parse(body)
-    const { name, email, message } = validatedData
+    const validatedData = ContactFormSchema.parse(body)
+    const { name, email, subject, message } = validatedData
 
     // 1. Save to Supabase database
     console.log('Attempting to save to database...')
@@ -105,7 +133,7 @@ export async function POST(request: NextRequest) {
       data: {
         name,
         email,
-        subject: null, // Explicitly set optional field
+        subject: subject || null,
         message,
         replied: false
       }
@@ -115,111 +143,36 @@ export async function POST(request: NextRequest) {
     // 2. Generate AI response
     const aiResponse = await generateAIResponse(name, email, message)
 
-    // 3. Send email notification to Trevor
-    if (RESEND_API_KEY && RESEND_API_KEY !== 'your_resend_api_key_here') {
+    // 3. Send emails
+    if (resend) {
       try {
-        await fetch('https://api.resend.com/emails', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${RESEND_API_KEY}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            from: 'Portfolio Contact <noreply@your-domain.com>', // Replace with your verified domain
-            to: ['tmille12@syr.edu'],
-            subject: `New Portfolio Contact: ${name}`,
-            html: `
-              <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-                <h2 style="color: #051C3D;">New Contact Form Submission</h2>
-
-                <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
-                  <h3>Contact Details:</h3>
-                  <p><strong>Name:</strong> ${name}</p>
-                  <p><strong>Email:</strong> ${email}</p>
-                  <p><strong>Submitted:</strong> ${new Date().toLocaleString()}</p>
-                </div>
-
-                <div style="background: #fff; padding: 20px; border: 1px solid #ddd; border-radius: 8px; margin: 20px 0;">
-                  <h3>Message:</h3>
-                  <p style="white-space: pre-wrap;">${message}</p>
-                </div>
-
-                <div style="background: #e8f5e8; padding: 20px; border-radius: 8px; margin: 20px 0;">
-                  <h3>📤 Suggested AI Response:</h3>
-                  <div style="background: white; padding: 15px; border-radius: 4px; white-space: pre-wrap; font-family: 'Courier New', monospace; font-size: 14px;">
-${aiResponse}
-                  </div>
-                  <p style="margin-top: 15px; font-size: 12px; color: #666;">
-                    💡 You can copy this response and personalize it as needed, or write your own reply.
-                  </p>
-                </div>
-
-                <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd;">
-                  <p style="color: #666; font-size: 12px;">
-                    This message was submitted through your portfolio website contact form.
-                  </p>
-                </div>
-              </div>
-            `
-          })
+        // Send notification to Trevor (this always works with test domain)
+        await resend.emails.send({
+          from: 'Portfolio Contact <onboarding@resend.dev>', // TODO: Replace with verified domain
+          to: 'tmille12@syr.edu',
+          subject: `New Contact Form Message from ${name}`,
+          html: `
+            <h2>New Contact Form Submission</h2>
+            <p><strong>From:</strong> ${name} (${email})</p>
+            ${subject ? `<p><strong>Subject:</strong> ${subject}</p>` : ''}
+            <p><strong>Message:</strong></p>
+            <p>${message.replace(/\n/g, '<br>')}</p>
+            <hr>
+            <h3>Suggested AI Response:</h3>
+            <pre style="white-space: pre-wrap; font-family: sans-serif;">${aiResponse}</pre>
+            <hr>
+            <p><small>View in database: Contact ID ${contact.id}</small></p>
+          `
         })
+        console.log('Notification email sent to Trevor')
+
       } catch (emailError) {
         console.error('Email sending failed:', emailError)
-        // Continue execution even if email fails
+        // Don't fail the entire request if email fails
+        // Contact is already saved to database
       }
-    }
-
-    // 4. Send confirmation email to submitter
-    if (RESEND_API_KEY && RESEND_API_KEY !== 'your_resend_api_key_here') {
-      try {
-        await fetch('https://api.resend.com/emails', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${RESEND_API_KEY}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            from: 'Trevor Miller <noreply@your-domain.com>', // Replace with your verified domain
-            to: [email],
-            subject: 'Thanks for reaching out!',
-            html: `
-              <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-                <h2 style="color: #051C3D;">Thanks for contacting me!</h2>
-
-                <p>Hi ${name},</p>
-
-                <p>Thank you for reaching out through my portfolio website. I've received your message and will get back to you soon!</p>
-
-                <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
-                  <h3>Your message:</h3>
-                  <p style="white-space: pre-wrap; font-style: italic;">"${message}"</p>
-                </div>
-
-                <p>In the meantime, feel free to:</p>
-                <ul>
-                  <li>Check out my projects on <a href="https://github.com/TrevorMiller04" style="color: #051C3D;">GitHub</a></li>
-                  <li>Connect with me on <a href="https://linkedin.com/in/trevor-miller04" style="color: #051C3D;">LinkedIn</a></li>
-                  <li>Download my <a href="https://your-domain.com/resume.pdf" style="color: #051C3D;">resume</a></li>
-                </ul>
-
-                <p>Best regards,<br>
-                <strong>Trevor Miller</strong><br>
-                Computer Science Major<br>
-                Syracuse University</p>
-
-                <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd;">
-                  <p style="color: #666; font-size: 12px;">
-                    This is an automated confirmation. Please don't reply to this email.
-                  </p>
-                </div>
-              </div>
-            `
-          })
-        })
-      } catch (confirmationError) {
-        console.error('Confirmation email failed:', confirmationError)
-        // Continue execution even if confirmation email fails
-      }
+    } else {
+      console.warn('Email sending skipped: RESEND_API_KEY not configured')
     }
 
     return NextResponse.json({
@@ -236,7 +189,7 @@ ${aiResponse}
       stack: error instanceof Error ? error.stack : undefined
     })
 
-    if (error instanceof z.ZodError) {
+    if (error && typeof error === 'object' && 'issues' in error) {
       console.error('Validation errors:', error.errors)
       return NextResponse.json(
         { success: false, message: 'Invalid form data', errors: error.errors },
