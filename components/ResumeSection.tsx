@@ -1,17 +1,3 @@
-'use client'
-
-import dynamic from 'next/dynamic'
-
-const PDFViewer = dynamic(() => import('./PDFViewer').then(mod => ({ default: mod.PDFViewer })), {
-  ssr: false,
-  loading: () => (
-    <div className="p-8 text-center">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-syracuse-orange mx-auto mb-4"></div>
-      <p className="text-gray-600">Loading PDF viewer...</p>
-    </div>
-  ),
-})
-
 export function ResumeSection() {
   return (
     <section id="resume" className="mb-20">
@@ -28,13 +14,32 @@ export function ResumeSection() {
           <a
             href="/resume.pdf"
             target="_blank"
+            rel="noopener noreferrer"
             className="px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-md hover:bg-gray-50 transition-colors duration-200"
           >
             Open in New Tab
           </a>
         </div>
-        <div className="bg-white rounded-lg shadow-lg p-6">
-          <PDFViewer fileUrl="/resume.pdf" />
+        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+          <object
+            data="/resume.pdf"
+            type="application/pdf"
+            className="w-full h-[800px]"
+          >
+            <div className="p-8 text-center">
+              <p className="text-gray-700 mb-4">
+                PDF preview not available in your browser.
+              </p>
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3 bg-syracuse-blue text-white font-medium rounded-md hover:bg-blue-800 transition-colors duration-200 inline-block"
+              >
+                View Resume PDF
+              </a>
+            </div>
+          </object>
         </div>
       </div>
     </section>
