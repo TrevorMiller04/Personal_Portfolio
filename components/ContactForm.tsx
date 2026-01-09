@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { ContactFormSchema } from '../lib/validation'
 
 export function ContactForm() {
+  const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'trevormiller68@icloud.com'
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -180,10 +182,10 @@ export function ContactForm() {
 
         <div className="space-y-4 mb-8">
           <button
-            onClick={(e) => copyToClipboard('tmille12@syr.edu', e.currentTarget)}
+            onClick={(e) => copyToClipboard(contactEmail, e.currentTarget)}
             className="block w-full text-left p-3 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors duration-200"
           >
-            <strong>Email:</strong> tmille12@syr.edu
+            <strong>Email:</strong> {contactEmail}
           </button>
           <button
             onClick={(e) => copyToClipboard('978-646-7116', e.currentTarget)}
