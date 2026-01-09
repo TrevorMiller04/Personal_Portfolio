@@ -3,8 +3,8 @@
 import { useState } from 'react'
 import { Document, Page, pdfjs } from 'react-pdf'
 
-// Configure PDF.js worker
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`
+// Configure PDF.js worker - use local worker file
+pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs'
 
 interface PDFViewerProps {
   fileUrl: string
