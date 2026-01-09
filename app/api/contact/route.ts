@@ -6,6 +6,7 @@ import { Resend } from 'resend'
 
 // Email service configuration
 const RESEND_API_KEY = process.env.RESEND_API_KEY
+const NOTIFICATION_EMAIL = process.env.NOTIFICATION_EMAIL || 'trevormiller68@icloud.com'
 const resend = RESEND_API_KEY && RESEND_API_KEY !== 'your_resend_api_key_here'
   ? new Resend(RESEND_API_KEY)
   : null
@@ -146,10 +147,10 @@ export async function POST(request: NextRequest) {
     // 3. Send emails
     if (resend) {
       try {
-        // Send notification to Trevor (this always works with test domain)
+        // Send notification to Trevor (using Resend account email for test domain)
         await resend.emails.send({
           from: 'Portfolio Contact <onboarding@resend.dev>', // TODO: Replace with verified domain
-          to: 'tmille12@syr.edu',
+          to: NOTIFICATION_EMAIL,
           subject: `New Contact Form Message from ${name}`,
           html: `
             <h2>New Contact Form Submission</h2>
