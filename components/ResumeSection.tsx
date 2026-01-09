@@ -1,3 +1,17 @@
+'use client'
+
+import dynamic from 'next/dynamic'
+
+const PDFViewer = dynamic(() => import('./PDFViewer').then(mod => ({ default: mod.PDFViewer })), {
+  ssr: false,
+  loading: () => (
+    <div className="p-8 text-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-syracuse-orange mx-auto mb-4"></div>
+      <p className="text-gray-600">Loading PDF viewer...</p>
+    </div>
+  ),
+})
+
 export function ResumeSection() {
   return (
     <section id="resume" className="mb-20">
@@ -19,19 +33,8 @@ export function ResumeSection() {
             Open in New Tab
           </a>
         </div>
-        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-          <iframe
-            src="/resume.pdf#toolbar=0"
-            className="w-full h-[720px] border-0"
-            title="Resume PDF"
-          >
-            <p className="p-4 text-center">
-              Your browser does not support PDF viewing.
-              <a href="/resume.pdf" className="text-syracuse-orange underline ml-1">
-                Download the PDF
-              </a> instead.
-            </p>
-          </iframe>
+        <div className="bg-white rounded-lg shadow-lg p-6">
+          <PDFViewer fileUrl="/resume.pdf" />
         </div>
       </div>
     </section>
