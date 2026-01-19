@@ -216,7 +216,7 @@ export function ContactForm() {
 
         <div className="text-sm text-gray-600 space-y-2">
           <p><strong>Currently seeking:</strong> Summer 2025 internships and full-time opportunities after December 2026 graduation</p>
-          <p><strong>Location:</strong> Open to remote, hybrid, or on-site positions</p>
+          <p><strong>Location:</strong> Open to remote, hybrid, or on-site positions near Boston, MA or Syracuse, NY.</p>
           <p><strong>Interests:</strong> Data Science, AI/ML Engineering, Software Engineering, Product Management</p>
         </div>
       </div>
