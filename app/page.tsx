@@ -8,11 +8,11 @@ import projectsData from '../data/projects.json'
 // Define project interface for JSON data
 interface ProjectData {
   title: string
-  role: string
   date: string
   description: string
   tech: string[]
-  repoURL: string
+  repoURL?: string
+  liveUrl?: string
   longDescription?: string
   images?: Array<{
     src: string
@@ -26,15 +26,13 @@ async function getProjects() {
   const transformedProjects = projectsData.map((project: ProjectData) => ({
     id: `project-${Date.now()}-${Math.random()}`, // Temporary ID for static data
     title: project.title,
-    role: project.role,
     date: project.date,
     description: project.description,
     longDescription: project.longDescription || null,
     techStack: project.tech,
     repoUrl: project.repoURL || null,
-    liveUrl: null,
-    images: project.images || null,
-    featured: true,
+    liveUrl: project.liveUrl || null,
+    images: project.images || [],
     createdAt: new Date(),
     updatedAt: new Date()
   }))
@@ -139,7 +137,7 @@ export default async function HomePage() {
 
           {/* Projects Section */}
           <section id="projects" className="mb-20">
-            <h3 className="text-3xl font-bold text-gray-900 mb-10 text-center">Featured Projects</h3>
+            <h3 className="text-3xl font-bold text-gray-900 mb-10 text-center">Projects</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {projects.map((project) => (
                 <ProjectCard key={project.id} project={project} />

@@ -4,7 +4,6 @@ import { z } from 'zod'
 export const ProjectSchema = z.object({
   id: z.string(),
   title: z.string().min(1),
-  role: z.string().min(1),
   date: z.string().min(1),
   description: z.string().min(1),
   longDescription: z.string().optional().nullable(),
@@ -15,15 +14,13 @@ export const ProjectSchema = z.object({
     src: z.string(),
     alt: z.string(),
     caption: z.string()
-  })).optional().nullable(),
-  featured: z.boolean().default(false),
+  })).default([]),
   createdAt: z.date(),
   updatedAt: z.date()
 })
 
 export const CreateProjectSchema = z.object({
   title: z.string().min(1, 'Title is required'),
-  role: z.string().min(1, 'Role is required'),
   date: z.string().min(1, 'Date is required'),
   description: z.string().min(10, 'Description must be at least 10 characters'),
   longDescription: z.string().optional(),
@@ -34,8 +31,7 @@ export const CreateProjectSchema = z.object({
     src: z.string(),
     alt: z.string(),
     caption: z.string()
-  })).optional(),
-  featured: z.boolean().default(false)
+  })).optional()
 })
 
 // Contact form validation schema
