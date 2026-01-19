@@ -5,8 +5,7 @@
       "experience": [
         "Built data ingestion pipeline processing 95,000+ Spotify playback records with Pandas (Playlist Generator)",
         "Implemented custom PyTorch training loops for transformer-based NLP classification (Multitext Classification)",
-        "Developed AWS Lambda serverless functions for ML model inference endpoints (Multitext Classification)",
-        "Created modular data processing scripts with proper separation of concerns across ingestion, refinement, and API layers (Playlist Generator)"
+        "Developed AWS Lambda serverless functions for ML model inference endpoints (Multitext Classification)"
       ]
     },
     {
@@ -14,26 +13,21 @@
       "experience": [
         "Built full-stack portfolio with Next.js in strict mode, enforcing type safety across 20+ components (Portfolio Website)",
         "Implemented strongly-typed API routes with Zod validation schemas for contact form (Portfolio Website)",
-        "Developed mobile app with React Native/Expo using TypeScript for type-safe component architecture (Spur)",
-        "Created type-safe Prisma models for PostgreSQL database with automatic client generation (Portfolio Website)"
+        "Developed mobile app with React Native/Expo using TypeScript for type-safe component architecture (Spur)"
       ]
     },
     {
       "name": "Java",
       "experience": [
         "Implemented data structures: linked lists, stacks, queues, hash tables with Big-O analysis (Coursework)",
-        "Developed sorting algorithms: quicksort, mergesort, heap sort with complexity evaluation (Coursework)",
-        "Applied SOLID principles and design patterns (Singleton, Factory) in OOP projects (Coursework)",
-        "Built graph algorithms for shortest paths, MST, and traversals using adjacency representations (Coursework)"
+        "Developed sorting algorithms: quicksort, mergesort, heap sort with complexity evaluation (Coursework)"
       ]
     },
     {
       "name": "JavaScript",
       "experience": [
         "Implemented interactive modal/gallery systems with carousel functionality and keyboard navigation (Portfolio Website)",
-        "Used ES6+ features: async/await for API calls, destructuring, arrow functions throughout React components (Portfolio Website)",
-        "Built client-side form validation with real-time feedback and error handling (Portfolio Website)",
-        "Created dynamic UI updates using DOM manipulation and event handling patterns (Portfolio Website)"
+        "Built client-side form validation with real-time feedback and error handling (Portfolio Website)"
       ]
     },
     {
@@ -41,8 +35,7 @@
       "experience": [
         "Analyzed buffer overflow vulnerabilities and ROP chain construction in security coursework",
         "Implemented exploit mitigation techniques and memory safety patterns",
-        "Debugged low-level memory issues using GDB and analysis tools",
-        "Applied systems programming concepts for performance-critical operations"
+        "Debugged low-level memory issues using GDB and analysis tools"
       ]
     },
     {
@@ -50,8 +43,7 @@
       "experience": [
         "Designed PostgreSQL schemas with proper relationships and constraints via Prisma (Portfolio Website)",
         "Implemented database queries for contact form submissions with timestamp indexing (Portfolio Website)",
-        "Applied Row Level Security policies in Supabase for data access control (Portfolio Website)",
-        "Structured normalized database design following relational data modeling principles (Coursework)"
+        "Applied Row Level Security policies in Supabase for data access control (Portfolio Website)"
       ]
     }
   ],
@@ -60,7 +52,6 @@
       "name": "React",
       "experience": [
         "Built interactive portfolio with 15+ React components using hooks (useState, useEffect) and Context API (Portfolio Website)",
-        "Implemented component-based architecture with proper separation of concerns and reusable patterns (Portfolio Website)",
         "Created dynamic form handling with controlled components and validation feedback (Portfolio Website)",
         "Developed mobile UI flows with React Native for multi-screen scheduling features (Spur)"
       ]
@@ -98,9 +89,7 @@
       "name": "Vercel",
       "experience": [
         "Deployed full-stack Next.js application with automatic CI/CD from GitHub (Portfolio Website)",
-        "Configured environment variables for production deployment with secure credential management (Portfolio Website)",
-        "Optimized build performance and bundle size for production environments (Portfolio Website)",
-        "Resolved security vulnerabilities (CVE-2025-66478) during deployment pipeline (Portfolio Website)"
+        "Configured environment variables for production deployment with secure credential management (Portfolio Website)"
       ]
     },
     {
@@ -108,8 +97,7 @@
       "experience": [
         "Created PostgreSQL schemas with Prisma integration for project data and contact submissions (Portfolio Website)",
         "Applied Row Level Security policies for secure data access patterns (Portfolio Website)",
-        "Integrated real-time database operations with TypeScript-safe client (Portfolio Website)",
-        "Managed database migrations and credential rotation during project lifecycle (Portfolio Website)"
+        "Integrated real-time database operations with TypeScript-safe client (Portfolio Website)"
       ]
     },
     {
@@ -122,21 +110,18 @@
       ]
     },
     {
-      "name": "AWS (S3, SageMaker, EC2)",
+      "name": "AWS",
       "experience": [
+        "Used SageMaker for ML model training/hosting, S3 for artifact storage, EC2 for compute, Lambda for serverless inference, and API Gateway for HTTP endpoint exposure (Multitext Classification)",
         "Deployed trained ML model as managed SageMaker endpoint with versioning (Multitext Classification)",
         "Developed custom inference scripts for real-time model serving and request handling (Multitext Classification)",
-        "Conducted load testing using SageMaker Inference Recommender for latency/throughput analysis (Multitext Classification)",
-        "Configured IAM roles and permissions for Lambda-to-SageMaker integration (Multitext Classification)"
+        "Conducted load testing using SageMaker Inference Recommender for latency/throughput analysis (Multitext Classification)"
       ]
     },
     {
       "name": "Postman",
       "experience": [
-        "Validated end-to-end ML inference pipeline via HTTP API Gateway integration (Multitext Classification)",
-        "Tested contact form API endpoints with various payload scenarios and error cases (Portfolio Website)",
-        "Debugged serverless function behavior with request/response inspection (Multitext Classification)",
-        "Created API request collections for repeatable testing workflows (Multitext Classification)"
+        "Validated end-to-end ML inference pipeline via HTTP API Gateway integration (Multitext Classification)"
       ]
     }
   ],
@@ -153,7 +138,7 @@
     {
       "name": "MCP Servers",
       "experience": [
-        "Configured Claude MCP servers for enhanced development workflow and context retrieval",
+        "Configured Claude/Codex MCP servers for enhanced development workflow and context retrieval",
         "Integrated filesystem and sequential-thinking MCP tools for complex problem-solving",
         "Leveraged Context7 MCP for real-time documentation lookups during implementation",
         "Applied MCP architecture patterns for agent-based task automation"
@@ -163,9 +148,7 @@
       "name": "Caching Strategies",
       "experience": [
         "Implemented caching for AI suggestions to reduce repeated OpenAI API calls (Spur)",
-        "Optimized response times and API usage costs with intelligent cache invalidation (Spur)",
-        "Applied rate limiting with in-memory cache for contact form submissions (Portfolio Website)",
-        "Designed cache key strategies based on user input fingerprints (Spur)"
+        "Applied rate limiting with in-memory cache for contact form submissions (Portfolio Website)"
       ]
     }
   ],
@@ -201,9 +184,7 @@
       "name": "OOP",
       "experience": [
         "Applied SOLID principles and design patterns in Java coursework projects",
-        "Implemented inheritance, polymorphism, and encapsulation across class hierarchies",
-        "Created modular TypeScript classes for React components with clear interfaces (Portfolio Website)",
-        "Designed object-oriented data models with Prisma ORM schema definitions (Portfolio Website)"
+        "Implemented inheritance, polymorphism, and encapsulation across class hierarchies"
       ]
     },
     {
@@ -211,18 +192,12 @@
       "experience": [
         "Architected full-stack system with database, API layer, email service, and AI integration (Portfolio Website)",
         "Designed modular data pipeline with separation between ingestion, processing, and API layers (Playlist Generator)",
-        "Contributed to mobile app architecture decisions for routing, navigation, and service boundaries (Spur)",
-        "Planned ML system lifecycle from training through deployment to API consumption (Multitext Classification)"
+        "Contributed to mobile app architecture decisions for routing, navigation, and service boundaries (Spur)"
       ]
     },
     {
       "name": "Testing & Debugging",
-      "experience": [
-        "Debugged email delivery issues with Resend API test domain restrictions (Portfolio Website)",
-        "Resolved PDF rendering across multiple approaches: X-Frame-Options, react-pdf, native object (Portfolio Website)",
-        "Fixed security vulnerabilities (CVE-2025-66478) in Next.js dependency chain (Portfolio Website)",
-        "Validated ML inference pipeline with systematic endpoint testing and error handling (Multitext Classification)"
-      ]
+      "experience": []
     }
   ]
 }
