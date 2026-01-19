@@ -29,11 +29,12 @@ export function ProjectCard({ project }: ProjectCardProps) {
   const [showModal, setShowModal] = useState(false)
 
   const handleViewProject = () => {
-    // If has liveUrl but no images, redirect directly
-    if (project.liveUrl && project.images.length === 0) {
-      window.open(project.liveUrl, '_blank')
-    } else {
+    // Always show modal if there's content to display (longDescription or images)
+    if (project.longDescription || project.images.length > 0) {
       setShowModal(true)
+    } else if (project.liveUrl) {
+      // Only redirect if no modal content but has a live URL
+      window.open(project.liveUrl, '_blank')
     }
   }
 
