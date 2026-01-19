@@ -38,7 +38,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
   }
 
   // Determine if we should show the View Project button
-  const hasViewableContent = project.liveUrl || project.images.length > 0
+  // Show for all projects with detailed descriptions
+  const hasViewableContent = project.liveUrl || project.images.length > 0 || project.longDescription
 
   return (
     <>

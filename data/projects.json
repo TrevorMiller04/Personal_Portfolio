@@ -7,10 +7,7 @@
     "repoURL": "https://github.com/TrevorMiller04/Personal_Portfolio",
     "liveUrl": "https://trevormiller.xyz",
     "longDescription": "<p>Built a production-ready academic portfolio website using <strong>Next.js App Router</strong>, <strong>React 19</strong>, and <strong>TypeScript strict mode</strong>, structuring the application for recruiter-facing clarity, performance, and long-term maintainability.</p><p><strong>Key Features:</strong></p><ul><li>Full-stack architecture integrating PostgreSQL database via <strong>Supabase</strong> and <strong>Prisma ORM</strong> to manage real project data and contact submissions with strongly typed models</li><li>Contact form pipeline that persists submissions to database, triggers transactional email notifications via <strong>Resend</strong>, and generates context-aware AI responses using deterministic logic</li><li>API routes with <strong>Zod-based request validation</strong> to enforce schema correctness across frontend–backend boundaries</li><li>CI/CD pipeline using <strong>GitHub Actions</strong> to automate linting, type checking, and build verification</li><li>Performance optimization with explicit bundle size awareness and frontend rendering efficiency targets</li></ul><p><strong>Technical Implementation:</strong></p><ul><li>Syracuse University branding with custom design system using Tailwind CSS</li><li>Deployed to <strong>Vercel</strong> with environment-based configuration and production build optimization</li><li>Constrained AI integration focused on augmenting user communication without generating fabricated information</li><li>Strict authenticity policy: only verifiable academic work and real implementations showcased</li></ul>",
-    "images": [
-      { "src": "/projects/portfolio/portfolio_project1.png", "alt": "Portfolio homepage with Syracuse University branding", "caption": "Homepage featuring responsive design and campus background" },
-      { "src": "/projects/portfolio/portfolio_project2.png", "alt": "Technical workflow diagram", "caption": "Full-stack architecture and deployment workflow" }
-    ]
+    "images": []
   },
   {
     "title": "Multitext Classification Model",

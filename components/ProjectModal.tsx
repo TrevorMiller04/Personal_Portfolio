@@ -46,15 +46,6 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
     }
   }, [onClose, project.images.length])
 
-  // Handle liveUrl redirect
-  useEffect(() => {
-    if (project.liveUrl && project.images.length === 0) {
-      // If has liveUrl but no images, redirect immediately
-      window.open(project.liveUrl, '_blank')
-      onClose()
-    }
-  }, [project.liveUrl, project.images.length, onClose])
-
   const handlePrevImage = () => {
     setCurrentImageIndex((prev) => (prev === 0 ? project.images.length - 1 : prev - 1))
   }
@@ -67,11 +58,6 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
     if (e.target === e.currentTarget) {
       onClose()
     }
-  }
-
-  // Don't render modal if no images and redirected
-  if (project.liveUrl && project.images.length === 0) {
-    return null
   }
 
   return (
