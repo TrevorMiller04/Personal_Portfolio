@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import { defineConfig, env } from 'prisma/config'
+import { defineConfig } from 'prisma/config'
 
 export default defineConfig({
   schema: 'prisma/schema.prisma',
@@ -8,6 +8,8 @@ export default defineConfig({
     seed: 'tsx prisma/seed.ts'
   },
   datasource: {
-    url: env('DATABASE_URL')
+    // Use DATABASE_URL if available, otherwise use a dummy URL for prisma generate
+    // (prisma generate doesn't actually connect to the database)
+    url: process.env.DATABASE_URL || 'postgresql://dummy:dummy@localhost:5432/dummy'
   }
 })
