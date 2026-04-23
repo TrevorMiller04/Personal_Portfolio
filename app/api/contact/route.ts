@@ -13,7 +13,7 @@ const resend = RESEND_API_KEY && RESEND_API_KEY !== 'your_resend_api_key_here'
 
 
 // AI Response Generator using OpenAI API or Anthropic (mock for now)
-async function generateAIResponse(name: string, email: string, message: string): Promise<string> {
+async function generateAIResponse(name: string, _email: string, message: string): Promise<string> {
   // This would integrate with OpenAI or Anthropic API
   // For now, returning a contextual template response
 
@@ -128,58 +128,50 @@ export async function POST(request: NextRequest) {
     const validatedData = ContactFormSchema.parse(body)
     const { name, email, subject, message } = validatedData
 
-    // 1. Save to Supabase database
-    console.log('Attempting to save to database...')
-    const contact = await prisma.contact.create({
-      data: {
-        name,
-        email,
-        subject: subject || null,
-        message,
-        replied: false
-      }
-    })
-    console.log('Contact saved successfully:', contact.id)
-
-    // 2. Generate AI response
+    // 1. Generate AI response
     const aiResponse = await generateAIResponse(name, email, message)
 
-    // 3. Send emails
+    // 2. Send email notification — primary success path
     if (resend) {
-      try {
-        // Send notification to Trevor (using Resend account email for test domain)
-        await resend.emails.send({
-          from: 'Portfolio Contact <onboarding@resend.dev>', // TODO: Replace with verified domain
-          to: NOTIFICATION_EMAIL,
-          subject: `New Contact Form Message from ${name}`,
-          html: `
-            <h2>New Contact Form Submission</h2>
-            <p><strong>From:</strong> ${name} (${email})</p>
-            ${subject ? `<p><strong>Subject:</strong> ${subject}</p>` : ''}
-            <p><strong>Message:</strong></p>
-            <p>${message.replace(/\n/g, '<br>')}</p>
-            <hr>
-            <h3>Suggested AI Response:</h3>
-            <pre style="white-space: pre-wrap; font-family: sans-serif;">${aiResponse}</pre>
-            <hr>
-            <p><small>View in database: Contact ID ${contact.id}</small></p>
-          `
-        })
-        console.log('Notification email sent to Trevor')
-
-      } catch (emailError) {
-        console.error('Email sending failed:', emailError)
-        // Don't fail the entire request if email fails
-        // Contact is already saved to database
-      }
+      await resend.emails.send({
+        from: 'Portfolio Contact <onboarding@resend.dev>',
+        to: NOTIFICATION_EMAIL,
+        subject: `New Contact Form Message from ${name}`,
+        html: `
+          <h2>New Contact Form Submission</h2>
+          <p><strong>From:</strong> ${name} (${email})</p>
+          ${subject ? `<p><strong>Subject:</strong> ${subject}</p>` : ''}
+          <p><strong>Message:</strong></p>
+          <p>${message.replace(/\n/g, '<br>')}</p>
+          <hr>
+          <h3>Suggested AI Response:</h3>
+          <pre style="white-space: pre-wrap; font-family: sans-serif;">${aiResponse}</pre>
+        `
+      })
+      console.log('Notification email sent to Trevor')
     } else {
       console.warn('Email sending skipped: RESEND_API_KEY not configured')
     }
 
+    // 3. Save to database — best effort, non-fatal
+    try {
+      const contact = await prisma.contact.create({
+        data: {
+          name,
+          email,
+          subject: subject || null,
+          message,
+          replied: false
+        }
+      })
+      console.log('Contact saved to database:', contact.id)
+    } catch (dbError) {
+      console.error('DB save failed (non-fatal):', dbError)
+    }
+
     return NextResponse.json({
       success: true,
-      message: 'Message sent successfully!',
-      contactId: contact.id
+      message: 'Message sent successfully!'
     })
 
   } catch (error) {
@@ -191,9 +183,10 @@ export async function POST(request: NextRequest) {
     })
 
     if (error && typeof error === 'object' && 'issues' in error) {
-      console.error('Validation errors:', error.errors)
+      const zodError = error as { issues: unknown[] }
+      console.error('Validation errors:', zodError.issues)
       return NextResponse.json(
-        { success: false, message: 'Invalid form data', errors: error.errors },
+        { success: false, message: 'Invalid form data', errors: zodError.issues },
         { status: 400 }
       )
     }
